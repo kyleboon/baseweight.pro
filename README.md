@@ -4,10 +4,10 @@ LighterPack helps you track the gear you bring on adventures.
 
 ## Tech Stack
 
-- **Frontend**: Vue.js 2 SPA with Vuex and Vue Router
+- **Frontend**: Vue 3 SPA with Pinia and Vue Router
 - **Backend**: Node.js / Express
 - **Database**: MongoDB (via Docker Compose)
-- **Build**: Webpack 5
+- **Build**: Vite
 
 ## Prerequisites
 
@@ -71,7 +71,39 @@ npx playwright test --update-snapshots                 # Regenerate screenshot b
 
 Playwright automatically starts the app server before running tests (via `npm run start`). MongoDB must be running via Docker Compose first.
 
-## Future Initiatives
+## Modernization Roadmap
 
-- Migrate from MongoDB/mongojs to PostgreSQL document store
-- Update MongoDB driver from legacy mongojs to official mongodb npm package
+### Phase 1 — Server async/await + MongoDB driver (1–2 weeks)
+
+- Replace `mongojs` (archived/unmaintained) with the official `mongodb` driver
+- Refactor `server/auth.js` and `server/endpoints.js` from callback pyramids to `async/await`
+- Add `express-async-errors` for centralized error handling
+- Remove `body-parser` dependency (built into Express 4.16+)
+- Upgrade `markdown@0.5.0` (from 2012) to `marked@14.x`
+- Add security hardening: `helmet`, `express-rate-limit`, explicit cookie attributes (`httpOnly`, `secure`, `sameSite`)
+
+### Phase 2 — Testing + TypeScript foundation (2–4 weeks)
+
+- Add Vitest + `@vue/test-utils` for unit and component tests
+- Add `tsconfig.json` with strict mode; enable `@ts-check` in existing JS files
+- Enable disabled ESLint rules: `no-shadow`, `no-param-reassign`, `consistent-return`
+- Add Prettier + `husky` + `lint-staged` for consistent formatting and pre-commit enforcement
+- Enable `vue/require-prop-types` and `vue/require-explicit-emits` in ESLint
+
+### Phase 3 — Composition API + remove legacy patterns (4–8 weeks)
+
+- Convert all ~30 components from Options API to Composition API with `<script setup>`
+- Remove `window.bus` event emitter and `mixins/utils-mixin.js` — replace with composables
+- Remove `window.router`, `window.fetchJson` global namespace pollution
+- Replace `dragula` with `SortableJS` or `vue-draggable-next` (TypeScript support, actively maintained)
+- Remove `lodash` dependency — use native `Object.assign()` and `debounce`
+- Convert `client/dataTypes.js` from `.prototype` function constructors to ES6 `class` syntax; replace `var` and loose equality
+
+### Phase 4 — Full TypeScript + performance + accessibility (ongoing)
+
+- Full TypeScript migration across client and server
+- Route-level code splitting with `defineAsyncComponent`
+- Virtual scrolling for large gear lists (`vue-virtual-scroller`)
+- Accessibility: ARIA labels, keyboard navigation for drag-drop, skip links
+- Bundle analysis with `rollup-plugin-visualizer`
+- Fix disabled WebKit Playwright tests
