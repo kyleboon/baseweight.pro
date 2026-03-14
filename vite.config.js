@@ -38,6 +38,9 @@ function assetsJsonPlugin() {
 export default defineConfig({
     plugins: [vue(), assetsJsonPlugin()],
     root: '.',
+    define: {
+        global: 'globalThis',
+    },
     css: {
         preprocessorOptions: {
             scss: {
