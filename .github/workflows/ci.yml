@@ -66,7 +66,7 @@ jobs:
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add test/e2e/**/*-snapshots/*-linux.png
+                  find test/e2e -name "*-linux.png" -exec git add {} +
                   if git diff --staged --quiet; then
                     echo "No new snapshots to commit"
                   else
