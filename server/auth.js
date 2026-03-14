@@ -20,7 +20,12 @@ const authenticateUser = async function (req, res, next) {
             const token = crypto.randomBytes(48).toString('hex');
             user.token = token;
             upsertUser(user).catch((err) => logWithRequest(req, { message: 'Error saving session token', err }));
-            res.cookie('lp', token, { path: '/', maxAge: 365 * 24 * 60 * 1000 });
+            res.cookie('lp', token, {
+                path: '/',
+                maxAge: 365 * 24 * 60 * 1000,
+                httpOnly: true,
+                sameSite: 'lax',
+            });
         } else {
             const users = await getDb().collection('users')
                 .find({ token: req.cookies.lp })

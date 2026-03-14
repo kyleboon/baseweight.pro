@@ -79,9 +79,9 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - ✅ Refactor `server/auth.js` and `server/endpoints.js` from callback pyramids to `async/await`
 - ✅ Convert `authenticateUser` from continuation-passing callback to Express middleware
 - ~~Add `express-async-errors` for centralized error handling~~ (not needed — Express 5 handles async errors natively)
-- Remove `body-parser` dependency (built into Express 4.16+)
-- Upgrade `markdown@0.5.0` (from 2012) to `marked@14.x`
-- Add security hardening: `helmet`, `express-rate-limit`, explicit cookie attributes (`httpOnly`, `secure`, `sameSite`)
+- ✅ Remove `body-parser` dependency (built into Express 5)
+- ✅ Upgrade `markdown@0.5.0` (from 2012) to `marked@14.x`
+- ✅ Add security hardening: `helmet`, `express-rate-limit` on auth endpoints, `httpOnly` + `sameSite` cookie attributes
 
 ### Phase 2 — Testing + TypeScript foundation (2–4 weeks)
 

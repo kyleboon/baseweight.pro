@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const Mustache = require('mustache');
 const extend = require('node.extend');
-const markdown = require('markdown').markdown;
+const { marked } = require('marked');
 const config = require('config');
 const { logWithRequest, logger } = require('./log.js');
 const { getDb } = require('./db.js');
@@ -129,7 +129,7 @@ router.get('/r/:id', async (req, res) => {
         renderedCategories,
         renderedTotals,
         optionalFields: library.optionalFields,
-        renderedDescription: markdown.toHTML(list.description),
+        renderedDescription: marked(list.description),
         scripts: shareScriptsHtml,
         styles: shareStylesHtml,
     };
@@ -186,7 +186,7 @@ router.get('/e/:id', async (req, res) => {
         categoryTemplate: templates.t_categoryShare,
         optionalFields: library.optionalFields,
         unitSelectTemplate: templates.t_unitSelect,
-        renderedDescription: markdown.toHTML(list.description),
+        renderedDescription: marked(list.description),
         currencySymbol: library.currencySymbol,
     });
 
@@ -199,7 +199,7 @@ router.get('/e/:id', async (req, res) => {
         renderedCategories,
         renderedTotals,
         optionalFields: library.optionalFields,
-        renderedDescription: markdown.toHTML(list.description),
+        renderedDescription: marked(list.description),
         baseUrl: config.get('deployUrl'),
         styles: shareStylesLinks,
         scripts: shareScriptsLinks,

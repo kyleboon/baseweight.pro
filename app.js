@@ -1,6 +1,7 @@
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const compression = require('compression');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const config = require('config');
 const express = require('express');
 const morgan = require('morgan');
@@ -19,7 +20,7 @@ morgan.token('requestid', function getUsername (req) {
 });
 
 const app = express();
-app.enable('trust proxy');
+app.set('trust proxy', 1); // Trust one hop (nginx/load balancer in front of app)
 
 app.use(function (req, res, next) {
     req.uuid = uuid.v4();
@@ -45,13 +46,23 @@ app.use(morgan(function (tokens, req, res) {
 
 const oneDay = 86400000;
 
+app.use(helmet());
 app.use(compression());
 app.use(cookieParser());
-app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({
-    extended: true,
-    limit: '50mb',
-}));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 20,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { message: 'Too many attempts, please try again later.' },
+});
+app.use('/signin', authLimiter);
+app.use('/register', authLimiter);
+app.use('/forgotPassword', authLimiter);
+app.use('/forgotUsername', authLimiter);
 
 app.use(express.static(`${__dirname}/public/`, { maxAge: oneDay }));
 const endpoints = require('./server/endpoints.js');

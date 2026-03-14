@@ -106,7 +106,12 @@ router.post('/register', async (req, res) => {
     logWithRequest(req, { message: 'Saving new user', username });
     await upsertUser(newUser);
     const out = { username, library: JSON.stringify(newUser.library), syncToken: 0 };
-    res.cookie('lp', token, { path: '/', maxAge: 365 * 24 * 60 * 1000 });
+    res.cookie('lp', token, {
+        path: '/',
+        maxAge: 365 * 24 * 60 * 1000,
+        httpOnly: true,
+        sameSite: 'lax',
+    });
     return res.status(200).json(out);
 });
 
