@@ -1,3 +1,4 @@
+// @ts-check
 module.exports = (function () {
     function getColor(index, baseColor) {
         if (baseColor) {

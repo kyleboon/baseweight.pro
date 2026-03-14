@@ -15,7 +15,8 @@
         "prepare": "husky",
         "test:unit": "vitest run",
         "test:unit:watch": "vitest",
-        "test:unit:coverage": "vitest run --coverage"
+        "test:unit:coverage": "vitest run --coverage",
+        "typecheck": "tsc --noEmit"
     },
     "lint-staged": {
         "*.{js,vue}": [
@@ -88,6 +89,7 @@
         "stylelint": "^17.4.0",
         "stylelint-config-standard": "^40.0.0",
         "stylelint-order": "^8.1.0",
+        "typescript": "^5.9.3",
         "vite": "^8.0.0",
         "vitest": "^4.1.0"
     }

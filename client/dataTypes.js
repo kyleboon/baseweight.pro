@@ -1,3 +1,4 @@
+// @ts-check
 const assignIn = require('lodash/assignIn');
 
 const colorUtils = require('./utils/color.js');

@@ -1,3 +1,4 @@
+// @ts-check
 module.exports = (function () {
     function WeightToMg(value, unit) {
         if (unit == 'g') {

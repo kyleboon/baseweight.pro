@@ -54,6 +54,7 @@ npm run lint:css         # Stylelint with auto-fix (.scss and .vue files)
 npm run test:unit        # Run Vitest unit tests
 npm run test:unit:watch  # Run Vitest in watch mode
 npm run test:unit:coverage  # Run Vitest with V8 coverage report
+npm run typecheck            # TypeScript type check (no emit)
 ```
 
 ## Testing
@@ -97,7 +98,7 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - ✅ Enable stricter ESLint rules: `no-shadow`, `no-param-reassign`, `consistent-return`
 - ✅ Add GitHub Actions CI (lint + E2E tests on every push/PR)
 - ✅ Add Vitest + `@vue/test-utils` for unit and component tests
-- Add `tsconfig.json` with strict mode; enable `@ts-check` in existing JS files
+- ✅ Add `tsconfig.json` with strict mode; enable `@ts-check` in existing JS files
 - Enable `vue/require-prop-types` and `vue/require-explicit-emits` in ESLint
 
 ### Phase 3 — Composition API + remove legacy patterns (4–8 weeks)
