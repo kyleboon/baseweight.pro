@@ -151,6 +151,33 @@ test.describe('Item and category management', () => {
         await expect(page.locator('.lpCategory')).toHaveCount(3);
     });
 
+    test('should show correct per-category and total weights and prices in the list summary', async ({ page }) => {
+        await freshUser(page);
+        await seedListData(page);
+
+        const categories = page.locator('.lpTotalCategory');
+
+        // Per-category subtotals
+        await expect(categories.nth(0).locator('.lpDisplaySubtotal')).toContainText('1400');
+        await expect(categories.nth(0).locator('.lpCell.lpNumber').first()).toContainText('$700.00');
+
+        await expect(categories.nth(1).locator('.lpDisplaySubtotal')).toContainText('550');
+        await expect(categories.nth(1).locator('.lpCell.lpNumber').first()).toContainText('$250.00');
+
+        await expect(categories.nth(2).locator('.lpDisplaySubtotal')).toContainText('700');
+        await expect(categories.nth(2).locator('.lpCell.lpNumber').first()).toContainText('$125.00');
+
+        await expect(categories.nth(3).locator('.lpDisplaySubtotal')).toContainText('26');
+        await expect(categories.nth(3).locator('.lpCell.lpNumber').first()).toContainText('$44.00');
+
+        // Total row
+        await expect(page.locator('.lpTotal .lpTotalValue')).toContainText('2676');
+        await expect(page.locator('.lpTotal .lpCell.lpNumber.lpSubtotal').first()).toContainText('$1119.00');
+
+        // Base weight = total (2676) − worn (550) − consumable (26) = 2100
+        await expect(page.locator('.lpBaseWeight .lpDisplaySubtotal')).toContainText('2100');
+    });
+
     test('should show consumable weight and price in the list summary', async ({ page }) => {
         await freshUser(page);
         await seedListData(page);
