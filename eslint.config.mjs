@@ -137,8 +137,8 @@ export default [
             'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
             'vue/max-attributes-per-line': 'off',
             'vue/multi-word-component-names': 'off',
-            'vue/require-prop-types': 'off',
-            'vue/require-explicit-emits': 'off',
+            'vue/require-prop-types': 'error',
+            'vue/require-explicit-emits': 'error',
         },
     },
 ];
