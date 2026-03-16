@@ -110,14 +110,15 @@ Playwright automatically starts the app server before running tests (via `npm ru
     - ✅ `auth-errors.spec.ts` — wrong password, duplicate username, mismatched passwords
     - ✅ `forgot-password.spec.ts` — unknown username/email error handling
 
-### Phase 3 — Composition API + remove legacy patterns
+### Phase 3 — Composition API + remove legacy patterns ✅
 
-- Convert all ~30 components from Options API to Composition API with `<script setup>` (10/31 done: spinner, blackout-footer, errors, global-alerts, modal, popover, popover-hover, colorpicker, unit-select, donut-chart)
+- ✅ Convert all 31 components and 6 views from Options API to `<script setup>` Composition API
 - ✅ Remove `window.bus` event emitter — replaced with Pinia store state and direct router navigation
 - ✅ Remove `window.router`, `window.fetchJson` global namespace pollution
 - ✅ Remove `lodash` dependency — replaced with native equivalents
 - ✅ Remove jQuery — replaced with vanilla JS in share page and embed widget
-- Remove `mixins/utils-mixin.js` — replace with direct imports from `client/utils/utils.js` (prerequisite for converting item.vue, category.vue, library-items.vue, list-summary.vue)
+- ✅ Remove `mixins/utils-mixin.js` — inlined into consuming components
+- ✅ Add unit tests for all converted components and views (41 test files, 226 tests)
 - Replace `dragula` with `SortableJS` or `vue-draggable-next` (TypeScript support, actively maintained)
 - Convert `client/dataTypes.js` from `.prototype` function constructors to ES6 `class` syntax; replace `var` and loose equality
 
