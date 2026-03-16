@@ -112,12 +112,13 @@ Playwright automatically starts the app server before running tests (via `npm ru
 
 ### Phase 3 — Composition API + remove legacy patterns
 
-- Convert all ~30 components from Options API to Composition API with `<script setup>`
+- Convert all ~30 components from Options API to Composition API with `<script setup>` (10/31 done: spinner, blackout-footer, errors, global-alerts, modal, popover, popover-hover, colorpicker, unit-select, donut-chart)
 - ✅ Remove `window.bus` event emitter — replaced with Pinia store state and direct router navigation
-- Remove `mixins/utils-mixin.js` — replace with composables
-- Remove `window.router`, `window.fetchJson` global namespace pollution
+- ✅ Remove `window.router`, `window.fetchJson` global namespace pollution
+- ✅ Remove `lodash` dependency — replaced with native equivalents
+- ✅ Remove jQuery — replaced with vanilla JS in share page and embed widget
+- Remove `mixins/utils-mixin.js` — replace with direct imports from `client/utils/utils.js` (prerequisite for converting item.vue, category.vue, library-items.vue, list-summary.vue)
 - Replace `dragula` with `SortableJS` or `vue-draggable-next` (TypeScript support, actively maintained)
-- Remove `lodash` dependency — use native `Object.assign()` and `debounce`
 - Convert `client/dataTypes.js` from `.prototype` function constructors to ES6 `class` syntax; replace `var` and loose equality
 
 ### Phase 4 — Full TypeScript + performance + accessibility (ongoing)
@@ -128,3 +129,11 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - Accessibility: ARIA labels, keyboard navigation for drag-drop, skip links
 - Bundle analysis with `rollup-plugin-visualizer`
 - Fix disabled WebKit Playwright tests
+
+### Phase 5 — Modernize share/embed pages
+
+The share and embed pages are currently rendered server-side using Mustache templates and a parallel set of render functions in `server/views.js`. This duplicates logic already in Vue components (weight formatting, unit select widget, etc.).
+
+- **Vue SSR for share page**: Replace Mustache templates and `server/views.js` render functions with `@vue/server-renderer`. Render the existing `share.vue` component server-side so the share page is generated from the same component tree as the main app. Eliminates `t_itemShare.mustache`, `t_categoryShare.mustache`, `t_totals.mustache`, `t_CategorySummary.mustache`, `t_unitSelect.mustache`, and the parallel render functions in `server/views.js`.
+- **Replace embed widget with iframe**: Replace the current `embed.jmustache` / `embed.mustache` two-template system (which injects escaped HTML inside a JS file) with a simple `<iframe src="/r:id?embed=true">` pointing at the SSR share page. Zero script injection on the host page, no CSS conflicts, impossible to break.
+- **Delete `server/chart-svg.js`**: Once the share page uses the Vue `donut-chart.vue` component via SSR, the standalone SVG renderer used only by the share page can be removed.
