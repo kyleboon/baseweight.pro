@@ -65,7 +65,6 @@ export default {
             newEmail: '',
             newPassword: '',
             confirmNewPassword: '',
-            shown: false,
         };
     },
     computed: {
@@ -75,11 +74,14 @@ export default {
         username() {
             return this.$store.loggedIn;
         },
-    },
-    beforeMount() {
-        bus.$on('showAccount', () => {
-            this.shown = true;
-        });
+        shown: {
+            get() {
+                return this.$store.activeModal === 'account';
+            },
+            set(val) {
+                if (!val) this.$store.closeModal();
+            },
+        },
     },
     methods: {
         updateAccount() {
@@ -130,7 +132,7 @@ export default {
                 credentials: 'same-origin',
                 body: JSON.stringify(data),
             })
-                .then((response) => {
+                .then((_response) => {
                     this.saving = false;
                     this.shown = false;
                 })
@@ -140,8 +142,7 @@ export default {
                 });
         },
         showDeleteAccount() {
-            this.shown = false;
-            bus.$emit('showDeleteAccount');
+            this.$store.showModal('deleteAccount');
         },
     },
 };

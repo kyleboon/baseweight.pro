@@ -20,6 +20,7 @@ export default {
     props: {
         color: {
             type: String,
+            default: null,
         },
     },
     emits: ['colorChange'],

@@ -12,6 +12,7 @@ export default {
     props: {
         errors: {
             type: [Array, Object, String],
+            default: null,
         },
     },
     computed: {

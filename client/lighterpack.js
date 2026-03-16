@@ -1,6 +1,5 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-import mitt from 'mitt';
 
 import './css/lighterpack.scss';
 import 'dragula/dist/dragula.css';
@@ -10,18 +9,6 @@ import { useLighterpackStore, setupAutoSave } from './store/store';
 
 import { registerDirectives as focusDirectives } from './utils/focus.js';
 import { displayWeight, displayPrice } from './utils/utils.js';
-
-// Set up global event bus (mitt replaces Vue 2 event bus)
-const emitter = mitt();
-window.bus = {
-    $on: (event, handler) => emitter.on(event, handler),
-    $off: (event, handler) => emitter.off(event, handler),
-    $emit: (event, data) => emitter.emit(event, data),
-};
-
-bus.$on('unauthorized', () => {
-    window.location = '/signin';
-});
 
 const pinia = createPinia();
 const app = createApp(App);

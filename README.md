@@ -113,7 +113,8 @@ Playwright automatically starts the app server before running tests (via `npm ru
 ### Phase 3 — Composition API + remove legacy patterns
 
 - Convert all ~30 components from Options API to Composition API with `<script setup>`
-- Remove `window.bus` event emitter and `mixins/utils-mixin.js` — replace with composables
+- ✅ Remove `window.bus` event emitter — replaced with Pinia store state and direct router navigation
+- Remove `mixins/utils-mixin.js` — replace with composables
 - Remove `window.router`, `window.fetchJson` global namespace pollution
 - Replace `dragula` with `SortableJS` or `vue-draggable-next` (TypeScript support, actively maintained)
 - Remove `lodash` dependency — use native `Object.assign()` and `debounce`

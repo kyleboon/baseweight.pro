@@ -33,32 +33,33 @@ export default {
                 confirm: 'Yes',
                 cancel: 'No',
             },
-            messages: {},
-            callback: null,
-            shown: false,
         };
     },
-    beforeMount() {
-        bus.$on('initSpeedbump', (callback, options) => {
-            this.initSpeedbump(callback, options);
-        });
+    computed: {
+        shown: {
+            get() {
+                return this.$store.speedbump !== null;
+            },
+            set(val) {
+                if (!val) this.$store.closeSpeedbump();
+            },
+        },
+        messages() {
+            const msgs = Object.assign({}, this.defaultMessages);
+            const speedbump = this.$store.speedbump;
+            if (!speedbump) return msgs;
+            const options = speedbump.options;
+            if (typeof options === 'string') {
+                msgs.body = options;
+            } else if (options) {
+                Object.assign(msgs, options);
+            }
+            return msgs;
+        },
     },
     methods: {
-        initSpeedbump(callback, options) {
-            this.callback = callback;
-            this.messages = Object.assign({}, this.defaultMessages);
-            if (typeof options === 'string') {
-                this.messages.body = options;
-            } else {
-                this.messages = Object.assign(this.messages, options);
-            }
-            this.shown = true;
-        },
         confirmSpeedbump() {
-            if (this.callback && typeof this.callback === 'function') {
-                this.callback(true);
-            }
-            this.shown = false;
+            this.$store.confirmSpeedbump();
         },
     },
 };

@@ -79,7 +79,7 @@ export default {
                 credentials: 'same-origin',
                 body: JSON.stringify({ username: this.forgotPasswordUsername }),
             })
-                .then((response) => {
+                .then((_response) => {
                     this.$router.push('/signin/reset-password');
                 })
                 .catch((response) => {
@@ -101,7 +101,7 @@ export default {
                 credentials: 'same-origin',
                 body: JSON.stringify({ email: this.forgotUsernameEmail }),
             })
-                .then((response) => {
+                .then((_response) => {
                     this.$router.push('/signin/forgot-username');
                 })
                 .catch((response) => {

@@ -71,7 +71,7 @@ export default {
                 },
                 body: JSON.stringify({ username: user.username }),
             })
-                .then((response) => {
+                .then((_response) => {
                     console.log('clear session success');
                 })
                 .catch((err) => {

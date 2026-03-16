@@ -28,8 +28,8 @@ db.users_prod.find({}, (err, users) => {
         try {
             library.load(user.library);
             successfulUsersCount++;
-        } catch (err) {
-            console.log(`${user.username} - ${err}`);
+        } catch (loadErr) {
+            console.log(`${user.username} - ${loadErr}`);
             erroredUsers.push(user.username);
             erroredUsersCount++;
         }

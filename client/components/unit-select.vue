@@ -1,15 +1,15 @@
 <template>
     <div class="lpUnitSelect" :class="{ lpOpen: isOpen, lpHover: isFocused }" @click="toggle($event)">
         <select class="lpUnit lpInvisible" :value="unit" @keyup="keyup($event)" @focus="focusSelect" @blur="blurSelect">
-            <option v-for="unit in units" :key="unit" :value="unit">
-                {{ unit }}
+            <option v-for="unitOption in units" :key="unitOption" :value="unitOption">
+                {{ unitOption }}
             </option>
         </select>
         <span class="lpDisplay">{{ unit }}</span>
         <i class="lpSprite lpExpand" />
         <ul :class="'lpUnitDropdown ' + unit">
-            <li v-for="unit in units" :key="unit" :class="unit" @click="select(unit)">
-                {{ unit }}
+            <li v-for="unitOption in units" :key="unitOption" :class="unitOption" @click="select(unitOption)">
+                {{ unitOption }}
             </li>
         </ul>
     </div>
@@ -21,12 +21,15 @@ export default {
     props: {
         weight: {
             type: Number,
+            default: 0,
         },
         unit: {
             type: String,
+            default: null,
         },
         onChange: {
             type: Function,
+            default: null,
         },
     },
     data() {
@@ -76,7 +79,7 @@ export default {
                 this.close();
             }
         },
-        closeOnClick(evt) {
+        closeOnClick(_evt) {
             this.close();
         },
         focusSelect() {

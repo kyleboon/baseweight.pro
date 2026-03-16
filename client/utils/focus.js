@@ -18,22 +18,6 @@ export function registerDirectives(app) {
         },
     });
 
-    app.directive('focus-on-bus', {
-        mounted(el, binding) {
-            bus.$on(binding.value, () => {
-                el.focus();
-            });
-        },
-    });
-
-    app.directive('select-on-bus', {
-        mounted(el, binding) {
-            bus.$on(binding.value, () => {
-                el.select();
-            });
-        },
-    });
-
     app.directive('empty-if-zero', {
         mounted(el) {
             el.addEventListener('focus', () => {

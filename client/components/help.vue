@@ -36,15 +36,15 @@ export default {
     components: {
         modal,
     },
-    data() {
-        return {
-            shown: false,
-        };
-    },
-    beforeMount() {
-        bus.$on('showHelp', () => {
-            this.shown = true;
-        });
+    computed: {
+        shown: {
+            get() {
+                return this.$store.activeModal === 'help';
+            },
+            set(val) {
+                if (!val) this.$store.closeModal();
+            },
+        },
     },
 };
 </script>

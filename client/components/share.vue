@@ -6,13 +6,7 @@
                 <div class="lpFields">
                     <div class="lpField">
                         <label for="shareUrl">Share your list</label>
-                        <input
-                            id="shareUrl"
-                            v-select-on-bus="'show-share-box'"
-                            v-select-on-focus
-                            type="text"
-                            :value="shareUrl"
-                        />
+                        <input id="shareUrl" ref="shareUrl" v-select-on-focus type="text" :value="shareUrl" />
                     </div>
                     <div class="lpField">
                         <label for="embedUrl">Embed your list</label>
@@ -69,7 +63,7 @@ export default {
         },
     },
     methods: {
-        focusShare(evt) {
+        focusShare(_evt) {
             if (!this.list.externalId) {
                 fetchJson('/externalId', {
                     method: 'POST',
@@ -80,15 +74,18 @@ export default {
                 })
                     .then((response) => {
                         this.$store.setExternalId({ externalId: response.externalId, list: this.list });
-                        setTimeout(() => {
-                            bus.$emit('show-share-box');
-                        }, 0);
+                        this.$nextTick(() => {
+                            if (this.$refs.shareUrl) this.$refs.shareUrl.select();
+                        });
                     })
-                    .catch((response) => {
+                    .catch((_response) => {
                         alert('An error occurred while attempting to get an ID for your list. Please try again later.'); // TODO
                     });
+            } else {
+                this.$nextTick(() => {
+                    if (this.$refs.shareUrl) this.$refs.shareUrl.select();
+                });
             }
-            bus.$emit('show-share-box');
         },
     },
 };

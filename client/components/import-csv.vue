@@ -68,20 +68,19 @@ export default {
             return this.$store.library;
         },
     },
+    watch: {
+        '$store.importCSVTrigger'() {
+            this.csvInput.click();
+        },
+    },
     mounted() {
         this.csvInput = document.getElementById('csv');
         this.csvInput.onchange = this.importCSV;
-
-        bus.$on('importCSV', () => {
-            this.csvInput.click();
-        });
     },
     methods: {
         importCSV(evt) {
             const file = evt.target.files[0];
             const name = file.name;
-            const size = file.size;
-            const type = file.type;
 
             if (file.name.length < 1) {
                 return;

@@ -31,10 +31,10 @@ export default {
     },
     methods: {
         showAccount() {
-            bus.$emit('showAccount');
+            this.$store.showModal('account');
         },
         showHelp() {
-            bus.$emit('showHelp');
+            this.$store.showModal('help');
         },
         signout() {
             this.$store.signout();

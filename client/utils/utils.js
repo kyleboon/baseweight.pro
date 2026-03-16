@@ -51,7 +51,7 @@ window.fetchJson = (url, options) => {
 
                     try {
                         json = text ? JSON.parse(text) : {};
-                    } catch (err) {
+                    } catch (_err) {
                         json = { message: response };
                     }
 
@@ -73,7 +73,7 @@ window.fetchJson = (url, options) => {
                     return resolve(response.json);
                 }
                 if (response.status && (response.status === 401 || response.status === 403)) {
-                    bus.$emit('unauthorized');
+                    window.router.push('/signin');
                     return undefined;
                 }
 

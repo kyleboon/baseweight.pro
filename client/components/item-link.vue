@@ -20,21 +20,32 @@ export default {
     data() {
         return {
             url: '',
-            item: false,
-            shown: false,
         };
     },
-    beforeMount() {
-        bus.$on('updateItemLink', (item) => {
-            this.shown = true;
-            this.item = item;
-            this.url = item.url;
-        });
+    computed: {
+        shown: {
+            get() {
+                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'link');
+            },
+            set(val) {
+                if (!val) this.$store.closeItemDialog();
+            },
+        },
+        item() {
+            return this.$store.activeItemDialog ? this.$store.activeItemDialog.item : null;
+        },
+    },
+    watch: {
+        shown(val) {
+            if (val && this.item) {
+                this.url = this.item.url;
+            }
+        },
     },
     methods: {
         addLink() {
             this.$store.updateItemLink({ url: this.url, item: this.item });
-            this.shown = false;
+            this.$store.closeItemDialog();
         },
     },
 };

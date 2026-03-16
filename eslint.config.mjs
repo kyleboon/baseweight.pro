@@ -67,7 +67,6 @@ export default [
                 URLSearchParams: 'readonly',
                 FileReader: 'readonly',
                 Image: 'readonly',
-                bus: 'readonly',
                 fetchJson: 'readonly',
                 require: 'readonly',
                 module: 'writable',
@@ -77,7 +76,7 @@ export default [
         rules: {
             ...sharedRules,
             ...prettier.rules,
-            'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            'no-unused-vars': ['warn', { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
         },
     },
     // Unit test files
@@ -124,7 +123,6 @@ export default [
                 URLSearchParams: 'readonly',
                 FileReader: 'readonly',
                 Image: 'readonly',
-                bus: 'readonly',
                 fetchJson: 'readonly',
                 require: 'readonly',
                 module: 'writable',
@@ -134,7 +132,7 @@ export default [
         rules: {
             ...sharedRules,
             ...prettier.rules,
-            'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+            'no-unused-vars': ['warn', { argsIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_' }],
             'vue/max-attributes-per-line': 'off',
             'vue/multi-word-component-names': 'off',
             'vue/require-prop-types': 'error',

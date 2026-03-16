@@ -27,18 +27,20 @@ export default {
     data() {
         return {
             listId: false,
-            shown: false,
         };
     },
     computed: {
         library() {
             return this.$store.library;
         },
-    },
-    beforeMount() {
-        bus.$on('copyList', () => {
-            this.shown = true;
-        });
+        shown: {
+            get() {
+                return this.$store.activeModal === 'copyList';
+            },
+            set(val) {
+                if (!val) this.$store.closeModal();
+            },
+        },
     },
     methods: {
         copyList() {

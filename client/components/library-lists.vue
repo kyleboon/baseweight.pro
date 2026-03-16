@@ -15,16 +15,16 @@
         </div>
         <ul id="lists">
             <li
-                v-for="list in library.lists"
-                :key="list.id"
+                v-for="libList in library.lists"
+                :key="libList.id"
                 class="lpLibraryList"
-                :class="{ lpActive: library.defaultListId == list.id }"
+                :class="{ lpActive: library.defaultListId == libList.id }"
             >
                 <div class="lpHandle" title="Reorder this item" />
-                <span class="lpLibraryListSwitch lpListName" @click="setDefaultList(list)">
-                    {{ listName(list) }}
+                <span class="lpLibraryListSwitch lpListName" @click="setDefaultList(libList)">
+                    {{ listName(libList) }}
                 </span>
-                <a class="lpRemove" title="Remove this list" @click="removeList(list)"
+                <a class="lpRemove" title="Remove this list" @click="removeList(libList)"
                     ><i class="lpSprite lpSpriteRemove"
                 /></a>
             </li>
@@ -45,6 +45,7 @@ export default {
     props: {
         list: {
             type: Object,
+            default: null,
         },
     },
     computed: {
@@ -66,22 +67,22 @@ export default {
             this.$store.newList();
         },
         copyList() {
-            bus.$emit('copyList');
+            this.$store.showModal('copyList');
         },
         importCSV() {
-            bus.$emit('importCSV');
+            this.$store.triggerImportCSV();
         },
         handleListReorder() {
             const $lists = document.getElementById('lists');
             const drake = dragula([$lists], {
-                moves($el, $source, $handle, $sibling) {
+                moves($el, $source, $handle, _sibling) {
                     return $handle.classList.contains('lpHandle');
                 },
             });
-            drake.on('drag', ($el, $target, $source, $sibling) => {
+            drake.on('drag', ($el, _target, _source, _sibling) => {
                 this.dragStartIndex = getElementIndex($el);
             });
-            drake.on('drop', ($el, $target, $source, $sibling) => {
+            drake.on('drop', ($el, _target, _source, _sibling) => {
                 this.$store.reorderList({ before: this.dragStartIndex, after: getElementIndex($el) });
                 drake.cancel(true);
             });
@@ -93,7 +94,7 @@ export default {
             const speedbumpOptions = {
                 body: 'Are you sure you want to delete this list? This cannot be undone.',
             };
-            bus.$emit('initSpeedbump', callback, speedbumpOptions);
+            this.$store.initSpeedbump(callback, speedbumpOptions);
         },
     },
 };

@@ -41,17 +41,30 @@ export default {
     data() {
         return {
             imageUrl: null,
-            item: false,
             uploading: false,
-            shown: false,
         };
     },
-    mounted() {
-        bus.$on('updateItemImage', (item) => {
-            this.shown = true;
-            this.item = item;
-            this.imageUrl = item.imageUrl;
-        });
+    computed: {
+        shown: {
+            get() {
+                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'image');
+            },
+            set(val) {
+                if (!val) this.$store.closeItemDialog();
+            },
+        },
+        item() {
+            return this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'image'
+                ? this.$store.activeItemDialog.item
+                : { image: null, imageUrl: null };
+        },
+    },
+    watch: {
+        shown(val) {
+            if (val && this.$store.activeItemDialog) {
+                this.imageUrl = this.$store.activeItemDialog.item.imageUrl;
+            }
+        },
     },
     methods: {
         saveImageUrl() {
@@ -96,7 +109,7 @@ export default {
                     this.$store.updateItemImage({ image: response.data.id, item: this.item });
                     this.shown = false;
                 })
-                .catch((response) => {
+                .catch((_response) => {
                     this.uploading = false;
                     alert('Upload failed! If this issue persists please file a bug.');
                 });

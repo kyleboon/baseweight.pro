@@ -13,8 +13,8 @@
                 class="username"
             />
             <input
+                ref="passwordInput"
                 v-model="password"
-                v-select-on-bus="'focus-signin-password'"
                 type="password"
                 placeholder="Password"
                 name="password"
@@ -50,6 +50,7 @@ export default {
     props: {
         message: {
             type: String,
+            default: null,
         },
     },
     data() {
@@ -96,7 +97,7 @@ export default {
                 })
                 .catch((err) => {
                     this.errors = err;
-                    bus.$emit('focus-signin-password');
+                    this.$refs.passwordInput.focus();
                     this.password = '';
                     this.fetching = false;
                 });

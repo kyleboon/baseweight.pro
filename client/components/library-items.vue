@@ -3,23 +3,23 @@
         <h2>Gear</h2>
         <input id="librarySearch" v-model="searchText" type="text" placeholder="search items" />
         <ul id="library">
-            <li v-for="item in filteredItems" :key="item.id" class="lpLibraryItem" :data-item-id="item.id">
-                <a v-if="item.url" :href="item.url" target="_blank" class="lpName lpHref">{{ item.name }}</a>
-                <span v-if="!item.url" class="lpName">{{ item.name }}</span>
+            <li v-for="libItem in filteredItems" :key="libItem.id" class="lpLibraryItem" :data-item-id="libItem.id">
+                <a v-if="libItem.url" :href="libItem.url" target="_blank" class="lpName lpHref">{{ libItem.name }}</a>
+                <span v-if="!libItem.url" class="lpName">{{ libItem.name }}</span>
                 <span class="lpWeight">
-                    {{ displayWeight(item.weight, item.authorUnit) }}
-                    {{ item.authorUnit }}
+                    {{ displayWeight(libItem.weight, libItem.authorUnit) }}
+                    {{ libItem.authorUnit }}
                 </span>
                 <span class="lpDescription">
-                    {{ item.description }}
+                    {{ libItem.description }}
                 </span>
                 <a
                     class="lpRemove lpRemoveLibraryItem speedbump"
                     title="Delete this item permanently"
-                    @click="removeItem(item)"
+                    @click="removeItem(libItem)"
                     ><i class="lpSprite lpSpriteRemove"
                 /></a>
-                <div v-if="!item.inCurrentList" class="lpHandle lpLibraryItemHandle" title="Reorder this item" />
+                <div v-if="!libItem.inCurrentList" class="lpHandle lpLibraryItemHandle" title="Reorder this item" />
             </li>
         </ul>
     </section>
@@ -37,6 +37,7 @@ export default {
     props: {
         item: {
             type: Object,
+            default: null,
         },
     },
     data() {
@@ -109,7 +110,7 @@ export default {
             const $categoryItems = Array.prototype.slice.call(document.getElementsByClassName('lpItems')); // list.vue
             const drake = dragula([$library].concat($categoryItems), {
                 copy: true,
-                moves($el, $source, $handle, $sibling) {
+                moves($el, $source, $handle, _sibling) {
                     const items = self.library.getItemsInCurrentList();
                     if (items.indexOf(parseInt($el.dataset.itemId)) > -1) {
                         return false;
@@ -123,10 +124,10 @@ export default {
                     return true;
                 },
             });
-            drake.on('drag', ($el, $target, $source, $sibling) => {
+            drake.on('drag', ($el, _target, _source, _sibling) => {
                 this.itemDragId = parseInt($el.dataset.itemId); // fragile
             });
-            drake.on('drop', ($el, $target, $source, $sibling) => {
+            drake.on('drop', ($el, $target, _source, _sibling) => {
                 if (!$target || $target.id === 'library') {
                     return;
                 }
@@ -147,7 +148,7 @@ export default {
             const speedbumpOptions = {
                 body: 'Are you sure you want to delete this item? This cannot be undone.',
             };
-            bus.$emit('initSpeedbump', callback, speedbumpOptions);
+            this.$store.initSpeedbump(callback, speedbumpOptions);
         },
     },
 };

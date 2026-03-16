@@ -106,9 +106,11 @@ export default {
     props: {
         category: {
             type: Object,
+            default: null,
         },
         itemContainer: {
             type: Object,
+            default: null,
         },
     },
     data() {
@@ -223,13 +225,13 @@ export default {
             this.displayWeight = weightUtils.MgToWeight(this.item.weight, this.item.authorUnit);
         },
         updateItemLink() {
-            bus.$emit('updateItemLink', this.item);
+            this.$store.openItemLinkDialog(this.item);
         },
         updateItemImage() {
-            bus.$emit('updateItemImage', this.item);
+            this.$store.openItemImageDialog(this.item);
         },
         viewItemImage() {
-            bus.$emit('viewItemImage', this.fullImage);
+            this.$store.openViewImageDialog(this.fullImage);
         },
         toggleWorn() {
             if (this.categoryItem.consumable) {

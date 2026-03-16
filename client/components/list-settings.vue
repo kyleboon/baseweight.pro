@@ -7,7 +7,7 @@
                     <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="lpOptionalField">
                         <label>
                             <input
-                                v-model="optionalField.value"
+                                :checked="optionalField.value"
                                 type="checkbox"
                                 @change="toggleOptionalField($event, optionalField.name)"
                             />
@@ -41,42 +41,6 @@ export default {
     components: {
         PopoverHover,
     },
-    data() {
-        return {
-            optionalFieldsLookup: [
-                {
-                    name: 'images',
-                    displayName: 'Item images',
-                    cssClass: 'lpShowImages',
-                    value: false,
-                },
-                {
-                    name: 'price',
-                    displayName: 'Item prices',
-                    cssClass: 'lpShowPrices',
-                    value: false,
-                },
-                {
-                    name: 'worn',
-                    displayName: 'Worn items',
-                    cssClass: 'lpShowWorn',
-                    value: false,
-                },
-                {
-                    name: 'consumable',
-                    displayName: 'Consumable items',
-                    cssClass: 'lpShowConsumable',
-                    value: false,
-                },
-                {
-                    name: 'listDescription',
-                    displayName: 'List descriptions',
-                    cssClass: 'lpShowListDescription',
-                    value: false,
-                },
-            ],
-        };
-    },
     computed: {
         library() {
             return this.$store.library;
@@ -84,14 +48,19 @@ export default {
         isSignedIn() {
             return this.$store.loggedIn;
         },
-    },
-    beforeMount() {
-        this.updateOptionalFieldValues();
-    },
-    mounted() {
-        bus.$on('optionalFieldChanged', () => {
-            this.updateOptionalFieldValues();
-        });
+        optionalFieldsLookup() {
+            const fields = [
+                { name: 'images', displayName: 'Item images', cssClass: 'lpShowImages' },
+                { name: 'price', displayName: 'Item prices', cssClass: 'lpShowPrices' },
+                { name: 'worn', displayName: 'Worn items', cssClass: 'lpShowWorn' },
+                { name: 'consumable', displayName: 'Consumable items', cssClass: 'lpShowConsumable' },
+                { name: 'listDescription', displayName: 'List descriptions', cssClass: 'lpShowListDescription' },
+            ];
+            return fields.map((f) => ({
+                ...f,
+                value: this.library.optionalFields[f.name],
+            }));
+        },
     },
     methods: {
         toggleOptionalField(evt, optionalField) {
@@ -99,15 +68,6 @@ export default {
         },
         updateCurrencySymbol(evt) {
             this.$store.updateCurrencySymbol(evt.target.value);
-        },
-        updateOptionalFieldValues() {
-            let i;
-            let fieldLookup;
-
-            for (i = 0; i < this.optionalFieldsLookup.length; i++) {
-                fieldLookup = this.optionalFieldsLookup[i];
-                fieldLookup.value = this.library.optionalFields[fieldLookup.name];
-            }
         },
     },
 };

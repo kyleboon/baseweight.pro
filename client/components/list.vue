@@ -100,7 +100,7 @@ export default {
             }
             const $categoryItems = Array.prototype.slice.call(document.getElementsByClassName('lpItems'));
             const drake = dragula($categoryItems, {
-                moves($el, $source, $handle, $sibling) {
+                moves($el, $source, $handle, _sibling) {
                     return $handle.classList.contains('lpItemHandle');
                 },
                 accepts($el, $target, $source, $sibling) {
@@ -110,10 +110,10 @@ export default {
                     return true;
                 },
             });
-            drake.on('drag', ($el, $target, $source, $sibling) => {
+            drake.on('drag', ($el, _target, _source, _sibling) => {
                 this.itemDragId = parseInt($el.id); // fragile
             });
-            drake.on('drop', ($el, $target, $source, $sibling) => {
+            drake.on('drop', ($el, $target, _source, _sibling) => {
                 const categoryId = parseInt($target.parentElement.id); // fragile
                 this.$store.reorderItem({
                     list: this.list,
@@ -128,14 +128,14 @@ export default {
         handleCategoryReorder() {
             const $categories = document.getElementsByClassName('lpCategories')[0];
             const drake = dragula([$categories], {
-                moves(el, $source, $handle, $sibling) {
+                moves(el, $source, $handle, _sibling) {
                     return $handle.classList.contains('lpCategoryHandle');
                 },
             });
-            drake.on('drag', ($el, $target, $source, $sibling) => {
+            drake.on('drag', ($el, _target, _source, _sibling) => {
                 this.categoryDragStartIndex = getElementIndex($el);
             });
-            drake.on('drop', ($el, $target, $source, $sibling) => {
+            drake.on('drop', ($el, _target, _source, _sibling) => {
                 this.$store.reorderCategory({
                     list: this.list,
                     before: this.categoryDragStartIndex,

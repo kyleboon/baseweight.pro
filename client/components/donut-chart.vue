@@ -92,12 +92,15 @@ export default {
     props: {
         categories: {
             type: Array,
+            default: null,
         },
         totalWeight: {
             type: Number,
+            default: 0,
         },
         library: {
             type: Object,
+            default: null,
         },
     },
     emits: ['category-hover'],

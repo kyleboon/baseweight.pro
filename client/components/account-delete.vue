@@ -52,18 +52,20 @@ export default {
             errors: [],
             confirmationText: '',
             currentPassword: '',
-            shown: false,
         };
     },
     computed: {
         isConfirmationComplete() {
             return this.confirmationText.toLocaleLowerCase() === 'delete my account';
         },
-    },
-    beforeMount() {
-        bus.$on('showDeleteAccount', () => {
-            this.shown = true;
-        });
+        shown: {
+            get() {
+                return this.$store.activeModal === 'deleteAccount';
+            },
+            set(val) {
+                if (!val) this.$store.closeModal();
+            },
+        },
     },
     methods: {
         deleteAccount() {
@@ -89,7 +91,7 @@ export default {
                 credentials: 'same-origin',
                 body: JSON.stringify({ username: this.$store.loggedIn, password: this.currentPassword }),
             })
-                .then((response) => {
+                .then((_response) => {
                     this.deleting = false;
                     this.$store.signout();
                     this.$router.push('/signin');

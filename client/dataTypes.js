@@ -162,7 +162,7 @@ Category.prototype.save = function () {
     const out = assignIn({}, this);
 
     delete out.library;
-    delete /** @type {any} */ (out).template;
+    delete (/** @type {any} */ (out).template);
     delete out._isNew;
 
     return out;
@@ -435,7 +435,7 @@ const Library = function () {
 Library.prototype.firstRun = function () {
     const firstList = this.newList();
     const firstCategory = this.newCategory({ list: firstList });
-    const firstItem = this.newItem({ category: firstCategory });
+    this.newItem({ category: firstCategory });
 };
 
 /**

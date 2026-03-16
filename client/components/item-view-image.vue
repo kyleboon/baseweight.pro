@@ -12,17 +12,20 @@ export default {
     components: {
         modal,
     },
-    data() {
-        return {
-            imageUrl: '',
-            shown: false,
-        };
-    },
-    mounted() {
-        bus.$on('viewItemImage', (imageUrl) => {
-            this.shown = true;
-            this.imageUrl = imageUrl;
-        });
+    computed: {
+        shown: {
+            get() {
+                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'viewImage');
+            },
+            set(val) {
+                if (!val) this.$store.closeItemDialog();
+            },
+        },
+        imageUrl() {
+            return this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'viewImage'
+                ? this.$store.activeItemDialog.imageUrl
+                : '';
+        },
     },
 };
 </script>

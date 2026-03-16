@@ -3,9 +3,6 @@ import debounce from 'lodash/debounce';
 import weightUtils from '../utils/weight.js';
 import dataTypes from '../dataTypes.js';
 
-const Item = dataTypes.Item;
-const Category = dataTypes.Category;
-const List = dataTypes.List;
 const Library = dataTypes.Library;
 
 const saveInterval = 10000;
@@ -20,6 +17,10 @@ export const useLighterpackStore = defineStore('lighterpack', {
         loggedIn: false,
         directiveInstances: {},
         globalAlerts: [],
+        activeModal: null,
+        speedbump: null,
+        importCSVTrigger: 0,
+        activeItemDialog: null,
     }),
 
     getters: {
@@ -55,7 +56,7 @@ export const useLighterpackStore = defineStore('lighterpack', {
                 const parsed = JSON.parse(libraryData);
                 library.load(parsed);
                 this.library = library;
-            } catch (err) {
+            } catch (_err) {
                 this.globalAlerts.push({ message: 'An error occurred while loading your data.' });
             }
             this.lastSaveData = JSON.stringify(library.save());
@@ -86,13 +87,13 @@ export const useLighterpackStore = defineStore('lighterpack', {
         },
         newCategory(list) {
             const category = this.library.newCategory({ list, _isNew: true });
-            const item = this.library.newItem({ category });
+            this.library.newItem({ category });
             this.library.getListById(this.library.defaultListId).calculateTotals();
         },
         newList() {
             const list = this.library.newList();
             const category = this.library.newCategory({ list });
-            const item = this.library.newItem({ category });
+            this.library.newItem({ category });
             list.calculateTotals();
             this.library.defaultListId = list.id;
         },
@@ -181,13 +182,11 @@ export const useLighterpackStore = defineStore('lighterpack', {
             const item = this.library.getItemById(args.item.id);
             item.imageUrl = args.imageUrl;
             this.library.optionalFields.images = true;
-            bus.$emit('optionalFieldChanged');
         },
         updateItemImage(args) {
             const item = this.library.getItemById(args.item.id);
             item.image = args.image;
             this.library.optionalFields.images = true;
-            bus.$emit('optionalFieldChanged');
         },
         updateItemUnit(unit) {
             this.library.itemUnit = unit;
@@ -241,6 +240,39 @@ export const useLighterpackStore = defineStore('lighterpack', {
             list.calculateTotals();
             this.library.defaultListId = list.id;
         },
+        showModal(name) {
+            this.activeModal = name;
+        },
+        closeModal() {
+            this.activeModal = null;
+        },
+        initSpeedbump(callback, options) {
+            this.speedbump = { callback, options };
+        },
+        confirmSpeedbump() {
+            if (this.speedbump && typeof this.speedbump.callback === 'function') {
+                this.speedbump.callback(true);
+            }
+            this.speedbump = null;
+        },
+        closeSpeedbump() {
+            this.speedbump = null;
+        },
+        triggerImportCSV() {
+            this.importCSVTrigger += 1;
+        },
+        openItemLinkDialog(item) {
+            this.activeItemDialog = { type: 'link', item, imageUrl: null };
+        },
+        openItemImageDialog(item) {
+            this.activeItemDialog = { type: 'image', item, imageUrl: null };
+        },
+        openViewImageDialog(imageUrl) {
+            this.activeItemDialog = { type: 'viewImage', item: null, imageUrl };
+        },
+        closeItemDialog() {
+            this.activeItemDialog = null;
+        },
         addDirectiveInstance({ key, value }) {
             this.directiveInstances[key] = value;
         },
@@ -283,7 +315,7 @@ export const useLighterpackStore = defineStore('lighterpack', {
                 })
                 .catch((response) => {
                     if (response.status == 401) {
-                        bus.$emit('unauthorized');
+                        window.router.push('/signin');
                         return undefined;
                     }
                     return new Promise((resolve, reject) => {
@@ -337,7 +369,7 @@ export function setupAutoSave(store) {
                             error = response.json.status;
                         }
                         if (response.status == 401) {
-                            bus.$emit('unauthorized', error);
+                            window.router.push('/signin');
                         } else {
                             alert(error); // TODO
                         }

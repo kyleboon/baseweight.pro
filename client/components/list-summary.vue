@@ -146,6 +146,7 @@ export default {
     props: {
         list: {
             type: Object,
+            default: null,
         },
     },
     data() {

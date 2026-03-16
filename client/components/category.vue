@@ -63,6 +63,7 @@ export default {
     props: {
         category: {
             type: Object,
+            default: null,
         },
     },
     computed: {
@@ -90,7 +91,7 @@ export default {
             const speedbumpOptions = {
                 body: 'Are you sure you want to delete this category? This cannot be undone.',
             };
-            bus.$emit('initSpeedbump', callback, speedbumpOptions);
+            this.$store.initSpeedbump(callback, speedbumpOptions);
         },
     },
 };
