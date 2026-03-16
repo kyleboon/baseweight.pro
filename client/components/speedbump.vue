@@ -17,52 +17,40 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
-export default {
-    name: 'Speedbump',
-    components: {
-        modal,
+defineOptions({ name: 'Speedbump' });
+
+const store = useLighterpackStore();
+
+const defaultMessages = { title: '', body: '', confirm: 'Yes', cancel: 'No' };
+
+const shown = computed({
+    get: () => store.speedbump !== null,
+    set: (val) => {
+        if (!val) store.closeSpeedbump();
     },
-    data() {
-        return {
-            defaultMessages: {
-                title: '',
-                body: '',
-                confirm: 'Yes',
-                cancel: 'No',
-            },
-        };
-    },
-    computed: {
-        shown: {
-            get() {
-                return this.$store.speedbump !== null;
-            },
-            set(val) {
-                if (!val) this.$store.closeSpeedbump();
-            },
-        },
-        messages() {
-            const msgs = Object.assign({}, this.defaultMessages);
-            const speedbump = this.$store.speedbump;
-            if (!speedbump) return msgs;
-            const options = speedbump.options;
-            if (typeof options === 'string') {
-                msgs.body = options;
-            } else if (options) {
-                Object.assign(msgs, options);
-            }
-            return msgs;
-        },
-    },
-    methods: {
-        confirmSpeedbump() {
-            this.$store.confirmSpeedbump();
-        },
-    },
-};
+});
+
+const messages = computed(() => {
+    const msgs = Object.assign({}, defaultMessages);
+    const speedbump = store.speedbump;
+    if (!speedbump) return msgs;
+    const options = speedbump.options;
+    if (typeof options === 'string') {
+        msgs.body = options;
+    } else if (options) {
+        Object.assign(msgs, options);
+    }
+    return msgs;
+});
+
+function confirmSpeedbump() {
+    store.confirmSpeedbump();
+}
 </script>
 
 <style lang="scss"></style>

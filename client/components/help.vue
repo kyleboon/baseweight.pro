@@ -28,25 +28,21 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
-export default {
-    name: 'Help',
-    components: {
-        modal,
+defineOptions({ name: 'Help' });
+
+const store = useLighterpackStore();
+
+const shown = computed({
+    get: () => store.activeModal === 'help',
+    set: (val) => {
+        if (!val) store.closeModal();
     },
-    computed: {
-        shown: {
-            get() {
-                return this.$store.activeModal === 'help';
-            },
-            set(val) {
-                if (!val) this.$store.closeModal();
-            },
-        },
-    },
-};
+});
 </script>
 
 <style lang="scss">

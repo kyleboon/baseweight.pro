@@ -4,30 +4,25 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
-export default {
-    name: 'ItemViewImage',
-    components: {
-        modal,
+defineOptions({ name: 'ItemViewImage' });
+
+const store = useLighterpackStore();
+
+const shown = computed({
+    get: () => !!(store.activeItemDialog && store.activeItemDialog.type === 'viewImage'),
+    set: (val) => {
+        if (!val) store.closeItemDialog();
     },
-    computed: {
-        shown: {
-            get() {
-                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'viewImage');
-            },
-            set(val) {
-                if (!val) this.$store.closeItemDialog();
-            },
-        },
-        imageUrl() {
-            return this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'viewImage'
-                ? this.$store.activeItemDialog.imageUrl
-                : '';
-        },
-    },
-};
+});
+
+const imageUrl = computed(() =>
+    store.activeItemDialog && store.activeItemDialog.type === 'viewImage' ? store.activeItemDialog.imageUrl : '',
+);
 </script>
 
 <style lang="scss">

@@ -13,35 +13,31 @@
     </span>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useLighterpackStore } from '../store/store.js';
 import PopoverHover from './popover-hover.vue';
 
-export default {
-    name: 'AccountDropdown',
-    components: {
-        PopoverHover,
-    },
-    computed: {
-        library() {
-            return this.$store.library;
-        },
-        username() {
-            return this.$store.loggedIn;
-        },
-    },
-    methods: {
-        showAccount() {
-            this.$store.showModal('account');
-        },
-        showHelp() {
-            this.$store.showModal('help');
-        },
-        signout() {
-            this.$store.signout();
-            this.$router.push('/signin');
-        },
-    },
-};
+defineOptions({ name: 'AccountDropdown' });
+
+const store = useLighterpackStore();
+const router = useRouter();
+
+const username = computed(() => store.loggedIn);
+
+function showAccount() {
+    store.showModal('account');
+}
+
+function showHelp() {
+    store.showModal('help');
+}
+
+function signout() {
+    store.signout();
+    router.push('/signin');
+}
 </script>
 
 <style lang="scss">

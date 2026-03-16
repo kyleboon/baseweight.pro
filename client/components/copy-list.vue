@@ -16,42 +16,31 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
-export default {
-    name: 'CopyList',
-    components: {
-        modal,
+defineOptions({ name: 'CopyList' });
+
+const store = useLighterpackStore();
+
+const listId = ref(false);
+
+const library = computed(() => store.library);
+
+const shown = computed({
+    get: () => store.activeModal === 'copyList',
+    set: (val) => {
+        if (!val) store.closeModal();
     },
-    data() {
-        return {
-            listId: false,
-        };
-    },
-    computed: {
-        library() {
-            return this.$store.library;
-        },
-        shown: {
-            get() {
-                return this.$store.activeModal === 'copyList';
-            },
-            set(val) {
-                if (!val) this.$store.closeModal();
-            },
-        },
-    },
-    methods: {
-        copyList() {
-            if (!this.listId) {
-                return; // TODO: errors
-            }
-            this.$store.copyList(this.listId);
-            this.shown = false;
-        },
-    },
-};
+});
+
+function copyList() {
+    if (!listId.value) return; // TODO: errors
+    store.copyList(listId.value);
+    shown.value = false;
+}
 </script>
 
 <style lang="scss">

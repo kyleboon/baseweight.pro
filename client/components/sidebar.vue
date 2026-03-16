@@ -9,17 +9,11 @@
     </div>
 </template>
 
-<script>
+<script setup>
 import libraryItems from './library-items.vue';
 import libraryLists from './library-lists.vue';
 
-export default {
-    name: 'Sidebar',
-    components: {
-        libraryItems,
-        libraryLists,
-    },
-};
+defineOptions({ name: 'Sidebar' });
 </script>
 
 <style lang="scss">
