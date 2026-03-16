@@ -6,7 +6,7 @@
                 <div class="lpFields">
                     <div class="lpField">
                         <label for="shareUrl">Share your list</label>
-                        <input id="shareUrl" ref="shareUrl" v-select-on-focus type="text" :value="shareUrl" />
+                        <input id="shareUrl" ref="shareUrlInput" v-select-on-focus type="text" :value="shareUrl" />
                     </div>
                     <div class="lpField">
                         <label for="embedUrl">Embed your list</label>
@@ -21,75 +21,54 @@
     </span>
 </template>
 
-<script>
-import PopoverHover from './popover-hover.vue';
+<script setup>
+import { ref, computed, nextTick } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import { fetchJson } from '../utils/utils.js';
+import PopoverHover from './popover-hover.vue';
 
-export default {
-    name: 'Share',
-    components: {
-        PopoverHover,
-    },
-    computed: {
-        library() {
-            return this.$store.library;
-        },
-        list() {
-            return this.library.getListById(this.library.defaultListId);
-        },
-        isSignedIn() {
-            return this.$store.loggedIn;
-        },
-        externalId() {
-            return this.list.externalId || '';
-        },
-        baseUrl() {
-            const location = window.location;
-            return location.origin ? location.origin : `${location.protocol}//${location.hostname}`;
-        },
-        shareUrl() {
-            if (this.externalId) {
-                return `${this.baseUrl}/r/${this.externalId}`;
-            }
-            return '';
-        },
-        csvUrl() {
-            if (this.externalId) {
-                return `${this.baseUrl}/csv/${this.externalId}`;
-            }
-            return '';
-        },
-        embedCode() {
-            return `<script src="${this.baseUrl}/e/${this.externalId}"><\/script><div id="${this.externalId}"></div>`;
-        },
-    },
-    methods: {
-        focusShare(_evt) {
-            if (!this.list.externalId) {
-                fetchJson('/externalId', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    credentials: 'same-origin',
-                })
-                    .then((response) => {
-                        this.$store.setExternalId({ externalId: response.externalId, list: this.list });
-                        this.$nextTick(() => {
-                            if (this.$refs.shareUrl) this.$refs.shareUrl.select();
-                        });
-                    })
-                    .catch((_response) => {
-                        alert('An error occurred while attempting to get an ID for your list. Please try again later.'); // TODO
-                    });
-            } else {
-                this.$nextTick(() => {
-                    if (this.$refs.shareUrl) this.$refs.shareUrl.select();
+defineOptions({ name: 'Share' });
+
+const store = useLighterpackStore();
+
+const shareUrlInput = ref(null);
+
+const library = computed(() => store.library);
+const list = computed(() => library.value.getListById(library.value.defaultListId));
+const isSignedIn = computed(() => store.loggedIn);
+const externalId = computed(() => list.value.externalId || '');
+const baseUrl = computed(() => {
+    const location = window.location;
+    return location.origin ? location.origin : `${location.protocol}//${location.hostname}`;
+});
+const shareUrl = computed(() => (externalId.value ? `${baseUrl.value}/r/${externalId.value}` : ''));
+const csvUrl = computed(() => (externalId.value ? `${baseUrl.value}/csv/${externalId.value}` : ''));
+const embedCode = computed(
+    () => `<script src="${baseUrl.value}/e/${externalId.value}"><\/script><div id="${externalId.value}"></div>`,
+);
+
+function focusShare(_evt) {
+    if (!list.value.externalId) {
+        fetchJson('/externalId', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+        })
+            .then((response) => {
+                store.setExternalId({ externalId: response.externalId, list: list.value });
+                nextTick(() => {
+                    if (shareUrlInput.value) shareUrlInput.value.select();
                 });
-            }
-        },
-    },
-};
+            })
+            .catch((_response) => {
+                alert('An error occurred while attempting to get an ID for your list. Please try again later.'); // TODO
+            });
+    } else {
+        nextTick(() => {
+            if (shareUrlInput.value) shareUrlInput.value.select();
+        });
+    }
+}
 </script>
 
 <style lang="scss">

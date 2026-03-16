@@ -22,7 +22,7 @@
                 <input v-model="confirmationText" type="text" name="confirmationText" placeholder="Confirmation text" />
             </div>
 
-            <errors :errors="errors" />
+            <errors :errors="errors_" />
 
             <div class="lpButtons">
                 <input
@@ -36,74 +36,64 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useLighterpackStore } from '../store/store.js';
+import { fetchJson } from '../utils/utils.js';
 import errors from './errors.vue';
 import modal from './modal.vue';
-import { fetchJson } from '../utils/utils.js';
 
-export default {
-    name: 'AccountDelete',
-    components: {
-        errors,
-        modal,
+defineOptions({ name: 'AccountDelete' });
+
+const store = useLighterpackStore();
+const router = useRouter();
+
+const deleting = ref(false);
+const errors_ = ref([]);
+const confirmationText = ref('');
+const currentPassword = ref('');
+
+const isConfirmationComplete = computed(() => confirmationText.value.toLocaleLowerCase() === 'delete my account');
+
+const shown = computed({
+    get: () => store.activeModal === 'deleteAccount',
+    set: (val) => {
+        if (!val) store.closeModal();
     },
-    data() {
-        return {
-            deleting: false,
-            errors: [],
-            confirmationText: '',
-            currentPassword: '',
-        };
-    },
-    computed: {
-        isConfirmationComplete() {
-            return this.confirmationText.toLocaleLowerCase() === 'delete my account';
-        },
-        shown: {
-            get() {
-                return this.$store.activeModal === 'deleteAccount';
-            },
-            set(val) {
-                if (!val) this.$store.closeModal();
-            },
-        },
-    },
-    methods: {
-        deleteAccount() {
-            this.errors = [];
+});
 
-            if (!this.currentPassword) {
-                this.errors.push({ field: 'currentPassword', message: 'Please enter your current password.' });
-            }
+function deleteAccount() {
+    errors_.value = [];
 
-            if (!this.isConfirmationComplete) {
-                this.errors.push({ field: 'confirmationText', message: 'Please enter the confirmation text.' });
-            }
+    if (!currentPassword.value) {
+        errors_.value.push({ field: 'currentPassword', message: 'Please enter your current password.' });
+    }
 
-            if (this.errors.length) {
-                return;
-            }
+    if (!isConfirmationComplete.value) {
+        errors_.value.push({ field: 'confirmationText', message: 'Please enter the confirmation text.' });
+    }
 
-            fetchJson('/delete-account', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({ username: this.$store.loggedIn, password: this.currentPassword }),
-            })
-                .then((_response) => {
-                    this.deleting = false;
-                    this.$store.signout();
-                    this.$router.push('/signin');
-                })
-                .catch((err) => {
-                    this.errors = err;
-                    this.deleting = false;
-                });
-        },
-    },
-};
+    if (errors_.value.length) {
+        return;
+    }
+
+    fetchJson('/delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ username: store.loggedIn, password: currentPassword.value }),
+    })
+        .then((_response) => {
+            deleting.value = false;
+            store.signout();
+            router.push('/signin');
+        })
+        .catch((err) => {
+            errors_.value = err;
+            deleting.value = false;
+        });
+}
 </script>
 
 <style lang="scss">

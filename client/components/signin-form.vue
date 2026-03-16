@@ -22,7 +22,7 @@
             />
         </div>
 
-        <errors :errors="errors" />
+        <errors :errors="errors_" />
 
         <div class="lpButtons">
             <button class="lpButton">
@@ -37,72 +37,65 @@
     </form>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useLighterpackStore } from '../store/store.js';
+import { fetchJson } from '../utils/utils.js';
 import errors from './errors.vue';
 import spinner from './spinner.vue';
-import { fetchJson } from '../utils/utils.js';
 
-export default {
-    name: 'SigninForm',
-    components: {
-        errors,
-        spinner,
-    },
-    props: {
-        message: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            fetching: false,
-            errors: [],
-            username: '',
-            password: '',
-        };
-    },
-    methods: {
-        signin() {
-            this.errors = [];
+defineOptions({ name: 'SigninForm' });
 
-            if (!this.username) {
-                this.errors.push({ field: 'username', message: 'Please enter a username.' });
-            }
+defineProps({
+    message: { type: String, default: null },
+});
 
-            if (!this.password) {
-                this.errors.push({ field: 'password', message: 'Please enter a password.' });
-            }
+const store = useLighterpackStore();
+const router = useRouter();
 
-            if (this.errors.length) {
-                return;
-            }
+const fetching = ref(false);
+const errors_ = ref([]);
+const username = ref('');
+const password = ref('');
+const passwordInput = ref(null);
 
-            this.fetching = true;
+function signin() {
+    errors_.value = [];
 
-            fetchJson('/signin/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'same-origin',
-                body: JSON.stringify({ username: this.username, password: this.password }),
-            })
-                .then((response) => {
-                    this.$store.setSyncToken(response.syncToken);
-                    this.$store.loadLibraryData(response.library);
-                    this.$store.setSaveType('remote');
-                    this.$store.setLoggedIn(response.username);
-                    this.$router.push('/');
-                    this.fetching = false;
-                })
-                .catch((err) => {
-                    this.errors = err;
-                    this.$refs.passwordInput.focus();
-                    this.password = '';
-                    this.fetching = false;
-                });
-        },
-    },
-};
+    if (!username.value) {
+        errors_.value.push({ field: 'username', message: 'Please enter a username.' });
+    }
+
+    if (!password.value) {
+        errors_.value.push({ field: 'password', message: 'Please enter a password.' });
+    }
+
+    if (errors_.value.length) {
+        return;
+    }
+
+    fetching.value = true;
+
+    fetchJson('/signin/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ username: username.value, password: password.value }),
+    })
+        .then((response) => {
+            store.setSyncToken(response.syncToken);
+            store.loadLibraryData(response.library);
+            store.setSaveType('remote');
+            store.setLoggedIn(response.username);
+            router.push('/');
+            fetching.value = false;
+        })
+        .catch((err) => {
+            errors_.value = err;
+            passwordInput.value.focus();
+            password.value = '';
+            fetching.value = false;
+        });
+}
 </script>

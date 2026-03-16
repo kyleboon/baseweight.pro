@@ -49,52 +49,51 @@
     </li>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
+import weightUtils from '../utils/weight.js';
 import item from './item.vue';
 
-import utilsMixin from '../mixins/utils-mixin.js';
+defineOptions({ name: 'Category' });
 
-export default {
-    name: 'Category',
-    components: {
-        item,
-    },
-    mixins: [utilsMixin],
-    props: {
-        category: {
-            type: Object,
-            default: null,
-        },
-    },
-    computed: {
-        library() {
-            return this.$store.library;
-        },
-        itemContainers() {
-            return this.category.categoryItems.map((categoryItem) => ({
-                categoryItem,
-                item: this.library.getItemById(categoryItem.itemId),
-            }));
-        },
-    },
-    methods: {
-        newItem() {
-            this.$store.newItem({ category: this.category, _isNew: true });
-        },
-        updateCategoryName(evt) {
-            this.$store.updateCategoryName({ id: this.category.id, name: evt.target.value });
-        },
-        removeCategory(category) {
-            const callback = () => {
-                this.$store.removeCategory(category);
-            };
-            const speedbumpOptions = {
-                body: 'Are you sure you want to delete this category? This cannot be undone.',
-            };
-            this.$store.initSpeedbump(callback, speedbumpOptions);
-        },
-    },
-};
+const props = defineProps({
+    category: { type: Object, default: null },
+});
+
+const store = useLighterpackStore();
+
+const library = computed(() => store.library);
+
+const itemContainers = computed(() =>
+    props.category.categoryItems.map((categoryItem) => ({
+        categoryItem,
+        item: library.value.getItemById(categoryItem.itemId),
+    })),
+);
+
+function displayWeight(mg, unit) {
+    return weightUtils.MgToWeight(mg, unit) || 0;
+}
+
+function displayPrice(price, symbol) {
+    const amount = typeof price === 'number' ? price.toFixed(2) : '0.00';
+    return symbol + amount;
+}
+
+function newItem() {
+    store.newItem({ category: props.category, _isNew: true });
+}
+
+function updateCategoryName(evt) {
+    store.updateCategoryName({ id: props.category.id, name: evt.target.value });
+}
+
+function removeCategory(category) {
+    store.initSpeedbump(() => store.removeCategory(category), {
+        body: 'Are you sure you want to delete this category? This cannot be undone.',
+    });
+}
 </script>
 
 <style lang="scss">

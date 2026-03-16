@@ -9,46 +9,36 @@
     </modal>
 </template>
 
-<script>
+<script setup>
+import { ref, computed, watch } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
-export default {
-    name: 'ItemLink',
-    components: {
-        modal,
+defineOptions({ name: 'ItemLink' });
+
+const store = useLighterpackStore();
+
+const url = ref('');
+
+const shown = computed({
+    get: () => !!(store.activeItemDialog && store.activeItemDialog.type === 'link'),
+    set: (val) => {
+        if (!val) store.closeItemDialog();
     },
-    data() {
-        return {
-            url: '',
-        };
-    },
-    computed: {
-        shown: {
-            get() {
-                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'link');
-            },
-            set(val) {
-                if (!val) this.$store.closeItemDialog();
-            },
-        },
-        item() {
-            return this.$store.activeItemDialog ? this.$store.activeItemDialog.item : null;
-        },
-    },
-    watch: {
-        shown(val) {
-            if (val && this.item) {
-                this.url = this.item.url;
-            }
-        },
-    },
-    methods: {
-        addLink() {
-            this.$store.updateItemLink({ url: this.url, item: this.item });
-            this.$store.closeItemDialog();
-        },
-    },
-};
+});
+
+const item = computed(() => (store.activeItemDialog ? store.activeItemDialog.item : null));
+
+watch(shown, (val) => {
+    if (val && item.value) {
+        url.value = item.value.url;
+    }
+});
+
+function addLink() {
+    store.updateItemLink({ url: url.value, item: item.value });
+    store.closeItemDialog();
+}
 </script>
 
 <style lang="scss"></style>

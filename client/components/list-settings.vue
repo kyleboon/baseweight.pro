@@ -33,44 +33,36 @@
     </span>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import PopoverHover from './popover-hover.vue';
 
-export default {
-    name: 'ListSettings',
-    components: {
-        PopoverHover,
-    },
-    computed: {
-        library() {
-            return this.$store.library;
-        },
-        isSignedIn() {
-            return this.$store.loggedIn;
-        },
-        optionalFieldsLookup() {
-            const fields = [
-                { name: 'images', displayName: 'Item images', cssClass: 'lpShowImages' },
-                { name: 'price', displayName: 'Item prices', cssClass: 'lpShowPrices' },
-                { name: 'worn', displayName: 'Worn items', cssClass: 'lpShowWorn' },
-                { name: 'consumable', displayName: 'Consumable items', cssClass: 'lpShowConsumable' },
-                { name: 'listDescription', displayName: 'List descriptions', cssClass: 'lpShowListDescription' },
-            ];
-            return fields.map((f) => ({
-                ...f,
-                value: this.library.optionalFields[f.name],
-            }));
-        },
-    },
-    methods: {
-        toggleOptionalField(evt, optionalField) {
-            this.$store.toggleOptionalField(optionalField);
-        },
-        updateCurrencySymbol(evt) {
-            this.$store.updateCurrencySymbol(evt.target.value);
-        },
-    },
-};
+defineOptions({ name: 'ListSettings' });
+
+const store = useLighterpackStore();
+
+const library = computed(() => store.library);
+const isSignedIn = computed(() => store.loggedIn);
+
+const optionalFieldsLookup = computed(() => {
+    const fields = [
+        { name: 'images', displayName: 'Item images', cssClass: 'lpShowImages' },
+        { name: 'price', displayName: 'Item prices', cssClass: 'lpShowPrices' },
+        { name: 'worn', displayName: 'Worn items', cssClass: 'lpShowWorn' },
+        { name: 'consumable', displayName: 'Consumable items', cssClass: 'lpShowConsumable' },
+        { name: 'listDescription', displayName: 'List descriptions', cssClass: 'lpShowListDescription' },
+    ];
+    return fields.map((f) => ({ ...f, value: library.value.optionalFields[f.name] }));
+});
+
+function toggleOptionalField(_evt, optionalField) {
+    store.toggleOptionalField(optionalField);
+}
+
+function updateCurrencySymbol(evt) {
+    store.updateCurrencySymbol(evt.target.value);
+}
 </script>
 
 <style lang="scss">

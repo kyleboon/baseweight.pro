@@ -30,97 +30,92 @@
     </div>
 </template>
 
-<script>
-import modal from './modal.vue';
+<script setup>
+import { ref, computed, watch } from 'vue';
+import { useLighterpackStore } from '../store/store.js';
 import { fetchJson } from '../utils/utils.js';
+import modal from './modal.vue';
 
-export default {
-    name: 'ItemImage',
-    components: {
-        modal,
-    },
-    data() {
-        return {
-            imageUrl: null,
-            uploading: false,
-        };
-    },
-    computed: {
-        shown: {
-            get() {
-                return !!(this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'image');
-            },
-            set(val) {
-                if (!val) this.$store.closeItemDialog();
-            },
-        },
-        item() {
-            return this.$store.activeItemDialog && this.$store.activeItemDialog.type === 'image'
-                ? this.$store.activeItemDialog.item
-                : { image: null, imageUrl: null };
-        },
-    },
-    watch: {
-        shown(val) {
-            if (val && this.$store.activeItemDialog) {
-                this.imageUrl = this.$store.activeItemDialog.item.imageUrl;
-            }
-        },
-    },
-    methods: {
-        saveImageUrl() {
-            this.$store.updateItemImageUrl({ imageUrl: this.imageUrl, item: this.item });
-            this.shown = false;
-        },
-        triggerImageUpload() {
-            this.$refs.imageInput.click();
-        },
-        uploadImage(evt) {
-            if (!FormData) {
-                alert('Your browser is not supported for file uploads. Please update to a more modern browser.');
-                return;
-            }
-            const file = evt.target.files[0];
-            const name = file.name;
-            const size = file.size;
-            const type = file.type;
+defineOptions({ name: 'ItemImage' });
 
-            if (name.length < 1) {
-                return;
-            }
-            if (size > 2500000) {
-                alert('Please upload a file less than 2.5mb');
-                return;
-            }
-            if (type != 'image/png' && type != 'image/jpg' && !type != 'image/gif' && type != 'image/jpeg') {
-                alert('File doesnt match png, jpg or gif.');
-                return;
-            }
-            const formData = new FormData(this.$refs.imageUploadForm);
+const store = useLighterpackStore();
 
-            this.uploading = true;
+const imageUrl = ref(null);
+const uploading = ref(false);
+const imageUploadForm = ref(null);
+const imageInput = ref(null);
 
-            fetchJson('/imageUpload', {
-                method: 'POST',
-                body: formData,
-                credentials: 'same-origin',
-            })
-                .then((response) => {
-                    this.uploading = false;
-                    this.$store.updateItemImage({ image: response.data.id, item: this.item });
-                    this.shown = false;
-                })
-                .catch((_response) => {
-                    this.uploading = false;
-                    alert('Upload failed! If this issue persists please file a bug.');
-                });
-        },
-        removeItemImage() {
-            this.$store.removeItemImage(this.item);
-            this.item.image = '';
-        },
+const shown = computed({
+    get: () => !!(store.activeItemDialog && store.activeItemDialog.type === 'image'),
+    set: (val) => {
+        if (!val) store.closeItemDialog();
     },
-};
+});
+
+const item = computed(() =>
+    store.activeItemDialog && store.activeItemDialog.type === 'image'
+        ? store.activeItemDialog.item
+        : { image: null, imageUrl: null },
+);
+
+watch(shown, (val) => {
+    if (val && store.activeItemDialog) {
+        imageUrl.value = store.activeItemDialog.item.imageUrl;
+    }
+});
+
+function saveImageUrl() {
+    store.updateItemImageUrl({ imageUrl: imageUrl.value, item: item.value });
+    shown.value = false;
+}
+
+function triggerImageUpload() {
+    imageInput.value.click();
+}
+
+function uploadImage(evt) {
+    if (!FormData) {
+        alert('Your browser is not supported for file uploads. Please update to a more modern browser.');
+        return;
+    }
+    const file = evt.target.files[0];
+    const name = file.name;
+    const size = file.size;
+    const type = file.type;
+
+    if (name.length < 1) return;
+    if (size > 2500000) {
+        alert('Please upload a file less than 2.5mb');
+        return;
+    }
+    if (type != 'image/png' && type != 'image/jpg' && !type != 'image/gif' && type != 'image/jpeg') {
+        alert('File doesnt match png, jpg or gif.');
+        return;
+    }
+
+    const formData = new FormData(imageUploadForm.value);
+    uploading.value = true;
+
+    fetchJson('/imageUpload', {
+        method: 'POST',
+        body: formData,
+        credentials: 'same-origin',
+    })
+        .then((response) => {
+            uploading.value = false;
+            store.updateItemImage({ image: response.data.id, item: item.value });
+            shown.value = false;
+        })
+        .catch((_response) => {
+            uploading.value = false;
+            alert('Upload failed! If this issue persists please file a bug.');
+        });
+}
+
+function removeItemImage() {
+    store.removeItemImage(item.value);
+    item.value.image = '';
+}
 </script>
 
 <style lang="scss"></style>
