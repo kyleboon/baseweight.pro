@@ -1,5 +1,7 @@
-import uniqueId from 'lodash/uniqueId';
 import { useLighterpackStore } from '../store/store.js';
+
+let _uniqueIdCounter = 0;
+const uniqueId = () => String(++_uniqueIdCounter);
 
 export function registerDirectives(app) {
     app.directive('select-on-focus', {

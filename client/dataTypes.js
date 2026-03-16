@@ -1,5 +1,4 @@
 // @ts-check
-const assignIn = require('lodash/assignIn');
 
 const colorUtils = require('./utils/color.js');
 const weightUtils = require('./utils/weight.js');
@@ -45,7 +44,7 @@ Item.prototype.save = function () {
  * @param {object} input
  */
 Item.prototype.load = function (input) {
-    assignIn(this, input);
+    Object.assign(this, input);
     if (typeof this.price === 'string') {
         this.price = parseFloat(this.price);
     }
@@ -86,7 +85,7 @@ Category.prototype.addItem = function (partialCategoryItem) {
         itemId: null,
         _isNew: false,
     };
-    assignIn(tempCategoryItem, partialCategoryItem);
+    Object.assign(tempCategoryItem, partialCategoryItem);
     this.categoryItems.push(tempCategoryItem);
 };
 
@@ -95,7 +94,7 @@ Category.prototype.addItem = function (partialCategoryItem) {
  */
 Category.prototype.updateCategoryItem = function (categoryItem) {
     const oldCategoryItem = this.getCategoryItemById(categoryItem.itemId);
-    if (oldCategoryItem) assignIn(oldCategoryItem, categoryItem);
+    if (oldCategoryItem) Object.assign(oldCategoryItem, categoryItem);
 };
 
 /**
@@ -153,13 +152,13 @@ Category.prototype.getCategoryItemById = function (id) {
 Category.prototype.getExtendedItemByIndex = function (index) {
     const categoryItem = this.categoryItems[index];
     const item = this.library.getItemById(categoryItem.itemId);
-    const extendedItem = assignIn({}, item);
-    assignIn(extendedItem, categoryItem);
+    const extendedItem = Object.assign({}, item);
+    Object.assign(extendedItem, categoryItem);
     return extendedItem;
 };
 
 Category.prototype.save = function () {
-    const out = assignIn({}, this);
+    const out = Object.assign({}, this);
 
     delete out.library;
     delete (/** @type {any} */ (out).template);
@@ -174,7 +173,7 @@ Category.prototype.save = function () {
 Category.prototype.load = function (input) {
     delete (/** @type {any} */ (input)._isNew);
 
-    assignIn(this, input);
+    Object.assign(this, input);
 
     this.categoryItems.forEach((categoryItem, index) => {
         delete categoryItem._isNew;
@@ -337,7 +336,7 @@ List.prototype.renderChart = function (type, linkParent = true) {
                 visiblePoints: false,
             };
             if (linkParent) tempCategoryData.parent = chartData;
-            assignIn(tempCategory, tempCategoryData);
+            Object.assign(tempCategory, tempCategoryData);
             chartData.points[i] = tempCategory;
         }
     }
@@ -393,7 +392,7 @@ List.prototype.calculateTotals = function () {
 };
 
 List.prototype.save = function () {
-    const out = assignIn({}, this);
+    const out = Object.assign({}, this);
     delete out.library;
     delete out.chart;
     return out;
@@ -403,7 +402,7 @@ List.prototype.save = function () {
  * @param {object} input
  */
 List.prototype.load = function (input) {
-    assignIn(this, input);
+    Object.assign(this, input);
     this.calculateTotals();
 };
 
@@ -426,7 +425,7 @@ const Library = function () {
     this.itemUnit = 'oz';
     this.showSidebar = true;
     this.showImages = false;
-    this.optionalFields = assignIn({}, defaultOptionalFields);
+    this.optionalFields = Object.assign({}, defaultOptionalFields);
     this.currencySymbol = '$';
     this.firstRun();
     return this;
@@ -456,7 +455,7 @@ Library.prototype.newItem = function ({ category, _isNew }) {
  */
 Library.prototype.updateItem = function (item) {
     const oldItem = this.getItemById(item.id);
-    assignIn(oldItem, item);
+    Object.assign(oldItem, item);
     return oldItem;
 };
 
@@ -702,7 +701,7 @@ Library.prototype.load = function (serializedLibrary) {
 
     this.items = [];
 
-    assignIn(this.optionalFields, serializedLibrary.optionalFields);
+    Object.assign(this.optionalFields, serializedLibrary.optionalFields);
 
     for (const i in serializedLibrary.items) {
         const temp = new Item({ id: serializedLibrary.items[i].id });
@@ -742,7 +741,7 @@ Library.prototype.load = function (serializedLibrary) {
  */
 Library.prototype.upgrade01to02 = function (serializedLibrary) {
     if (!serializedLibrary.optionalFields) {
-        serializedLibrary.optionalFields = assignIn({}, defaultOptionalFields);
+        serializedLibrary.optionalFields = Object.assign({}, defaultOptionalFields);
     }
 
     if (serializedLibrary.showImages) {

@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import debounce from 'lodash/debounce';
 import weightUtils from '../utils/weight.js';
 import dataTypes from '../dataTypes.js';
 import router from '../routes.js';
@@ -327,6 +326,27 @@ export const useLighterpackStore = defineStore('lighterpack', {
         },
     },
 });
+
+function debounce(fn, wait, { maxWait } = {}) {
+    let timer = null;
+    let lastInvokeTime = null;
+    return function (...args) {
+        const now = Date.now();
+        if (lastInvokeTime === null) lastInvokeTime = now;
+        clearTimeout(timer);
+        const elapsed = now - lastInvokeTime;
+        if (maxWait && elapsed >= maxWait) {
+            lastInvokeTime = now;
+            fn(...args);
+        } else {
+            timer = setTimeout(() => {
+                lastInvokeTime = null;
+                timer = null;
+                fn(...args);
+            }, wait);
+        }
+    };
+}
 
 // Auto-save plugin — watches state changes and saves debounced
 export function setupAutoSave(store) {

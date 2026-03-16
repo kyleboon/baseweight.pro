@@ -1,4 +1,3 @@
-import assignIn from 'lodash/assignIn';
 import weightUtils from './weight.js';
 import router from '../routes.js';
 
@@ -36,7 +35,7 @@ export const fetchJson = (url, options) => {
     };
 
     if (options) {
-        assignIn(fetchOptions, options);
+        Object.assign(fetchOptions, options);
     }
 
     if (!fetchOptions.body && !fetchOptions.headers['Content-Type']) {
