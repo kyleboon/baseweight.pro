@@ -206,14 +206,14 @@ function truncate(str, max = 18) {
 }
 
 .lp-center-name {
+    fill: #333;
     font-size: 12px;
     font-weight: 600;
-    fill: #333;
 }
 
 .lp-center-weight {
-    font-size: 11px;
     fill: #666;
+    font-size: 11px;
 }
 
 .lp-ring-enter-active,
