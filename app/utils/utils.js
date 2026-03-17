@@ -1,5 +1,4 @@
 import weightUtils from '../../shared/utils/weight.js';
-import router from '../../client/routes.js';
 
 class lpError extends Error {
     constructor(response, statusCode = null) {
@@ -73,7 +72,7 @@ export const fetchJson = (url, options) => {
                     return resolve(response.json);
                 }
                 if (response.status && (response.status === 401 || response.status === 403)) {
-                    router.push('/signin');
+                    navigateTo('/signin');
                     return undefined;
                 }
 

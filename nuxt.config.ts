@@ -6,4 +6,11 @@ export default defineNuxtConfig({
         '/**': { ssr: false }, // SPA for authenticated app
     },
     css: ['~/assets/css/app.scss'],
+    typescript: {
+        tsConfig: {
+            compilerOptions: {
+                noUncheckedIndexedAccess: false,
+            },
+        },
+    },
 });
