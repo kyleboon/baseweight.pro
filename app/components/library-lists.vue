@@ -107,7 +107,7 @@ function removeList(list) {
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 #listContainer {
     flex: 0 0 auto;

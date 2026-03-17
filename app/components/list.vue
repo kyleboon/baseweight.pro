@@ -112,7 +112,7 @@ function handleCategoryReorder() {
 
 <style lang="scss">
 @use 'sass:color';
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 #listDescriptionContainer {
     margin: 25px 0;

@@ -68,16 +68,19 @@ test.describe('Export and re-import a list', () => {
         const csvContent = await response.text();
 
         // Create a new blank list to import into
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400);
+        // Create a second list via the store (sidebar button is behind .lpList z-index)
+        await page.evaluate(() => {
+            const app = (document.getElementById('lp') as any).__vue_app__;
+            app.config.globalProperties.$store.newList();
+        });
         await page.locator('.lpLibraryList').nth(1).locator('.lpLibraryListSwitch').click();
 
-        // #csv is always in the DOM; setInputFiles triggers the onchange handler directly
-        await page.setInputFiles('#csv', {
+        // #csv is visually off-screen (position:absolute; left:-999px) but always in the DOM
+        await page.locator('#csv').setInputFiles({
             name: 'export.csv',
             mimeType: 'text/csv',
             buffer: Buffer.from(csvContent),
-        });
+        }, { force: true });
 
         // Validation modal should show both items
         await expect(page.locator('#importValidate')).toBeVisible();
@@ -100,15 +103,18 @@ test.describe('Export and re-import a list', () => {
         const response = await page.request.get(csvUrl);
         const csvContent = await response.text();
 
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400);
+        // Create a second list via the store (sidebar button is behind .lpList z-index)
+        await page.evaluate(() => {
+            const app = (document.getElementById('lp') as any).__vue_app__;
+            app.config.globalProperties.$store.newList();
+        });
         await page.locator('.lpLibraryList').nth(1).locator('.lpLibraryListSwitch').click();
 
-        await page.setInputFiles('#csv', {
+        await page.locator('#csv').setInputFiles({
             name: 'export.csv',
             mimeType: 'text/csv',
             buffer: Buffer.from(csvContent),
-        });
+        }, { force: true });
 
         await expect(page.locator('#importValidate')).toBeVisible();
         await page.locator('#importConfirm').click();

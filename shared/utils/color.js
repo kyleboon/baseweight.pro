@@ -1,5 +1,5 @@
 // @ts-check
-module.exports = (function () {
+const colorUtils = (function () {
     /**
      * @param {number} index
      * @param {{ r: number, g: number, b: number }} [baseColor]
@@ -193,3 +193,5 @@ module.exports = (function () {
         rgbToHex,
     };
 })();
+
+export default colorUtils;

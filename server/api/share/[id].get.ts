@@ -1,6 +1,4 @@
-import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const dataTypes = _require('../../../shared/dataTypes.js');
+import dataTypes from '#shared/dataTypes.js';
 
 const { Library } = dataTypes;
 

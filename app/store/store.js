@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import weightUtils from '../../shared/utils/weight.js';
-import dataTypes from '../../shared/dataTypes.js';
+import weightUtils from '#shared/utils/weight.js';
+import dataTypes from '#shared/dataTypes.js';
 import { fetchJson } from '../utils/utils.js';
 
 const Library = dataTypes.Library;

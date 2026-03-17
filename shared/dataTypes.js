@@ -1,7 +1,7 @@
 // @ts-check
 
-const colorUtils = require('./utils/color.js');
-const weightUtils = require('./utils/weight.js');
+import colorUtils from './utils/color.js';
+import weightUtils from './utils/weight.js';
 
 /**
  * @typedef {{ qty: number, worn: number, consumable: boolean, star: number, itemId: any, _isNew?: boolean, price?: number }} CategoryItem
@@ -910,7 +910,9 @@ class Library {
     }
 }
 
-module.exports = {
+export { Library, List, Category, Item };
+
+export default {
     Library,
     List,
     Category,

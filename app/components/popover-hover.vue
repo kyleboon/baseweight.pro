@@ -42,5 +42,5 @@ defineExpose({ shown, show, hide, startHideTimeout });
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 </style>

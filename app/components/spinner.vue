@@ -7,7 +7,7 @@ defineOptions({ name: 'Spinner' });
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 $spinnerSize: 18px;
 

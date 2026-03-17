@@ -17,7 +17,7 @@ defineOptions({ name: 'Sidebar' });
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 $sidebarWidth: 280px;
 $sidebarOverflow: 1000px;
@@ -82,6 +82,7 @@ $sidebarPadding: 20px;
     height: 100%;
     position: relative;
     top: 0;
+    width: $sidebarWidth;
 
     > h1 {
         flex: 0 0 auto;

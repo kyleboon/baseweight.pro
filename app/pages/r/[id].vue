@@ -205,8 +205,8 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { marked } from 'marked';
-import dataTypes from '../../../shared/dataTypes.js';
-import weightUtils from '../../../shared/utils/weight.js';
+import dataTypes from '#shared/dataTypes.js';
+import weightUtils from '#shared/utils/weight.js';
 
 const { Library } = dataTypes;
 

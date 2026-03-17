@@ -1,10 +1,10 @@
-const { MongoClient } = require('mongodb');
-const config = require('config');
+import { MongoClient } from 'mongodb';
+import config from 'config';
 
 let client = null;
 let db = null;
 
-async function connect() {
+export async function connect() {
     const uri = config.get('databaseUrl');
     client = new MongoClient(uri);
     await client.connect();
@@ -12,7 +12,7 @@ async function connect() {
     db = client.db(dbName);
 }
 
-function getDb() {
+export function getDb() {
     if (!db) throw new Error('Database not connected. Call connect() first.');
     return db;
 }
@@ -22,7 +22,7 @@ function getDb() {
  * - If doc has an _id, replace the full document in place.
  * - If doc has no _id, insert and attach the generated _id back onto the object.
  */
-async function upsertUser(user) {
+export async function upsertUser(user) {
     const users = getDb().collection('users');
     if (user._id) {
         await users.replaceOne({ _id: user._id }, user, { upsert: true });
@@ -33,12 +33,10 @@ async function upsertUser(user) {
     return user;
 }
 
-async function close() {
+export async function close() {
     if (client) {
         await client.close();
         client = null;
         db = null;
     }
 }
-
-module.exports = { connect, getDb, upsertUser, close };

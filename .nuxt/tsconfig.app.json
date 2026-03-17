@@ -33,7 +33,7 @@
             "#vue-router": ["../node_modules/vue-router"],
             "#unhead/composables": ["../node_modules/nuxt/dist/head/runtime/composables"],
             "#imports": ["./imports"],
-            "#app-manifest": ["./manifest/meta/f9a5444f-c751-4b43-b951-dffc086662bc.json"],
+            "#app-manifest": ["./manifest/meta/60b12dfe-324b-4694-8b9c-9eaf6fb783a4.json"],
             "#components": ["./components"],
             "#build": ["."],
             "#build/*": ["./*"]

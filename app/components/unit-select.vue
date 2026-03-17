@@ -102,7 +102,7 @@ defineExpose({ isOpen, isFocused, select, close, open });
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 .lpUnitSelect {
     border: 1px solid transparent;

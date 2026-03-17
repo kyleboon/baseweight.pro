@@ -42,7 +42,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 .lpPopover {
     display: block;

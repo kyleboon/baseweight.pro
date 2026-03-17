@@ -1,7 +1,7 @@
 <template>
     <div v-if="isLoaded" id="main" :class="{ lpHasSidebar: library.showSidebar }">
         <sidebar />
-        <div class="lpList lpTransition">
+        <div class="lpList" :class="{ lpTransition: showTransition }">
             <div id="header" class="clearfix">
                 <span class="headerItem">
                     <a id="hamburger" class="lpTransition" @click="toggleSidebar"><i class="lpSprite lpHamburger" /></a>
@@ -61,7 +61,7 @@
         <globalAlerts />
         <speedbump />
         <copyList />
-        <importCSV />
+        <ImportCsv />
         <itemImage />
         <itemViewImage />
         <itemLink />
@@ -72,7 +72,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue';
+import { ref, computed, onBeforeMount, onMounted, nextTick } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLighterpackStore } from '~/store/store.js';
 
@@ -82,6 +82,7 @@ const store = useLighterpackStore();
 const router = useRouter();
 
 const isLoaded = ref(false);
+const showTransition = ref(false);
 
 const library = computed(() => store.library);
 const activeList = computed(() => library.value.getListById(library.value.defaultListId));
@@ -93,6 +94,12 @@ onBeforeMount(() => {
     } else {
         isLoaded.value = true;
     }
+});
+
+onMounted(() => {
+    nextTick(() => {
+        showTransition.value = true;
+    });
 });
 
 function toggleSidebar() {

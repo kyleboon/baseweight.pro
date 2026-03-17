@@ -15,7 +15,7 @@ const store = useLighterpackStore();
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 .lpGlobalAlerts {
     background: $yellow1;

@@ -1,5 +1,5 @@
 // @ts-check
-module.exports = (function () {
+const weightUtils = (function () {
     /**
      * @param {number} value
      * @param {string} unit
@@ -63,3 +63,5 @@ module.exports = (function () {
         MgToWeight,
     };
 })();
+
+export default weightUtils;

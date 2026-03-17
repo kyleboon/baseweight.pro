@@ -56,7 +56,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 </script>
 
 <style lang="scss">
-@use '../css/globals' as *;
+@use '../assets/css/globals' as *;
 
 .lpModal {
     background: $background1;

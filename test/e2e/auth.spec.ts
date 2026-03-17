@@ -12,6 +12,8 @@ test('has title', async ({ page }) => {
 });
 
 test.describe('User Authentication Tests', () => {
+    test.describe.configure({ mode: 'serial' });
+
     test.beforeAll(async ({ browser }) => {
         const { username, password, email } = await getSharedUser();
         const page = await browser.newPage();

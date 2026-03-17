@@ -2,7 +2,7 @@ import { createRequire } from 'module';
 const _require = createRequire(import.meta.url);
 const bcrypt = _require('bcryptjs');
 const crypto = _require('crypto');
-const dataTypes = _require('../../../shared/dataTypes.js');
+import dataTypes from '#shared/dataTypes.js';
 
 const { Library } = dataTypes;
 
@@ -44,7 +44,8 @@ export default defineEventHandler(async (event) => {
         return { errors: [{ field: 'email', message: 'A user with that email already exists.' }] };
     }
 
-    const salt = await bcrypt.genSalt(10);
+    const saltRounds = process.env.NODE_ENV === 'test' ? 1 : 10;
+    const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     const token = crypto.randomBytes(48).toString('hex');
 

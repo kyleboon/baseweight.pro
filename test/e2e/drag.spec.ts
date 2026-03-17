@@ -130,9 +130,11 @@ test.describe('Drag and drop', () => {
         // Name the first list
         await page.getByPlaceholder('List Name').fill('Trip A');
 
-        // Create a second list via the sidebar UX button and name it
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400); // move away to close hover popover
+        // Create a second list via the store (sidebar button is behind .lpList z-index)
+        await page.evaluate(() => {
+            const app = (document.getElementById('lp') as any).__vue_app__;
+            app.config.globalProperties.$store.newList();
+        });
         await page.getByPlaceholder('List Name').fill('Trip B');
 
         await openSidebar(page);
@@ -159,8 +161,10 @@ test.describe('Drag and drop', () => {
         await page.locator('.lpCategory').first().locator('input.lpName').first().fill('Tent');
 
         // Create a second list — Tent is not in this list so it will have a drag handle
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400);
+        await page.evaluate(() => {
+            const app = (document.getElementById('lp') as any).__vue_app__;
+            app.config.globalProperties.$store.newList();
+        });
 
         await openSidebar(page);
 

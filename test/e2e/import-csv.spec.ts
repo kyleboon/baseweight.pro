@@ -22,12 +22,12 @@ test.describe('CSV import', () => {
     test('should open the import validation modal with a valid CSV', async ({ page }) => {
         await freshUser(page);
 
-        // #csv is always in the DOM; setInputFiles triggers the onchange handler directly
-        await page.setInputFiles('#csv', {
+        // #csv is visually off-screen (position:absolute; left:-999px) but always in the DOM
+        await page.locator('#csv').setInputFiles({
             name: 'gear.csv',
             mimeType: 'text/csv',
             buffer: Buffer.from(VALID_CSV),
-        });
+        }, { force: true });
 
         // The validation modal should appear
         await expect(page.locator('#importValidate')).toBeVisible();
@@ -42,11 +42,11 @@ test.describe('CSV import', () => {
     test('should import items into the list after confirming', async ({ page }) => {
         await freshUser(page);
 
-        await page.setInputFiles('#csv', {
+        await page.locator('#csv').setInputFiles({
             name: 'gear.csv',
             mimeType: 'text/csv',
             buffer: Buffer.from(VALID_CSV),
-        });
+        }, { force: true });
 
         await expect(page.locator('#importValidate')).toBeVisible();
         await page.locator('#importConfirm').click();
@@ -65,11 +65,11 @@ test.describe('CSV import', () => {
             await dialog.dismiss();
         });
 
-        await page.setInputFiles('#csv', {
+        await page.locator('#csv').setInputFiles({
             name: 'gear.txt',
             mimeType: 'text/plain',
             buffer: Buffer.from(VALID_CSV),
-        });
+        }, { force: true });
 
         await expect(page.locator('#importValidate')).toBeHidden();
     });
@@ -82,11 +82,11 @@ test.describe('CSV import', () => {
             await dialog.dismiss();
         });
 
-        await page.setInputFiles('#csv', {
+        await page.locator('#csv').setInputFiles({
             name: 'bad.csv',
             mimeType: 'text/csv',
             buffer: Buffer.from(INVALID_UNIT_CSV),
-        });
+        }, { force: true });
 
         await expect(page.locator('#importValidate')).toBeHidden();
     });

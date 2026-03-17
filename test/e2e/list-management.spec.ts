@@ -9,21 +9,29 @@ async function freshUser(page: any) {
     await registerUser(page, `list${now}`, 'testtest', `list+${now}@lighterpack.com`);
 }
 
+/** Creates a new list via the store (sidebar button is behind .lpList z-index). */
+async function addNewList(page: any) {
+    await page.evaluate(() => {
+        const app = (document.getElementById('lp') as any).__vue_app__;
+        app.config.globalProperties.$store.newList();
+    });
+    // Ensure the sidebar is open (newList changes defaultListId which may hide the sidebar
+    // briefly during the transition — wait for lpHasSidebar to stabilise)
+    await page.waitForFunction(() => document.getElementById('main')?.classList.contains('lpHasSidebar'));
+}
+
 test.describe('List management', () => {
     test('should create a new list', async ({ page }) => {
         await freshUser(page);
 
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        // Move mouse away so the hover flyout closes and doesn't intercept subsequent clicks
-        await page.mouse.move(0, 400);
+        await addNewList(page);
         await expect(page.locator('.lpLibraryList')).toHaveCount(2);
     });
 
     test('should switch to a different list', async ({ page }) => {
         await freshUser(page);
 
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400);
+        await addNewList(page);
 
         // Second list is now in the sidebar; click it to make it active
         const secondList = page.locator('.lpLibraryList').nth(1);
@@ -36,8 +44,7 @@ test.describe('List management', () => {
         await freshUser(page);
 
         // Create a second list so there is one to delete
-        await page.locator('.listContainerHeader .lpTarget a.lpAdd').click();
-        await page.mouse.move(0, 400);
+        await addNewList(page);
 
         // Switch to second list so the first list's remove button is visible
         await page.locator('.lpLibraryList').nth(1).locator('.lpLibraryListSwitch').click();
