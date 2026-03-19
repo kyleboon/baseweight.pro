@@ -73,12 +73,4 @@ describe('RegisterForm component', () => {
         await wrapper.find('form').trigger('submit');
         expect(wrapper.vm.errors_).toEqual(expect.arrayContaining([expect.objectContaining({ field: 'username' })]));
     });
-
-    it('loadLocal pushes to / if already local saving', () => {
-        const store = useLighterpackStore();
-        store.saveType = 'local';
-        const wrapper = mount(RegisterForm, { global: { stubs } });
-        wrapper.vm.loadLocal();
-        expect(mockPush).toHaveBeenCalledWith('/');
-    });
 });

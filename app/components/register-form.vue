@@ -12,23 +12,19 @@
                 Register
                 <spinner v-if="saving" />
             </button>
-            <a class="lpHref lpGetStarted" @click="loadLocal">Skip registration</a>
         </div>
     </form>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useLighterpackStore } from '../store/store.js';
 import { fetchJson } from '../utils/utils.js';
-import dataTypes from '#shared/dataTypes.js';
 import errors from './errors.vue';
 import spinner from './spinner.vue';
 
 defineOptions({ name: 'RegisterForm' });
-
-const Library = dataTypes.Library;
 
 const store = useLighterpackStore();
 const router = useRouter();
@@ -39,20 +35,6 @@ const password = ref('');
 const passwordConfirm = ref('');
 const saving = ref(false);
 const errors_ = ref([]);
-
-const isLocalSaving = computed(() => store.saveType === 'local');
-
-function loadLocal() {
-    if (isLocalSaving.value) {
-        router.push('/');
-        return;
-    }
-    const library = new Library();
-    store.loadLibraryData(JSON.stringify(library.save()));
-    store.setSaveType('local');
-    store.setLoggedIn(false);
-    router.push('/');
-}
 
 function submit() {
     errors_.value = [];
