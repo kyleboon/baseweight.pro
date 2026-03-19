@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
         return { errors: [{ message: 'An error occurred, please try logging out and in again.' }] };
     }
 
-    await getDb().collection('users').deleteOne({ _id: verified._id });
+    await deleteUser(verified.id);
     console.log({ message: 'Completed account delete', username: user.username });
     return { message: 'success' };
 });

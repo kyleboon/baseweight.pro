@@ -1,12 +1,13 @@
 import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const formidable = _require('formidable');
-const axios = _require('axios');
-const FormData = _require('form-data');
-const fs = _require('fs');
-const config = _require('config');
+import config from 'config';
 
 export default defineEventHandler(async (event) => {
+    const _require = createRequire(import.meta.url);
+    const formidable = _require('formidable');
+    const axios = _require('axios');
+    const FormData = _require('form-data');
+    const fs = _require('fs');
+
     const form = new formidable.IncomingForm();
     const { files } = await new Promise<any>((resolve, reject) => {
         form.parse(event.node.req, (err: any, _fields: any, parsedFiles: any) => {

@@ -1,6 +1,7 @@
-import dataTypes from '#shared/dataTypes.js';
-
-const { Library } = dataTypes;
+import { eq } from 'drizzle-orm';
+import * as schema from '../../schema.js';
+import { getDb } from '../../db.js';
+import { buildLibraryBlob } from '../../utils/library.js';
 
 export default defineEventHandler(async (event) => {
     const id = getRouterParam(event, 'id');
@@ -10,37 +11,23 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = getDb();
-    let users: any[];
-    try {
-        users = await db.collection('users').find({ 'library.lists.externalId': id }).toArray();
-    } catch {
-        throw createError({ statusCode: 500, message: 'An error occurred' });
-    }
+    const lists = await db
+        .select()
+        .from(schema.lists)
+        .where(eq(schema.lists.external_id, id));
 
-    if (!users.length || !users[0]?.library) {
+    if (!lists.length) {
         throw createError({ statusCode: 404, message: 'List not found' });
     }
 
-    const library = new Library();
-    library.load(users[0].library);
+    const list = lists[0]!;
+    const libraryBlob = await buildLibraryBlob(list.user_id);
 
-    let list = null;
-    for (const l of library.lists) {
-        if (l.externalId && l.externalId == id) {
-            library.defaultListId = l.id;
-            list = l;
-            break;
-        }
-    }
-
-    if (!list) {
-        throw createError({ statusCode: 404, message: 'List not found' });
-    }
+    // Set the default list to the requested one so the share page focuses on it
+    libraryBlob.defaultListId = list.id;
 
     return {
-        // Return the raw library JSON — the page reconstructs the Library
-        // object on both server and client using shared/dataTypes.js.
-        library: users[0].library,
+        library: libraryBlob,
         externalId: id,
     };
 });

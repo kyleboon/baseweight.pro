@@ -1,3 +1,7 @@
+import { eq } from 'drizzle-orm';
+import * as schema from '../../schema.js';
+import { getDb } from '../../db.js';
+import { buildLibraryBlob } from '../../utils/library.js';
 import dataTypes from '#shared/dataTypes.js';
 import weightUtils from '#shared/utils/weight.js';
 
@@ -17,29 +21,27 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, message: 'No list specified!' });
     }
 
-    let users;
-    try {
-        users = await getDb().collection('users').find({ 'library.lists.externalId': id }).toArray();
-    } catch {
-        throw createError({ statusCode: 500, message: 'An error occurred.' });
-    }
+    const db = getDb();
+    const lists = await db
+        .select()
+        .from(schema.lists)
+        .where(eq(schema.lists.external_id, id));
 
-    if (!users.length) {
+    if (!lists.length) {
         throw createError({ statusCode: 400, message: 'Invalid list specified.' });
     }
 
-    if (!users[0] || typeof users[0].library === 'undefined') {
-        throw createError({ statusCode: 500, message: 'Unknown error.' });
-    }
+    const dbList = lists[0]!;
+    const libraryBlob = await buildLibraryBlob(dbList.user_id);
 
     const library = new Library();
-    library.load(users[0].library);
+    library.load(libraryBlob);
 
     let list: any = null;
-    for (const i in library.lists) {
-        if (library.lists[i].externalId && library.lists[i].externalId == id) {
-            library.defaultListId = library.lists[i].id;
-            list = library.lists[i];
+    for (const l of library.lists) {
+        if (l.externalId && l.externalId == id) {
+            library.defaultListId = l.id;
+            list = l;
             break;
         }
     }
@@ -50,11 +52,10 @@ export default defineEventHandler(async (event) => {
 
     let out = 'Item Name,Category,desc,qty,weight,unit,url,price,worn,consumable\n';
 
-    for (const i in list.categoryIds) {
-        const category = library.getCategoryById(list.categoryIds[i]);
+    for (const categoryId of list.categoryIds) {
+        const category = library.getCategoryById(categoryId);
         if (category) {
-            for (const j in category.categoryItems) {
-                const categoryItem = category.categoryItems[j];
+            for (const categoryItem of category.categoryItems) {
                 if (categoryItem) {
                     const item = library.getItemById(categoryItem.itemId);
                     const itemRow = [

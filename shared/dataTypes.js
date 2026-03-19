@@ -408,8 +408,14 @@ class List {
 class Library {
     constructor() {
         this.version = '0.3';
-        /** @type {Record<number, any>} */
+        /** @type {Record<number, any>} - kept for backward compatibility */
         this.idMap = {};
+        /** @type {Record<number, any>} */
+        this.itemsMap = {};
+        /** @type {Record<number, any>} */
+        this.categoriesMap = {};
+        /** @type {Record<number, any>} */
+        this.listsMap = {};
         /** @type {any[]} */
         this.items = [];
         /** @type {any[]} */
@@ -440,6 +446,7 @@ class Library {
         const temp = new Item({ id: this.nextSequence(), unit: this.itemUnit });
         this.items.push(temp);
         this.idMap[temp.id] = temp;
+        this.itemsMap[temp.id] = temp;
         if (category) {
             category.addItem({ itemId: temp.id, _isNew });
         }
@@ -468,6 +475,7 @@ class Library {
         }
 
         this.items.splice(this.items.indexOf(item), 1);
+        delete this.itemsMap[id];
         delete this.idMap[id];
 
         return true;
@@ -481,6 +489,7 @@ class Library {
 
         this.categories.push(temp);
         this.idMap[temp.id] = temp;
+        this.categoriesMap[temp.id] = temp;
         if (list) {
             list.addCategory(temp.id);
         }
@@ -507,6 +516,7 @@ class Library {
 
         this.categories.splice(this.categories.indexOf(category), 1);
         delete this.idMap[id];
+        delete this.categoriesMap[id];
 
         return true;
     }
@@ -515,6 +525,7 @@ class Library {
         const temp = new List({ id: this.nextSequence(), library: this });
         this.lists.push(temp);
         this.idMap[temp.id] = temp;
+        this.listsMap[temp.id] = temp;
         if (!this.defaultListId) this.defaultListId = temp.id;
         return temp;
     }
@@ -532,6 +543,7 @@ class Library {
 
         this.lists.splice(this.lists.indexOf(list), 1);
         delete this.idMap[id];
+        delete this.listsMap[id];
 
         if (this.defaultListId === id) {
             this.defaultListId = this.lists.length > 0 ? this.lists[0].id : -1;
@@ -573,21 +585,21 @@ class Library {
      * @param {any} id
      */
     getCategoryById(id) {
-        return this.idMap[id];
+        return this.categoriesMap[id];
     }
 
     /**
      * @param {any} id
      */
     getItemById(id) {
-        return this.idMap[id];
+        return this.itemsMap[id];
     }
 
     /**
      * @param {any} id
      */
     getListById(id) {
-        return this.idMap[id];
+        return this.listsMap[id];
     }
 
     getItemsInCurrentList() {
@@ -704,6 +716,7 @@ class Library {
             temp.load(serializedLibrary.items[i]);
             this.items.push(temp);
             this.idMap[temp.id] = temp;
+            this.itemsMap[temp.id] = temp;
         }
 
         this.categories = [];
@@ -712,6 +725,7 @@ class Library {
             temp.load(serializedLibrary.categories[i]);
             this.categories.push(temp);
             this.idMap[temp.id] = temp;
+            this.categoriesMap[temp.id] = temp;
         }
 
         this.lists = [];
@@ -720,6 +734,7 @@ class Library {
             temp.load(serializedLibrary.lists[i]);
             this.lists.push(temp);
             this.idMap[temp.id] = temp;
+            this.listsMap[temp.id] = temp;
         }
 
         if (serializedLibrary.showSidebar) this.showSidebar = serializedLibrary.showSidebar;

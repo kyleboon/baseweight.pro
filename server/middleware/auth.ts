@@ -1,3 +1,5 @@
+import { findUserByToken } from '../utils/db.js';
+
 // Nitro server middleware: runs on every request.
 // Populates event.context.user from the `lp` session cookie when valid.
 // Individual API routes that require auth check event.context.user themselves.
@@ -6,9 +8,9 @@ export default defineEventHandler(async (event) => {
     if (!token) return;
 
     try {
-        const users = await getDb().collection('users').find({ token }).toArray();
-        if (users?.length) {
-            event.context.user = users[0];
+        const user = await findUserByToken(token);
+        if (user) {
+            event.context.user = user;
         }
     } catch {
         // DB error — continue unauthenticated

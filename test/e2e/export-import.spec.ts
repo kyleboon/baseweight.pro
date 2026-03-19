@@ -24,21 +24,20 @@ async function seedAndGetCsvUrl(page: any): Promise<string> {
     await page.locator('.lpCategory').nth(1).locator('input.lpName').first().fill('Stove');
     await page.locator('.lpCategory').nth(1).locator('input.lpWeight').first().fill('100');
 
-    // Open the Share popover to generate an externalId
+    // Open the Share popover to reveal the share URL
     await page.getByText('Share', { exact: true }).hover();
     const shareUrlInput = page.getByLabel('Share your list');
     await expect(shareUrlInput).toHaveValue(/\S/, { timeout: 10000 });
     const shareUrl = await shareUrlInput.inputValue();
 
-    // The app autosaves with a 10-second debounce. Poll until the CSV export
-    // contains the seeded items so we know the data has been flushed to the server.
+    // Saves are immediate — poll briefly to allow in-flight PATCH requests to complete
     const externalId = shareUrl.split('/r/')[1];
     const csvUrl = `${testRoot}csv/${externalId}`;
     await expect(async () => {
         const response = await page.request.get(csvUrl);
         expect(response.status()).toBe(200);
         expect(await response.text()).toContain('Tent');
-    }).toPass({ timeout: 30000 });
+    }).toPass({ timeout: 5000 });
 
     return csvUrl;
 }

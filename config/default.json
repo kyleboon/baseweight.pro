@@ -6,6 +6,7 @@
     "devServerPort": 8080,
     "bindings": [""],
     "databaseUrl": "mongodb://localhost:27017/lighterpack",
+    "databasePath": "./data/lighterpack.db",
     "imgurClientID": "",
     "mailgunDomain": "",
     "mailgunBaseURL": "",

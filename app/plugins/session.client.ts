@@ -10,16 +10,10 @@ export default defineNuxtPlugin(async () => {
     if (store.loggedIn) return;
 
     try {
-        const data = await $fetch('/api/auth/signin', {
-            method: 'POST',
-            body: {},
-            credentials: 'include',
-        });
+        const data = await $fetch('/api/library', { credentials: 'include' });
         if (data && (data as any).username) {
             store.setLoggedIn((data as any).username);
-            store.setSyncToken((data as any).syncToken);
             store.loadLibraryData((data as any).library);
-            store.setSaveType('remote');
         }
     } catch {
         // 401 = no valid session, stay unauthenticated

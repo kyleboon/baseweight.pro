@@ -1,3 +1,8 @@
+import { or, like } from 'drizzle-orm';
+import * as schema from '../../schema.js';
+import { getDb } from '../../db.js';
+import { isModerator } from '../../utils/auth.js';
+
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) {
@@ -10,19 +15,20 @@ export default defineEventHandler(async (event) => {
     }
 
     const q = String(getQuery(event).q ?? '').toLowerCase().trim();
-    const escaped = q.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-    const users = getDb().collection('users');
+    const db = getDb();
 
-    const [nameResult, emailResult] = await Promise.all([
-        users.find({ username: { $regex: `${escaped}.*`, $options: 'si' } }).toArray(),
-        users.find({ email: { $regex: `${escaped}.*`, $options: 'si' } }).toArray(),
-    ]);
+    const rows = await db
+        .select({
+            username: schema.users.username,
+            email: schema.users.email,
+        })
+        .from(schema.users)
+        .where(
+            or(
+                like(schema.users.username, `${q}%`),
+                like(schema.users.email, `${q}%`),
+            ),
+        );
 
-    const results = [...nameResult, ...emailResult].map((u: any) => ({
-        username: u.username,
-        library: u.library,
-        email: u.email,
-    }));
-
-    return { results };
+    return { results: rows };
 });

@@ -1,10 +1,5 @@
-import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const bcrypt = _require('bcryptjs');
-const crypto = _require('crypto');
-import dataTypes from '#shared/dataTypes.js';
-
-const { Library } = dataTypes;
+import bcrypt from 'bcryptjs';
+import { randomBytes } from 'node:crypto';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -30,16 +25,14 @@ export default defineEventHandler(async (event) => {
 
     console.log({ message: 'Attempting to register', username });
 
-    const users = getDb().collection('users');
-
-    const existingByUsername = await users.find({ username }).toArray();
-    if (existingByUsername.length) {
+    const existingByUsername = await findUserByUsername(username);
+    if (existingByUsername) {
         setResponseStatus(event, 400);
         return { errors: [{ field: 'username', message: 'That username already exists, please pick a different username.' }] };
     }
 
-    const existingByEmail = await users.find({ email }).toArray();
-    if (existingByEmail.length) {
+    const existingByEmail = await findUserByEmail(email);
+    if (existingByEmail) {
         setResponseStatus(event, 400);
         return { errors: [{ field: 'email', message: 'A user with that email already exists.' }] };
     }
@@ -47,23 +40,13 @@ export default defineEventHandler(async (event) => {
     const saltRounds = process.env.NODE_ENV === 'test' ? 1 : 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
-    const token = crypto.randomBytes(48).toString('hex');
+    const token = randomBytes(48).toString('hex');
 
-    let library;
-    if (body.library) {
-        try {
-            library = JSON.parse(body.library);
-        } catch {
-            setResponseStatus(event, 400);
-            return { errors: [{ message: 'Unable to parse your library. Contact support.' }] };
-        }
-    } else {
-        library = new Library().save();
-    }
-
-    const newUser = { username, password: hash, email, token, library, syncToken: 0 };
     console.log({ message: 'Saving new user', username });
-    await upsertUser(newUser);
+    const newUser = await createUser({ username, email, password: hash, token });
+
+    // Initialize library data for new user
+    await initNewUserLibrary(newUser.id);
 
     setCookie(event, 'lp', token, {
         path: '/',
@@ -72,5 +55,6 @@ export default defineEventHandler(async (event) => {
         sameSite: 'lax',
     });
 
-    return { username, library: JSON.stringify(newUser.library), syncToken: 0 };
+    const libraryBlob = await buildLibraryBlob(newUser.id);
+    return { username, library: JSON.stringify(libraryBlob) };
 });

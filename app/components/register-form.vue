@@ -111,9 +111,7 @@ function submit() {
         body: JSON.stringify(registerData),
     })
         .then((response) => {
-            store.setSyncToken(response.syncToken);
             store.loadLibraryData(response.library);
-            store.setSaveType('remote');
             store.setLoggedIn(response.username);
 
             if (registerData.library) {

@@ -37,6 +37,7 @@ test.describe('Authentication error handling', () => {
 
         await page.getByText('Signed in as').hover();
         await page.getByText('Sign out').click();
+        await page.waitForLoadState('load'); // wait for sign-out redirect to settle
 
         // After sign-out the page shows the sign-in form; navigate to the root to get the register form
         await page.goto(testRoot);

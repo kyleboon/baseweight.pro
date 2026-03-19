@@ -1,3 +1,6 @@
+import { findUserByUsername, updateUser } from '../../utils/db.js';
+import { isModerator } from '../../utils/auth.js';
+
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) {
@@ -13,15 +16,13 @@ export default defineEventHandler(async (event) => {
     const username = String(body.username ?? '').toLowerCase().trim();
     console.log({ message: 'MODERATION Clear session start', username });
 
-    const users = await getDb().collection('users').find({ username }).toArray();
-    if (!users.length) {
+    const target = await findUserByUsername(username);
+    if (!target) {
         setResponseStatus(event, 500);
         return { message: 'An error occurred.' };
     }
 
-    const target = users[0];
-    target.token = '';
-    await upsertUser(target);
+    await updateUser(target.id, { token: '' });
     console.log({ message: 'MODERATION Clear session succeeded', username });
     return { message: 'success' };
 });

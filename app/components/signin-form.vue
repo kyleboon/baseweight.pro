@@ -84,9 +84,7 @@ function signin() {
         body: JSON.stringify({ username: username.value, password: password.value }),
     })
         .then((response) => {
-            store.setSyncToken(response.syncToken);
             store.loadLibraryData(response.library);
-            store.setSaveType('remote');
             store.setLoggedIn(response.username);
             router.push('/');
             fetching.value = false;

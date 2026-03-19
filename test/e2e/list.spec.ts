@@ -40,15 +40,14 @@ test.describe('List tests', () => {
         const shareUrl = await shareUrlLocator.inputValue();
 
         await page.getByPlaceholder('List Name').fill(listName);
-        // Blur to trigger the auto-save debounce
         await page.getByPlaceholder('List Name').blur();
 
-        // Poll the share page until the list name appears (auto-save has a 10s debounce)
+        // Saves are immediate — poll briefly to allow the PATCH request to complete
         await expect(async () => {
             const response = await page.request.get(shareUrl);
             expect(response.status()).toBe(200);
             expect(await response.text()).toContain(listName);
-        }).toPass({ timeout: 30000 });
+        }).toPass({ timeout: 5000 });
 
         await page.goto(shareUrl);
         await expect(page.getByRole('heading').filter({ hasText: listName })).toBeVisible();

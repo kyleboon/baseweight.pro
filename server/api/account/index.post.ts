@@ -1,6 +1,4 @@
-import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const bcrypt = _require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -27,15 +25,14 @@ export default defineEventHandler(async (event) => {
             return { errors: [{ field: 'newPassword', message: 'Please enter a password between 5 and 60 characters.' }] };
         }
         const salt = await bcrypt.genSalt(10);
-        verified.password = await bcrypt.hash(newPassword, salt);
-        if (body.newEmail) verified.email = String(body.newEmail);
-        await upsertUser(verified);
+        const updates: any = { password: await bcrypt.hash(newPassword, salt) };
+        if (body.newEmail) updates.email = String(body.newEmail);
+        await updateUser(verified.id, updates);
         return { message: 'success' };
     }
 
     if (body.newEmail) {
-        verified.email = String(body.newEmail);
-        await upsertUser(verified);
+        await updateUser(verified.id, { email: String(body.newEmail) });
         return { message: 'success' };
     }
 

@@ -1,13 +1,5 @@
 import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const FormData = _require('form-data');
-const config = _require('config');
-
-let mg: any;
-if (config.get('mailgunAPIKey')) {
-    const Mailgun = _require('mailgun.js');
-    mg = new Mailgun(FormData).client({ username: 'api', key: config.get('mailgunAPIKey') });
-}
+import config from 'config';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -18,16 +10,21 @@ export default defineEventHandler(async (event) => {
         return { errors: [{ message: 'Please enter a valid email.' }] };
     }
 
-    const users = await getDb().collection('users').find({ email }).toArray();
-    if (!users.length) {
+    const user = await findUserByEmail(email);
+    if (!user) {
         setResponseStatus(event, 400);
         return { message: 'An error occurred' };
     }
 
-    const { username } = users[0];
+    const { username } = user;
     const message = `Hello ${username},\n Apparently you forgot your username. Here it is: \n\n Username: ${username}\n\n If you continue to have problems, please reply to this email with details.\n\n Thanks!`;
 
-    if (mg) {
+    const mailgunKey = config.get<string>('mailgunAPIKey');
+    if (mailgunKey) {
+        const _require = createRequire(import.meta.url);
+        const FormData = _require('form-data');
+        const Mailgun = _require('mailgun.js');
+        const mg = new Mailgun(FormData).client({ username: 'api', key: mailgunKey });
         const response = await mg.messages.create(config.get('mailgunDomain'), {
             from: 'LighterPack <info@mg.lighterpack.com>',
             to: email,

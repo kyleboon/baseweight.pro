@@ -9,6 +9,12 @@ Replace the MongoDB database and blob-save API with SQLite (via `better-sqlite3`
 
 The change enables future features including item tagging, cross-user item search, and a public item catalog, none of which are feasible with the current blob-save architecture.
 
+### Item model
+
+Items are **deep-copied into each category** at the time they are added. Editing a `category_item`'s fields (name, weight, etc.) never modifies a shared record — each category carries its own independent copy. A `global_item_id` FK records the catalog entry the copy originated from (nullable; set to NULL if the source global item is later deleted).
+
+The `global_items` catalog table and its management UI are **Phase 2** — deferred to a follow-on plan. Phase 1 only implements per-category item data embedded in `category_items`.
+
 ## Constraints
 
 - Single-server VPS deployment — local SQLite file on disk
@@ -53,9 +59,9 @@ One row per user. Display and unit preferences.
 | `opt_consumable`       | INTEGER                | boolean, default 1 |
 | `opt_list_description` | INTEGER                | boolean, default 0 |
 
-### `items`
+### `global_items` _(Phase 2 — deferred)_
 
-Per-user gear catalog. An item can appear in multiple categories.
+Per-user gear catalog. Managed in a future plan; not required for Phase 1.
 
 | Column        | Type                     | Notes                                         |
 | ------------- | ------------------------ | --------------------------------------------- |
@@ -100,24 +106,35 @@ Groupings within a list.
 
 ### `category_items`
 
-Junction table: item appears in a category with per-appearance attributes.
+Each row is a **deep copy** of item data scoped to one category. Editing these fields never touches `global_items`. `global_item_id` is a soft reference — it is set to NULL if the source global item is deleted, but the category item is preserved.
 
-| Column        | Type                     | Notes              |
-| ------------- | ------------------------ | ------------------ |
-| `id`          | INTEGER PK autoincrement |                    |
-| `category_id` | INTEGER → categories     | cascade delete     |
-| `item_id`     | INTEGER → items          | cascade delete     |
-| `qty`         | INTEGER                  | default 1          |
-| `worn`        | INTEGER                  | default 0          |
-| `consumable`  | INTEGER                  | boolean, default 0 |
-| `star`        | INTEGER                  | default 0          |
-| `sort_order`  | INTEGER                  | default 0          |
+| Column           | Type                     | Notes                                             |
+| ---------------- | ------------------------ | ------------------------------------------------- |
+| `id`             | INTEGER PK autoincrement |                                                   |
+| `category_id`    | INTEGER → categories     | cascade delete                                    |
+| `user_id`        | INTEGER → users          | for auth checks without join                      |
+| `global_item_id` | INTEGER → global_items   | nullable; SET NULL on delete; Phase 2 FK          |
+| `name`           | TEXT                     | default `''`; copied from global item at add time |
+| `description`    | TEXT                     | default `''`                                      |
+| `weight`         | REAL                     | default 0                                         |
+| `author_unit`    | TEXT                     | default `'oz'`                                    |
+| `price`          | REAL                     | default 0                                         |
+| `image`          | TEXT                     | default `''`                                      |
+| `image_url`      | TEXT                     | default `''`                                      |
+| `url`            | TEXT                     | default `''`                                      |
+| `qty`            | INTEGER                  | default 1                                         |
+| `worn`           | INTEGER                  | default 0                                         |
+| `consumable`     | INTEGER                  | boolean, default 0                                |
+| `star`           | INTEGER                  | default 0                                         |
+| `sort_order`     | INTEGER                  | default 0                                         |
 
-### `tags` and `item_tags`
+### `tags` and `item_tags` _(Phase 2 — deferred)_
+
+Tags attach to `global_items` entries. Deferred with the rest of the global item catalog.
 
 ```
 tags:       id, user_id (→ users), name
-item_tags:  item_id (→ items), tag_id (→ tags)  [composite PK]
+item_tags:  global_item_id (→ global_items), tag_id (→ tags)  [composite PK]
 ```
 
 ### Dropped concepts
@@ -149,13 +166,13 @@ PATCH  /api/library    → update total_unit, item_unit, show_sidebar, currency_
                          default_list_id, opt_*
 ```
 
-### Items
+### Global items _(Phase 2 — deferred)_
 
 ```
-GET    /api/items           → user's items (?search=, ?tag=, ?public=true for future)
-POST   /api/items           → create → returns { id, ...item }
-PATCH  /api/items/:id       → update any item fields
-DELETE /api/items/:id       → delete (cascades out of all category_items)
+GET    /api/global-items           → user's catalog (?search=, ?tag=, ?public=true)
+POST   /api/global-items           → create catalog entry → returns { id, ...item }
+PATCH  /api/global-items/:id       → update catalog entry (does NOT propagate to category_items)
+DELETE /api/global-items/:id       → delete; sets global_item_id = NULL on referencing category_items
 ```
 
 ### Lists
@@ -180,19 +197,24 @@ DELETE /api/categories/:id     → delete + cascade category_items
 ### Category items
 
 ```
-POST   /api/categories/:id/items             → add item to category
-PATCH  /api/categories/:id/items/:itemId     → update qty, worn, consumable, star, sort_order
+POST   /api/categories/:id/items             → create item in category; body contains all item fields
+                                               (name, description, weight, author_unit, price,
+                                                image, image_url, url) + qty, worn, consumable,
+                                                star, sort_order; optionally global_item_id
+                                               → returns { id, ...category_item }
+PATCH  /api/categories/:id/items/:itemId     → update any item fields or qty/worn/consumable/star/sort_order;
+                                               never propagates to global_items
 DELETE /api/categories/:id/items/:itemId     → remove item from category
 ```
 
-### Tags
+### Tags _(Phase 2 — deferred)_
 
 ```
-GET    /api/tags                      → user's tags
-POST   /api/tags                      → create tag
-DELETE /api/tags/:id                  → delete + remove from all items
-POST   /api/items/:id/tags            → add tag to item
-DELETE /api/items/:id/tags/:tagId     → remove tag from item
+GET    /api/tags                                  → user's tags
+POST   /api/tags                                  → create tag
+DELETE /api/tags/:id                              → delete + remove from all global items
+POST   /api/global-items/:id/tags                 → add tag to global item
+DELETE /api/global-items/:id/tags/:tagId          → remove tag from global item
 ```
 
 ### Share and export (unchanged)
@@ -220,14 +242,16 @@ The `Library` object remains the primary client-side state. Components are uncha
 
 Examples:
 
-- `addItem()` → `POST /api/items` → await `{ id }` → add to `library.items`
-- `updateItem()` → optimistic update → `PATCH /api/items/:id` → rollback on error
-- `deleteItem()` → `DELETE /api/items/:id` → remove from library on success
+- `addItem()` → `POST /api/categories/:id/items` with all item fields → await `{ id }` → add to category in `library`
+- `updateItem()` → optimistic update → `PATCH /api/categories/:id/items/:itemId` → rollback on error
+- `deleteItem()` → `DELETE /api/categories/:id/items/:itemId` → remove from category on success
 - `addList()` → `POST /api/lists` → await `{ id, external_id }` → add to `library.lists`
+
+`library.items` is derived on load from the union of all `category_items` across all lists (the API hydration response provides this). There is no separate item catalog in Phase 1.
 
 ### Page load hydration
 
-`app/plugins/session.client.ts` changes from calling `POST /api/auth/signin` to `GET /api/library`. The response contains library settings plus all lists with nested categories and items. The store reconstructs the `Library` object from this normalized response using the existing `dataTypes.js` `load()` method (fed a synthetic library JSON).
+`app/plugins/session.client.ts` changes from calling `POST /api/auth/signin` to `GET /api/library`. The response contains library settings plus all lists with nested categories and items (item fields embedded per category_item). The store reconstructs the `Library` object from this normalized response using the existing `dataTypes.js` `load()` method (fed a synthetic library JSON).
 
 ### Share page unaffected
 
@@ -318,15 +342,26 @@ The 43 Vitest tests covering `dataTypes.js`, components, and store logic require
 
 ## Implementation Order
 
-1. Add Drizzle dependencies, write `server/schema.ts`, generate initial migration
+### Phase 1 (this plan)
+
+1. Add Drizzle dependencies, write `server/schema.ts` (no `global_items` table yet), generate initial migration
 2. Replace `server/db.js` with `server/db.ts`, update `server/plugins/sqlite.ts`
 3. Rewrite auth routes (`register`, `signin`, `signout`, `forgot-*`) against new schema
 4. Rewrite `server/middleware/auth.ts` and `server/utils/auth.ts`
-5. Add new API routes (items, lists, categories, category_items, tags)
-6. Update `GET /api/library` for initial page load hydration
+5. Add new API routes (lists, categories, category_items with embedded item fields)
+6. Update `GET /api/library` for initial page load hydration (embed item fields per category_item)
 7. Update `GET /api/share/:id` and `GET /csv/:id` to query normalized tables
 8. Remove auto-save plugin; wire store actions to granular API calls
 9. Update `session.client.ts` to call `GET /api/library`
 10. Delete `POST /api/library/save` and `POST /api/external-id`
 11. Update E2E tests (remove timing workarounds, add rollback tests)
 12. Update `docker-compose.yml` to remove MongoDB service; add `data/` to `.gitignore`
+
+### Phase 2 (future plan — global item catalog)
+
+- Add `global_items` table to schema; generate migration
+- Add `tags` and `item_tags` tables
+- Implement `GET/POST/PATCH/DELETE /api/global-items` endpoints
+- Implement tag endpoints (`/api/tags`, `/api/global-items/:id/tags`)
+- Add "copy from catalog" action: `POST /api/categories/:id/items` with `{ global_item_id }` copies fields + sets FK
+- UI for browsing and managing the gear catalog

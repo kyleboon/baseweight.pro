@@ -2,9 +2,10 @@ export default defineEventHandler(async (event) => {
     const token = getCookie(event, 'lp');
     if (token) {
         try {
-            await getDb()
-                .collection('users')
-                .updateOne({ token }, { $unset: { token: '' } });
+            const user = await findUserByToken(token);
+            if (user) {
+                await updateUser(user.id, { token: null });
+            }
         } catch {
             // Best-effort token invalidation
         }

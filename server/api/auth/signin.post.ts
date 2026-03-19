@@ -1,6 +1,4 @@
-import { createRequire } from 'module';
-const _require = createRequire(import.meta.url);
-const crypto = _require('crypto');
+import { randomBytes } from 'node:crypto';
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
@@ -25,9 +23,9 @@ export default defineEventHandler(async (event) => {
             return { message: err.message ?? 'Please log in.' };
         }
 
-        const token = crypto.randomBytes(48).toString('hex');
-        user.token = token;
-        upsertUser(user).catch(console.error);
+        const token = randomBytes(48).toString('hex');
+        await updateUser(user.id, { token });
+        user = { ...user, token };
 
         setCookie(event, 'lp', token, {
             path: '/',
@@ -39,10 +37,6 @@ export default defineEventHandler(async (event) => {
 
     console.log({ message: 'signed in', username: user.username });
 
-    if (!user.syncToken) {
-        user.syncToken = 0;
-        upsertUser(user).catch(console.error);
-    }
-
-    return { username: user.username, library: JSON.stringify(user.library), syncToken: user.syncToken };
+    const libraryBlob = await buildLibraryBlob(user.id);
+    return { username: user.username, library: JSON.stringify(libraryBlob) };
 });

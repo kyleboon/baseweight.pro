@@ -133,7 +133,7 @@ test.describe('Drag and drop', () => {
         // Create a second list via the store (sidebar button is behind .lpList z-index)
         await page.evaluate(() => {
             const app = (document.getElementById('lp') as any).__vue_app__;
-            app.config.globalProperties.$store.newList();
+            return app.config.globalProperties.$store.newList();
         });
         await page.getByPlaceholder('List Name').fill('Trip B');
 
@@ -163,7 +163,7 @@ test.describe('Drag and drop', () => {
         // Create a second list — Tent is not in this list so it will have a drag handle
         await page.evaluate(() => {
             const app = (document.getElementById('lp') as any).__vue_app__;
-            app.config.globalProperties.$store.newList();
+            return app.config.globalProperties.$store.newList();
         });
 
         await openSidebar(page);

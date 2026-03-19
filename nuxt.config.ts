@@ -15,6 +15,9 @@ export default defineNuxtConfig({
         alias: {
             '#shared': resolve(__dirname, 'shared'),
         },
+        externals: {
+            external: ['better-sqlite3'],
+        },
     },
     vite: {
         resolve: {

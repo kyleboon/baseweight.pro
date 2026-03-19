@@ -16,7 +16,7 @@ const sharedRules = {
 
 export default [
     {
-        ignores: ['public/dist/**', 'public/js/**', 'node_modules/**'],
+        ignores: ['public/dist/**', 'public/js/**', 'node_modules/**', '.output/**', '.nuxt/**'],
     },
     // Server/Node files
     {
