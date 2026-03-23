@@ -12,6 +12,27 @@
                 @input="updateListName"
             />
             <div class="lp-list-header-actions">
+                <button
+                    v-if="library.optionalFields['images']"
+                    class="lp-icon-btn lp-list-camera"
+                    title="Manage list images"
+                    @click="manageListImages"
+                >
+                    <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M13 11.5a.5.5 0 01-.5.5h-9a.5.5 0 01-.5-.5v-6a.5.5 0 01.5-.5H5l1-2h4l1 2h1.5a.5.5 0 01.5.5v6z"
+                        />
+                        <circle cx="8" cy="8.5" r="2" />
+                    </svg>
+                </button>
                 <share />
             </div>
         </header>
@@ -29,6 +50,20 @@
                 please register an account.
             </p>
         </div>
+        <div v-if="library.optionalFields['images'] && listImages.length > 0" class="lp-list-image-strip">
+            <img
+                v-for="(img, i) in visibleListThumbs"
+                :key="img.id ?? i"
+                class="lpItemThumb"
+                :src="img.url"
+                :title="`Image ${i + 1}`"
+                @click="viewListImageAt(i)"
+            />
+            <span v-if="extraListImageCount > 0" class="lpThumbMore" @click="viewListImageAt(visibleListThumbs.length)"
+                >+{{ extraListImageCount }}</span
+            >
+        </div>
+
         <list-summary v-if="!isListNew" :list="list" />
 
         <div style="clear: both" />
@@ -81,8 +116,16 @@ defineOptions({ name: 'List' });
 
 const store = useLighterpackStore();
 
+const MAX_VISIBLE_THUMBS = 4;
+
 const library = computed(() => store.library);
 const list = computed(() => store.activeList);
+
+const listImages = computed(() => (list.value?.images ?? []).slice().sort((a, b) => a.sort_order - b.sort_order));
+
+const visibleListThumbs = computed(() => listImages.value.slice(0, MAX_VISIBLE_THUMBS));
+
+const extraListImageCount = computed(() => Math.max(0, listImages.value.length - MAX_VISIBLE_THUMBS));
 const categories = computed(() => {
     const l = list.value;
     if (!l) return [];
@@ -110,6 +153,14 @@ onUnmounted(() => {
     itemDrag.destroy();
     if (categorySortable) categorySortable.destroy();
 });
+
+function viewListImageAt(index) {
+    store.openViewImagesDialog(listImages.value, index);
+}
+
+function manageListImages() {
+    store.openListImageDialog(list.value);
+}
 
 function updateListName(evt) {
     store.updateListName({ id: list.value.id, name: evt.target.value });
@@ -223,6 +274,24 @@ function handleCategoryReorder() {
             gap: 5px;
             padding: 0;
         }
+    }
+}
+
+/* List image thumbnail strip */
+.lp-list-image-strip {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+/* List-level camera button */
+.lp-list-camera {
+    color: #8a8880;
+    visibility: visible;
+
+    &:hover {
+        color: #1e1e1c;
     }
 }
 

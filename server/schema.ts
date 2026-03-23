@@ -100,6 +100,19 @@ export const categories = sqliteTable('categories', {
     sort_order: integer('sort_order').default(0),
 });
 
+export const images = sqliteTable('images', {
+    id: integer('id').primaryKey({ autoIncrement: true }),
+    user_id: text('user_id')
+        .notNull()
+        .references(() => user.id, { onDelete: 'cascade' }),
+    entity_type: text('entity_type').notNull(), // 'item' | 'category' | 'list'
+    entity_id: integer('entity_id').notNull(),
+    filename: text('filename').notNull(), // relative path under uploadsPath, or full URL for remote
+    is_local: integer('is_local', { mode: 'boolean' }).notNull().default(true),
+    sort_order: integer('sort_order').default(0),
+    created_at: integer('created_at'),
+});
+
 export const category_items = sqliteTable('category_items', {
     id: integer('id').primaryKey({ autoIncrement: true }),
     category_id: integer('category_id')
@@ -114,8 +127,6 @@ export const category_items = sqliteTable('category_items', {
     weight: real('weight').default(0),
     author_unit: text('author_unit').default('oz'),
     price: real('price').default(0),
-    image: text('image').default(''),
-    image_url: text('image_url').default(''),
     url: text('url').default(''),
     qty: integer('qty').default(1),
     worn: integer('worn').default(0),

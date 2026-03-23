@@ -1,49 +1,84 @@
 <template>
     <div>
         <modal id="itemImageDialog" :shown="shown" @hide="shown = false">
-            <div class="columns">
-                <div class="lpHalf">
-                    <h2>Add image by URL</h2>
-                    <form id="itemImageUrlForm" @submit.prevent="saveImageUrl()">
-                        <input id="itemImageUrl" v-model="imageUrl" type="text" placeholder="Image URL" />
-                        <input type="submit" class="lpButton" value="Save" />
-                        <a class="lpHref close" @click="shown = false">Cancel</a>
+            <h2 class="image-dialog-title">{{ dialogTitle }}</h2>
+
+            <!-- Existing image gallery -->
+            <div v-if="images.length" class="image-gallery">
+                <div ref="galleryEl" class="gallery-strip">
+                    <div v-for="img in images" :key="img.id" class="gallery-item">
+                        <img :src="img.url" class="gallery-thumb" @click="viewImage(img)" />
+                        <button class="gallery-delete" title="Remove image" @click="removeImage(img)">×</button>
+                    </div>
+                </div>
+                <p class="gallery-hint">Drag thumbnails to reorder · Click to view full size</p>
+            </div>
+
+            <!-- Add section (hidden when at limit) -->
+            <template v-if="images.length < MAX_IMAGES">
+                <div class="add-section">
+                    <div
+                        class="drop-zone"
+                        :class="{ 'is-dragging': isDragging, 'is-uploading': uploading }"
+                        @dragover.prevent="isDragging = true"
+                        @dragleave="isDragging = false"
+                        @drop.prevent="handleDrop"
+                        @click="fileInput.click()"
+                    >
+                        <template v-if="uploading">
+                            <span class="drop-zone-spinner" />
+                            <span class="drop-zone-text">Uploading…</span>
+                        </template>
+                        <template v-else>
+                            <span class="drop-zone-icon">↑</span>
+                            <span class="drop-zone-text">Drop image here or click to browse</span>
+                        </template>
+                    </div>
+
+                    <form class="url-form" @submit.prevent="saveUrl">
+                        <label class="url-label">Or paste an image URL</label>
+                        <div class="url-row">
+                            <input
+                                v-model="urlInput"
+                                type="text"
+                                class="url-input"
+                                placeholder="https://example.com/photo.jpg"
+                            />
+                            <button type="submit" class="lpButton" :disabled="!urlInput.trim() || savingUrl">
+                                Add
+                            </button>
+                        </div>
                     </form>
                 </div>
-                <div class="lpHalf">
-                    <h2>Upload image from disk</h2>
-                    <template v-if="!item.image">
-                        <p class="imageUploadDescription">Your image will be hosted on imgur.</p>
-                        <button id="itemImageUpload" class="lpButton" @click="triggerImageUpload">Upload Image</button>
-                        <a class="lpHref close" @click="shown = false">Cancel</a>
-                        <p v-if="uploading">Uploading image...</p>
-                    </template>
-                    <template v-if="item.image">
-                        <button id="itemImageUpload" class="lpButton" @click="removeItemImage">Remove Image</button>
-                    </template>
-                </div>
-            </div>
+            </template>
+            <p v-else class="max-notice">Maximum of {{ MAX_IMAGES }} images per item.</p>
         </modal>
-        <form id="imageUpload" ref="imageUploadForm">
-            <input id="image" ref="imageInput" type="file" name="image" @change="uploadImage" />
-        </form>
+
+        <input ref="fileInput" type="file" accept="image/*" style="display: none" @change="handleFileChange" />
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onUnmounted } from 'vue';
+import Sortable from 'sortablejs';
 import { useLighterpackStore } from '../store/store.js';
-import { fetchJson } from '../utils/utils.js';
 import modal from './modal.vue';
+
+const MAX_IMAGES = 4;
 
 defineOptions({ name: 'ItemImage' });
 
 const store = useLighterpackStore();
 
-const imageUrl = ref(null);
+const fileInput = ref(null);
+const galleryEl = ref(null);
+const urlInput = ref('');
 const uploading = ref(false);
-const imageUploadForm = ref(null);
-const imageInput = ref(null);
+const savingUrl = ref(false);
+const isDragging = ref(false);
+
+/** @type {import('sortablejs').Sortable | null} */
+let sortableInstance = null;
 
 const shown = computed({
     get: () => !!(store.activeItemDialog && store.activeItemDialog.type === 'image'),
@@ -52,118 +87,297 @@ const shown = computed({
     },
 });
 
-const item = computed(() =>
-    store.activeItemDialog && store.activeItemDialog.type === 'image'
-        ? store.activeItemDialog.item
-        : { image: null, imageUrl: null },
-);
+const entityType = computed(() => store.activeItemDialog?.entityType ?? 'item');
+
+const dialogTitle = computed(() => {
+    if (entityType.value === 'category') return 'Manage Category Images';
+    if (entityType.value === 'list') return 'Manage List Images';
+    return 'Manage Item Images';
+});
+
+// Look up the reactive library entity so images array stays live after uploads/deletes
+const reactiveEntity = computed(() => {
+    if (!store.activeItemDialog || store.activeItemDialog.type !== 'image') return null;
+    const id = store.activeItemDialog.entity?.id;
+    if (!id || !store.library) return null;
+    if (entityType.value === 'category') return store.library.getCategoryById(id);
+    if (entityType.value === 'list') return store.library.getListById(id);
+    return store.library.getItemById(id);
+});
+
+const images = computed(() => (reactiveEntity.value?.images ?? []).slice().sort((a, b) => a.sort_order - b.sort_order));
 
 watch(shown, (val) => {
-    if (val && store.activeItemDialog) {
-        imageUrl.value = store.activeItemDialog.item.imageUrl;
+    if (val) urlInput.value = '';
+});
+
+// Mount/remount Sortable whenever the gallery element appears or disappears
+watch(galleryEl, (el) => {
+    if (sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
+    }
+    if (!el) return;
+    sortableInstance = Sortable.create(el, {
+        animation: 150,
+        onEnd(evt) {
+            const oldIndex = evt.oldIndex ?? 0;
+            const newIndex = evt.newIndex ?? 0;
+            if (oldIndex === newIndex) return;
+
+            // Revert SortableJS DOM mutation so Vue re-renders cleanly
+            if (newIndex < oldIndex) {
+                el.insertBefore(evt.item, el.children[oldIndex + 1] ?? null);
+            } else {
+                el.insertBefore(evt.item, el.children[oldIndex] ?? null);
+            }
+
+            const reordered = [...images.value];
+            const [moved] = reordered.splice(oldIndex, 1);
+            reordered.splice(newIndex, 0, moved);
+            store.reorderImages({ entityType: entityType.value, entityId: reactiveEntity.value.id, images: reordered });
+        },
+    });
+});
+
+onUnmounted(() => {
+    if (sortableInstance) {
+        sortableInstance.destroy();
+        sortableInstance = null;
     }
 });
 
-function saveImageUrl() {
-    store.updateItemImageUrl({ imageUrl: imageUrl.value, item: item.value });
-    shown.value = false;
+function viewImage(img) {
+    store.openViewImageDialog(img.url);
 }
 
-function triggerImageUpload() {
-    imageInput.value.click();
-}
-
-function uploadImage(evt) {
-    if (!FormData) {
-        alert('Your browser is not supported for file uploads. Please update to a more modern browser.');
-        return;
+async function removeImage(img) {
+    if (!reactiveEntity.value) return;
+    try {
+        await store.deleteImage({ id: img.id, entityType: entityType.value, entityId: reactiveEntity.value.id });
+    } catch {
+        store._showError('Failed to delete image.');
     }
-    const file = evt.target.files[0];
-    const name = file.name;
-    const size = file.size;
+}
+
+async function uploadFile(file) {
+    if (!reactiveEntity.value || images.value.length >= MAX_IMAGES) return;
+
     const type = file.type;
-
-    if (name.length < 1) return;
-    if (size > 2500000) {
-        alert('Please upload a file less than 2.5mb');
+    if (type !== 'image/png' && type !== 'image/jpeg' && type !== 'image/gif' && type !== 'image/webp') {
+        alert('File must be an image (PNG, JPG, GIF, or WebP).');
         return;
     }
-    if (type != 'image/png' && type != 'image/jpg' && !type != 'image/gif' && type != 'image/jpeg') {
-        alert('File doesnt match png, jpg or gif.');
+    if (file.size > 10 * 1024 * 1024) {
+        alert('Please upload a file less than 10 MB.');
         return;
     }
 
-    const formData = new FormData(imageUploadForm.value);
     uploading.value = true;
-
-    fetchJson('/api/image-upload', {
-        method: 'POST',
-        body: formData,
-        credentials: 'same-origin',
-    })
-        .then((response) => {
-            uploading.value = false;
-            store.updateItemImage({ image: response.data.id, item: item.value });
-            shown.value = false;
-        })
-        .catch((_response) => {
-            uploading.value = false;
-            alert('Upload failed! If this issue persists please file a bug.');
-        });
+    try {
+        await store.uploadImage({ file, entityType: entityType.value, entityId: reactiveEntity.value.id });
+    } catch {
+        alert('Upload failed. Please try again.');
+    } finally {
+        uploading.value = false;
+    }
 }
 
-function removeItemImage() {
-    store.removeItemImage(item.value);
-    item.value.image = '';
+function handleFileChange(evt) {
+    const file = evt.target.files[0];
+    if (file) uploadFile(file);
+    evt.target.value = '';
+}
+
+function handleDrop(evt) {
+    isDragging.value = false;
+    const file = evt.dataTransfer.files[0];
+    if (file) uploadFile(file);
+}
+
+async function saveUrl() {
+    const url = urlInput.value.trim();
+    if (!url || !reactiveEntity.value) return;
+    savingUrl.value = true;
+    try {
+        await store.addImageUrl({ entityType: entityType.value, entityId: reactiveEntity.value.id, url });
+        urlInput.value = '';
+    } catch {
+        store._showError('Failed to save image URL.');
+    } finally {
+        savingUrl.value = false;
+    }
 }
 </script>
 
 <style lang="scss">
 #itemImageDialog {
-    width: 600px;
+    width: 560px;
 }
 
-.columns {
+.image-dialog-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+// ── Gallery ──────────────────────────────────────────────────────────────────
+
+.image-gallery {
+    margin-bottom: 20px;
+}
+
+.gallery-strip {
     display: flex;
-    gap: 24px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
-.lpHalf {
-    flex: 1;
-    min-width: 0;
+.gallery-item {
+    cursor: grab;
+    position: relative;
 
-    h2 {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-
-    input[type='text'] {
-        background: #f3f2ee;
-        border: 1px solid #d0cfc9;
-        border-radius: 6px;
-        color: #1e1e1c;
-        display: block;
-        font-family: 'Figtree', system-ui, sans-serif;
-        font-size: 13px;
-        margin-bottom: 10px;
-        padding: 7px 10px;
-        width: 100%;
-
-        &:focus {
-            border-color: #e8a220;
-            outline: none;
-        }
-    }
-
-    + .lpHalf {
-        border-left: 1px solid #e8e7e1;
-        padding-left: 24px;
+    &:active {
+        cursor: grabbing;
     }
 }
 
-.imageUploadDescription {
+.gallery-thumb {
+    border-radius: 6px;
+    cursor: pointer;
+    display: block;
+    height: 80px;
+    object-fit: cover;
+    width: 80px;
+}
+
+.gallery-delete {
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-size: 14px;
+    height: 20px;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    width: 20px;
+
+    &:hover {
+        background: rgba(0, 0, 0, 0.85);
+    }
+}
+
+.gallery-hint {
+    color: #9e9c96;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+// ── Add section ──────────────────────────────────────────────────────────────
+
+.add-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.drop-zone {
+    align-items: center;
+    background: #f8f7f3;
+    border: 2px dashed #d0cfc9;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    min-height: 90px;
+    padding: 20px;
+    text-align: center;
+    transition:
+        border-color 0.15s,
+        background 0.15s;
+
+    &.is-dragging {
+        background: #fff9ee;
+        border-color: #e8a220;
+    }
+
+    &.is-uploading {
+        cursor: default;
+        opacity: 0.7;
+    }
+}
+
+.drop-zone-icon {
     color: #8a8880;
+    font-size: 22px;
+    line-height: 1;
+}
+
+.drop-zone-text {
+    color: #8a8880;
+    font-size: 13px;
+}
+
+.drop-zone-spinner {
+    animation: spin 0.8s linear infinite;
+    border: 2px solid #d0cfc9;
+    border-radius: 50%;
+    border-top-color: #e8a220;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+// ── URL form ─────────────────────────────────────────────────────────────────
+
+.url-label {
+    color: #6b6964;
+    display: block;
     font-size: 12px;
-    margin-bottom: 10px;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.url-row {
+    display: flex;
+    gap: 8px;
+}
+
+.url-input {
+    background: #f3f2ee;
+    border: 1px solid #d0cfc9;
+    border-radius: 6px;
+    color: #1e1e1c;
+    flex: 1;
+    font-family: 'Figtree', system-ui, sans-serif;
+    font-size: 13px;
+    min-width: 0;
+    padding: 7px 10px;
+
+    &:focus {
+        border-color: #e8a220;
+        outline: none;
+    }
+}
+
+.max-notice {
+    color: #8a8880;
+    font-size: 13px;
+    margin-top: 8px;
 }
 </style>

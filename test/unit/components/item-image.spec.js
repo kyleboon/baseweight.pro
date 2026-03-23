@@ -18,52 +18,56 @@ describe('ItemImage component', () => {
 
     it('is not shown when type is not image', () => {
         const store = useLighterpackStore();
-        store.activeItemDialog = { type: 'link', item: {} };
+        store.activeItemDialog = { type: 'link', entityType: 'item', entity: {} };
         const wrapper = mount(ItemImage, { global: { stubs } });
         expect(wrapper.vm.shown).toBe(false);
     });
 
     it('is shown when activeItemDialog type is image', () => {
         const store = useLighterpackStore();
-        store.activeItemDialog = { type: 'image', item: { image: null, imageUrl: null } };
+        store.activeItemDialog = { type: 'image', entityType: 'item', entity: { id: 1, images: [] } };
         const wrapper = mount(ItemImage, { global: { stubs } });
         expect(wrapper.vm.shown).toBe(true);
     });
 
     it('setting shown to false calls store.closeItemDialog', () => {
         const store = useLighterpackStore();
-        store.activeItemDialog = { type: 'image', item: { image: null, imageUrl: null } };
+        store.activeItemDialog = { type: 'image', entityType: 'item', entity: { id: 1, images: [] } };
         store.closeItemDialog = vi.fn();
         const wrapper = mount(ItemImage, { global: { stubs } });
         wrapper.vm.shown = false;
         expect(store.closeItemDialog).toHaveBeenCalled();
     });
 
-    it('item returns the dialog item when type is image', () => {
+    it('saveUrl calls store.addImageUrl with the entered url for an item', async () => {
         const store = useLighterpackStore();
-        const itemObj = { id: 1, image: null, imageUrl: 'http://img.com/a.jpg' };
-        store.activeItemDialog = { type: 'image', item: itemObj };
+        const itemObj = { id: 42, images: [] };
+        store.activeItemDialog = { type: 'image', entityType: 'item', entity: itemObj };
+        store.library = { getItemById: vi.fn(() => itemObj) };
+        store.addImageUrl = vi.fn().mockResolvedValue(undefined);
         const wrapper = mount(ItemImage, { global: { stubs } });
-        expect(wrapper.vm.item).toEqual(itemObj);
+        wrapper.vm.urlInput = 'http://img.com/new.jpg';
+        await wrapper.vm.saveUrl();
+        expect(store.addImageUrl).toHaveBeenCalledWith({
+            entityType: 'item',
+            entityId: 42,
+            url: 'http://img.com/new.jpg',
+        });
     });
 
-    it('item returns default when dialog is null', () => {
+    it('saveUrl calls store.addImageUrl with entityType category', async () => {
         const store = useLighterpackStore();
-        store.activeItemDialog = null;
+        const catObj = { id: 7, images: [] };
+        store.activeItemDialog = { type: 'image', entityType: 'category', entity: catObj };
+        store.library = { getCategoryById: vi.fn(() => catObj) };
+        store.addImageUrl = vi.fn().mockResolvedValue(undefined);
         const wrapper = mount(ItemImage, { global: { stubs } });
-        expect(wrapper.vm.item).toEqual({ image: null, imageUrl: null });
-    });
-
-    it('saveImageUrl calls store.updateItemImageUrl and closes', () => {
-        const store = useLighterpackStore();
-        const itemObj = { image: null, imageUrl: null };
-        store.activeItemDialog = { type: 'image', item: itemObj };
-        store.updateItemImageUrl = vi.fn();
-        store.closeItemDialog = vi.fn();
-        const wrapper = mount(ItemImage, { global: { stubs } });
-        wrapper.vm.imageUrl = 'http://img.com/new.jpg';
-        wrapper.vm.saveImageUrl();
-        expect(store.updateItemImageUrl).toHaveBeenCalledWith({ imageUrl: 'http://img.com/new.jpg', item: itemObj });
-        expect(store.closeItemDialog).toHaveBeenCalled();
+        wrapper.vm.urlInput = 'http://img.com/cat.jpg';
+        await wrapper.vm.saveUrl();
+        expect(store.addImageUrl).toHaveBeenCalledWith({
+            entityType: 'category',
+            entityId: 7,
+            url: 'http://img.com/cat.jpg',
+        });
     });
 });

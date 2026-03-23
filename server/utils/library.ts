@@ -121,6 +121,25 @@ export async function buildLibraryBlob(userId: string) {
               .orderBy(schema.category_items.sort_order)
         : [];
 
+    // Images for all entities (items, categories, lists)
+    const dbImages = await db
+        .select()
+        .from(schema.images)
+        .where(eq(schema.images.user_id, userId))
+        .orderBy(schema.images.sort_order);
+
+    // Build lookup: "item:123" -> [{id, url, sort_order}, ...]
+    const imagesByKey: Record<string, { id: number; url: string; sort_order: number }[]> = {};
+    for (const img of dbImages) {
+        const key = `${img.entity_type}:${img.entity_id}`;
+        if (!imagesByKey[key]) imagesByKey[key] = [];
+        imagesByKey[key].push({
+            id: img.id,
+            url: img.is_local ? `/uploads/${img.filename}` : img.filename,
+            sort_order: img.sort_order ?? 0,
+        });
+    }
+
     // Build items array — each category_item becomes a library item with id = category_item.id
     const items = dbItems.map((ci) => ({
         id: ci.id,
@@ -129,15 +148,15 @@ export async function buildLibraryBlob(userId: string) {
         weight: ci.weight ?? 0,
         authorUnit: ci.author_unit ?? 'oz',
         price: ci.price ?? 0,
-        image: ci.image ?? '',
-        imageUrl: ci.image_url ?? '',
         url: ci.url ?? '',
+        images: imagesByKey[`item:${ci.id}`] ?? [],
     }));
 
     // Build categories with categoryItems referencing item IDs
     const categories = dbCategories.map((cat) => ({
         id: cat.id,
         name: cat.name ?? '',
+        images: imagesByKey[`category:${cat.id}`] ?? [],
         categoryItems: dbItems
             .filter((ci) => ci.category_id === cat.id)
             .map((ci) => ({
@@ -155,6 +174,7 @@ export async function buildLibraryBlob(userId: string) {
         name: list.name ?? '',
         description: list.description ?? '',
         externalId: list.external_id,
+        images: imagesByKey[`list:${list.id}`] ?? [],
         categoryIds: dbCategories
             .filter((cat) => cat.list_id === list.id)
             .map((cat) => cat.id),

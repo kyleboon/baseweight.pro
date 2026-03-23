@@ -51,8 +51,6 @@ export default defineEventHandler(async (event) => {
             weight: Number(body.weight ?? 0),
             author_unit: String(body.author_unit ?? 'oz'),
             price: Number(body.price ?? 0),
-            image: String(body.image ?? ''),
-            image_url: String(body.image_url ?? ''),
             url: String(body.url ?? ''),
             qty: Number(body.qty ?? 1),
             worn: body.worn ? 1 : 0,

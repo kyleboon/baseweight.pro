@@ -1,17 +1,44 @@
 <template>
     <modal id="lpImageDialog" :shown="shown" @hide="shown = false">
-        <img :src="imageUrl" />
+        <!-- Main image display -->
+        <div class="view-image-main">
+            <button v-if="images.length > 1" class="nav-btn nav-prev" :disabled="activeIndex === 0" @click="prev">
+                ‹
+            </button>
+            <img :src="activeUrl" class="view-image-img" />
+            <button
+                v-if="images.length > 1"
+                class="nav-btn nav-next"
+                :disabled="activeIndex === images.length - 1"
+                @click="next"
+            >
+                ›
+            </button>
+        </div>
+
+        <!-- Thumbnail strip (multi-image only) -->
+        <div v-if="images.length > 1" class="view-thumb-strip">
+            <img
+                v-for="(img, i) in images"
+                :key="img.id ?? i"
+                :src="img.url ?? img"
+                class="view-thumb"
+                :class="{ 'is-active': i === activeIndex }"
+                @click="activeIndex = i"
+            />
+        </div>
     </modal>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { useLighterpackStore } from '../store/store.js';
 import modal from './modal.vue';
 
 defineOptions({ name: 'ItemViewImage' });
 
 const store = useLighterpackStore();
+const activeIndex = ref(0);
 
 const shown = computed({
     get: () => !!(store.activeItemDialog && store.activeItemDialog.type === 'viewImage'),
@@ -20,21 +47,106 @@ const shown = computed({
     },
 });
 
-const imageUrl = computed(() =>
-    store.activeItemDialog && store.activeItemDialog.type === 'viewImage' ? store.activeItemDialog.imageUrl : '',
-);
+// Normalise both { imageUrl } and { images } dialogs into a flat array
+const images = computed(() => {
+    if (!store.activeItemDialog || store.activeItemDialog.type !== 'viewImage') return [];
+    if (store.activeItemDialog.images?.length) {
+        return store.activeItemDialog.images;
+    }
+    if (store.activeItemDialog.imageUrl) {
+        return [{ id: null, url: store.activeItemDialog.imageUrl }];
+    }
+    return [];
+});
+
+const activeUrl = computed(() => {
+    const img = images.value[activeIndex.value];
+    if (!img) return '';
+    return img.url ?? img;
+});
+
+// Reset to startIndex (or 0) whenever the dialog opens
+watch(shown, (val) => {
+    if (val) activeIndex.value = store.activeItemDialog?.startIndex ?? 0;
+});
+
+function prev() {
+    if (activeIndex.value > 0) activeIndex.value--;
+}
+function next() {
+    if (activeIndex.value < images.value.length - 1) activeIndex.value++;
+}
 </script>
 
 <style lang="scss">
 #lpImageDialog {
-    width: auto;
     max-width: 90vw;
+    width: auto;
+}
 
-    img {
-        border-radius: 6px;
-        display: block;
-        max-height: 80vh;
-        max-width: 100%;
+.view-image-main {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.view-image-img {
+    border-radius: 6px;
+    display: block;
+    max-height: 70vh;
+    max-width: calc(90vw - 80px);
+    object-fit: contain;
+}
+
+.nav-btn {
+    background: none;
+    border: 1px solid #d0cfc9;
+    border-radius: 50%;
+    color: #4a4845;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-size: 22px;
+    height: 36px;
+    line-height: 1;
+    padding: 0;
+    width: 36px;
+
+    &:hover:not(:disabled) {
+        background: #f3f2ee;
+    }
+
+    &:disabled {
+        color: #c8c6c0;
+        cursor: default;
+    }
+}
+
+.view-thumb-strip {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 12px;
+    overflow-x: auto;
+}
+
+.view-thumb {
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 48px;
+    object-fit: cover;
+    opacity: 0.6;
+    transition:
+        opacity 0.15s,
+        border-color 0.15s;
+    width: 48px;
+
+    &.is-active,
+    &:hover {
+        border-color: #e8a220;
+        opacity: 1;
     }
 }
 </style>

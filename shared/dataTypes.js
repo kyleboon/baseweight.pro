@@ -29,9 +29,9 @@ class Item {
             this.authorUnit = unit;
         }
         this.price = 0.0;
-        this.image = '';
-        this.imageUrl = '';
         this.url = '';
+        /** @type {{ id: number, url: string, sort_order: number }[]} */
+        this.images = [];
     }
 
     save() {
@@ -59,6 +59,8 @@ class Category {
         this.name = '';
         /** @type {CategoryItem[]} */
         this.categoryItems = [];
+        /** @type {{ id: number, url: string, sort_order: number }[]} */
+        this.images = [];
 
         this.subtotalWeight = 0;
         this.subtotalWornWeight = 0;
@@ -202,6 +204,8 @@ class List {
         this.chart = null;
         this.description = '';
         this.externalId = '';
+        /** @type {{ id: number, url: string, sort_order: number }[]} */
+        this.images = [];
 
         this.totalWeight = 0;
         this.totalWornWeight = 0;

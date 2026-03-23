@@ -4,7 +4,7 @@ import { getDb } from '../../../../db.js';
 
 const ITEM_FIELDS = [
     'name', 'description', 'weight', 'author_unit', 'price',
-    'image', 'image_url', 'url', 'qty', 'worn', 'consumable', 'star', 'sort_order',
+    'url', 'qty', 'worn', 'consumable', 'star', 'sort_order',
 ] as const;
 
 export default defineEventHandler(async (event) => {

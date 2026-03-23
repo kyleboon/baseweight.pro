@@ -120,16 +120,9 @@
                         >
                             <span v-if="library.optionalFields.images" class="lpImageCell">
                                 <img
-                                    v-if="getItem(ci.itemId).image"
+                                    v-if="getItem(ci.itemId).images?.length"
                                     class="lpItemImage"
-                                    :src="`https://i.imgur.com/${getItem(ci.itemId).image}s.jpg`"
-                                    :href="`https://i.imgur.com/${getItem(ci.itemId).image}l.jpg`"
-                                />
-                                <img
-                                    v-else-if="getItem(ci.itemId).imageUrl"
-                                    class="lpItemImage"
-                                    :src="getItem(ci.itemId).imageUrl"
-                                    :href="getItem(ci.itemId).imageUrl"
+                                    :src="getItem(ci.itemId).images[0].url"
                                 />
                             </span>
                             <span class="lpName">
@@ -296,7 +289,7 @@ function getItem(itemId) {
 function itemClasses(ci) {
     const item = getItem(ci.itemId);
     return {
-        lpItemHasImage: !!(item.image || item.imageUrl),
+        lpItemHasImage: !!item.images?.length,
         lpItemHasPrice: !!item.price,
     };
 }

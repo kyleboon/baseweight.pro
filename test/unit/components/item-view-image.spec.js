@@ -39,17 +39,45 @@ describe('ItemViewImage component', () => {
         expect(store.closeItemDialog).toHaveBeenCalled();
     });
 
-    it('imageUrl returns the url from activeItemDialog', () => {
+    it('activeUrl returns the url from a single-url dialog', () => {
         const store = useLighterpackStore();
-        store.activeItemDialog = { type: 'viewImage', imageUrl: '/img/photo.jpg' };
+        store.activeItemDialog = { type: 'viewImage', imageUrl: '/img/photo.jpg', images: null };
         const wrapper = mount(ItemViewImage, { global: { stubs } });
-        expect(wrapper.vm.imageUrl).toBe('/img/photo.jpg');
+        expect(wrapper.vm.activeUrl).toBe('/img/photo.jpg');
     });
 
-    it('imageUrl returns empty string when no active dialog', () => {
+    it('activeUrl returns empty string when no active dialog', () => {
         const store = useLighterpackStore();
         store.activeItemDialog = null;
         const wrapper = mount(ItemViewImage, { global: { stubs } });
-        expect(wrapper.vm.imageUrl).toBe('');
+        expect(wrapper.vm.activeUrl).toBe('');
+    });
+
+    it('activeUrl returns first image url from images array', () => {
+        const store = useLighterpackStore();
+        store.activeItemDialog = {
+            type: 'viewImage',
+            imageUrl: null,
+            images: [
+                { id: 1, url: '/uploads/a.webp', sort_order: 0 },
+                { id: 2, url: '/uploads/b.webp', sort_order: 1 },
+            ],
+        };
+        const wrapper = mount(ItemViewImage, { global: { stubs } });
+        expect(wrapper.vm.activeUrl).toBe('/uploads/a.webp');
+    });
+
+    it('images array has two entries when dialog has two images', () => {
+        const store = useLighterpackStore();
+        store.activeItemDialog = {
+            type: 'viewImage',
+            imageUrl: null,
+            images: [
+                { id: 1, url: '/uploads/a.webp', sort_order: 0 },
+                { id: 2, url: '/uploads/b.webp', sort_order: 1 },
+            ],
+        };
+        const wrapper = mount(ItemViewImage, { global: { stubs } });
+        expect(wrapper.vm.images).toHaveLength(2);
     });
 });

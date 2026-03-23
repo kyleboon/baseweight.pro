@@ -16,6 +16,7 @@ function addItemToLibrary(library, serverItem, category, _isNew) {
     item.image = serverItem.image ?? '';
     item.imageUrl = serverItem.image_url ?? '';
     item.url = serverItem.url ?? '';
+    item.images = serverItem.images ?? [];
     library.items.push(item);
     library.idMap[item.id] = item;
     library.itemsMap[item.id] = item;
@@ -564,56 +565,88 @@ export const useLighterpackStore = defineStore('lighterpack', {
                 }
             }
         },
-        updateItemImageUrl(args) {
+        async updateItemImageUrl(args) {
             const item = this.library.getItemById(args.item.id);
-            const old = item.imageUrl;
-            item.imageUrl = args.imageUrl;
+            if (!item) return;
             this.library.optionalFields.images = true;
             if (this.loggedIn) {
-                const category = this.library.findCategoryWithItemById(args.item.id);
-                if (category) {
-                    this._api('PATCH', `/api/categories/${category.id}/items/${args.item.id}`, {
-                        image_url: args.imageUrl,
-                    }).catch(() => {
-                        item.imageUrl = old;
-                        this._showError('An error occurred saving the image URL.');
+                try {
+                    const result = await this._api('POST', '/api/images/url', {
+                        entityType: 'item',
+                        entityId: item.id,
+                        url: args.imageUrl,
                     });
+                    item.images.push({ id: result.id, url: result.url, sort_order: result.sort_order ?? 0 });
                     this._api('PATCH', '/api/library', { opt_images: 1 }).catch(() => {});
+                } catch {
+                    this._showError('An error occurred saving the image URL.');
                 }
+            } else {
+                // Offline: update legacy field so the thumbnail still shows
+                item.imageUrl = args.imageUrl;
             }
         },
-        updateItemImage(args) {
-            const item = this.library.getItemById(args.item.id);
-            const old = item.image;
-            item.image = args.image;
+        async uploadImage({ file, entityType, entityId }) {
+            const entity =
+                entityType === 'item'
+                    ? this.library.getItemById(entityId)
+                    : entityType === 'category'
+                      ? this.library.getCategoryById(entityId)
+                      : this.library.getListById(entityId);
+
+            const formData = new FormData();
+            formData.append('image', file);
+            formData.append('entityType', entityType);
+            formData.append('entityId', String(entityId));
+            formData.append('sortOrder', String(entity?.images?.length ?? 0));
+
+            const result = await $fetch('/api/image-upload', {
+                method: 'POST',
+                body: formData,
+                credentials: 'include',
+            });
+
+            const image = { id: result.id, url: result.url, sort_order: entity?.images?.length ?? 0 };
+            if (entity) entity.images.push(image);
+
             this.library.optionalFields.images = true;
-            if (this.loggedIn) {
-                const category = this.library.findCategoryWithItemById(args.item.id);
-                if (category) {
-                    this._api('PATCH', `/api/categories/${category.id}/items/${args.item.id}`, {
-                        image: args.image,
-                    }).catch(() => {
-                        item.image = old;
-                        this._showError('An error occurred saving the image.');
-                    });
-                    this._api('PATCH', '/api/library', { opt_images: 1 }).catch(() => {});
-                }
+            this._api('PATCH', '/api/library', { opt_images: 1 }).catch(() => {});
+            return image;
+        },
+        async deleteImage({ id, entityType, entityId }) {
+            await this._api('DELETE', `/api/images/${id}`);
+            let entity;
+            if (entityType === 'item') entity = this.library.getItemById(entityId);
+            else if (entityType === 'category') entity = this.library.getCategoryById(entityId);
+            else if (entityType === 'list') entity = this.library.getListById(entityId);
+            if (entity) {
+                const idx = entity.images.findIndex((img) => img.id === id);
+                if (idx !== -1) entity.images.splice(idx, 1);
             }
         },
-        removeItemImage(updateItem) {
-            const item = this.library.getItemById(updateItem.id);
-            const old = item.image;
-            item.image = '';
-            if (this.loggedIn) {
-                const category = this.library.findCategoryWithItemById(updateItem.id);
-                if (category) {
-                    this._api('PATCH', `/api/categories/${category.id}/items/${updateItem.id}`, {
-                        image: '',
-                    }).catch(() => {
-                        item.image = old;
-                    });
-                }
+        async reorderImages({ entityType, entityId, images }) {
+            const payload = images.map((img, index) => ({ id: img.id, sort_order: index }));
+            await this._api('POST', '/api/images/reorder', payload);
+            let entity;
+            if (entityType === 'item') entity = this.library.getItemById(entityId);
+            else if (entityType === 'category') entity = this.library.getCategoryById(entityId);
+            else if (entityType === 'list') entity = this.library.getListById(entityId);
+            if (entity) {
+                entity.images = images.map((img, index) => ({ ...img, sort_order: index }));
             }
+        },
+        async addImageUrl({ entityType, entityId, url }) {
+            const entity =
+                entityType === 'item'
+                    ? this.library.getItemById(entityId)
+                    : entityType === 'category'
+                      ? this.library.getCategoryById(entityId)
+                      : this.library.getListById(entityId);
+            if (!entity) return;
+            const result = await this._api('POST', '/api/images/url', { entityType, entityId, url });
+            entity.images.push({ id: result.id, url: result.url, sort_order: result.sort_order ?? 0 });
+            this.library.optionalFields.images = true;
+            this._api('PATCH', '/api/library', { opt_images: 1 }).catch(() => {});
         },
 
         // ── CSV import ────────────────────────────────────────────────────────
@@ -704,10 +737,19 @@ export const useLighterpackStore = defineStore('lighterpack', {
             this.activeItemDialog = { type: 'link', item, imageUrl: null };
         },
         openItemImageDialog(item) {
-            this.activeItemDialog = { type: 'image', item, imageUrl: null };
+            this.activeItemDialog = { type: 'image', entityType: 'item', entity: item };
+        },
+        openCategoryImageDialog(category) {
+            this.activeItemDialog = { type: 'image', entityType: 'category', entity: category };
+        },
+        openListImageDialog(list) {
+            this.activeItemDialog = { type: 'image', entityType: 'list', entity: list };
         },
         openViewImageDialog(imageUrl) {
-            this.activeItemDialog = { type: 'viewImage', item: null, imageUrl };
+            this.activeItemDialog = { type: 'viewImage', item: null, imageUrl, images: null };
+        },
+        openViewImagesDialog(images, startIndex = 0) {
+            this.activeItemDialog = { type: 'viewImage', item: null, imageUrl: null, images, startIndex };
         },
         closeItemDialog() {
             this.activeItemDialog = null;

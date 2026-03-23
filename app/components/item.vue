@@ -4,7 +4,20 @@
             <div class="lpItemHandle lpHandle" title="Reorder this item" />
         </span>
         <span v-if="library.optionalFields['images']" class="lpImageCell">
-            <img v-if="thumbnailImage" class="lpItemImage" :src="thumbnailImage" @click="viewItemImage()" />
+            <span v-if="item.images && item.images.length > 0" class="lpImageStrip">
+                <img
+                    v-for="(img, i) in visibleThumbnails"
+                    :key="img.id ?? i"
+                    class="lpItemThumb"
+                    :src="img.url"
+                    :title="`Image ${i + 1}`"
+                    @click="viewItemImageAt(i)"
+                />
+                <span v-if="extraImageCount > 0" class="lpThumbMore" @click="viewItemImageAt(visibleThumbnails.length)">
+                    +{{ extraImageCount }}
+                </span>
+            </span>
+            <img v-else-if="thumbnailImage" class="lpItemImage" :src="thumbnailImage" @click="viewItemImage()" />
         </span>
         <input
             v-model="item.name"
@@ -233,7 +246,20 @@ const library = computed(() => store.library);
 const item = ref({ ...props.itemContainer.item });
 const categoryItem = ref({ ...props.itemContainer.categoryItem });
 
+const MAX_VISIBLE_THUMBS = 4;
+
+const visibleThumbnails = computed(() => {
+    const sorted = (item.value.images ?? []).slice().sort((a, b) => a.sort_order - b.sort_order);
+    return sorted.slice(0, MAX_VISIBLE_THUMBS);
+});
+
+const extraImageCount = computed(() => Math.max(0, (item.value.images?.length ?? 0) - MAX_VISIBLE_THUMBS));
+
 const thumbnailImage = computed(() => {
+    if (item.value.images?.length) {
+        return item.value.images[0].url;
+    }
+    // Legacy Imgur
     if (item.value.image) {
         return `https://i.imgur.com/${item.value.image}s.jpg`;
     }
@@ -244,6 +270,10 @@ const thumbnailImage = computed(() => {
 });
 
 const fullImage = computed(() => {
+    if (item.value.images?.length) {
+        return item.value.images[0].url;
+    }
+    // Legacy Imgur
     if (item.value.image) {
         return `https://i.imgur.com/${item.value.image}l.jpg`;
     }
@@ -352,7 +382,16 @@ function updateItemImage() {
 }
 
 function viewItemImage() {
-    store.openViewImageDialog(fullImage.value);
+    if (item.value.images?.length) {
+        store.openViewImagesDialog(item.value.images.slice().sort((a, b) => a.sort_order - b.sort_order));
+    } else {
+        store.openViewImageDialog(fullImage.value);
+    }
+}
+
+function viewItemImageAt(index) {
+    const sorted = (item.value.images ?? []).slice().sort((a, b) => a.sort_order - b.sort_order);
+    store.openViewImagesDialog(sorted, index);
 }
 
 function toggleWorn() {
@@ -481,6 +520,8 @@ defineExpose({
     library,
     item,
     categoryItem,
+    visibleThumbnails,
+    extraImageCount,
     thumbnailImage,
     fullImage,
     saveItem,
@@ -495,6 +536,7 @@ defineExpose({
     updateItemLink,
     updateItemImage,
     viewItemImage,
+    viewItemImageAt,
     toggleWorn,
     toggleConsumable,
     cycleStar,
@@ -580,6 +622,48 @@ defineExpose({
 
     &:hover {
         color: #c05848;
+    }
+}
+
+/* Multi-image thumbnail strip */
+.lpImageStrip {
+    align-items: center;
+    display: flex;
+    gap: 2px;
+}
+
+.lpItemThumb {
+    border-radius: 3px;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 36px;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: opacity 120ms ease;
+    width: 36px;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.lpThumbMore {
+    align-items: center;
+    background: #e8e7e2;
+    border-radius: 3px;
+    color: #5a5954;
+    cursor: pointer;
+    display: flex;
+    font-size: 11px;
+    font-weight: 600;
+    height: 36px;
+    justify-content: center;
+    min-width: 28px;
+    padding: 0 4px;
+    transition: background 120ms ease;
+
+    &:hover {
+        background: #d0cfc9;
     }
 }
 
