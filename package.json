@@ -73,7 +73,7 @@
         "@vitejs/plugin-vue": "^6.0.5",
         "@vitest/coverage-v8": "^4.1.0",
         "@vue/test-utils": "^2.4.6",
-        "drizzle-kit": "^0.31.10",
+        "drizzle-kit": "^0.18.1",
         "eslint": "^10.0.3",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-vue": "^10.8.0",
