@@ -58,6 +58,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 .lp-popover-target {
     cursor: default;
     display: inline-block;
+
     /* Extend hit area downward to cover the gap to the panel */
     margin-bottom: -8px;
     padding-bottom: 8px;
@@ -101,6 +102,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     > *:first-child {
         margin-top: 0;
     }
+
     > *:last-child {
         margin-bottom: 0;
     }

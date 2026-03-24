@@ -38,11 +38,11 @@ const store = useLighterpackStore();
 <style lang="scss">
 .lp-global-alerts {
     left: 50%;
+    max-width: min(480px, 90vw);
     position: fixed;
     top: 0;
     transform: translateX(-50%);
     width: max-content;
-    max-width: min(480px, 90vw);
     z-index: 110;
 }
 
@@ -50,11 +50,11 @@ const store = useLighterpackStore();
     align-items: center;
     background: #fdf0d5;
     border: 0.5px solid #c07a0a;
-    border-top: none;
     border-radius: 0 0 10px 10px;
+    border-top: none;
     color: #8a520a;
     display: flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     font-weight: 500;
     gap: 8px;
@@ -62,7 +62,7 @@ const store = useLighterpackStore();
 
     & + & {
         border-radius: 0;
-        border-top: 0.5px solid rgba(192, 122, 10, 0.3);
+        border-top: 0.5px solid rgb(192 122 10 / 30%);
 
         &:last-child {
             border-radius: 0 0 10px 10px;

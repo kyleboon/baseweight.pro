@@ -57,7 +57,6 @@ defineExpose({ isOpen, isFocused, select, close, open });
 
 <style lang="scss">
 .lp-unit-select {
-    -webkit-appearance: none;
     appearance: none;
     background: transparent;
     border: none;

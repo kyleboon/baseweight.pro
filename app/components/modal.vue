@@ -66,7 +66,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     --stone-50: #fafaf7;
     --stone-300: #d0cfc9;
     --font-ui: 'Figtree', system-ui, sans-serif;
-    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-display: 'DM Serif Display', georgia, serif;
     --radius-xl: 14px;
     --space-8: 32px;
 
@@ -106,14 +106,14 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 }
 
 .lp-modal-overlay {
-    background: rgba(30, 30, 28, 0.5);
+    background: rgb(30 30 28 / 50%);
     height: 100%;
     inset: 0;
     position: fixed;
     z-index: 90;
 
     &.is-transparent {
-        background: rgba(30, 30, 28, 0.01);
+        background: rgb(30 30 28 / 1%);
     }
 }
 
@@ -156,7 +156,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
         border: 0.5px solid #d0cfc9;
         border-radius: 6px;
         color: #1e1e1c;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         height: 36px;
         outline: none;
@@ -196,7 +196,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     color: #1e1e1c;
     cursor: pointer;
     display: inline-flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     font-weight: 600;
     height: 34px;
@@ -208,10 +208,12 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
         background: #c07a0a;
         color: #fff;
     }
+
     &:focus-visible {
         outline: 2px solid #e8a220;
         outline-offset: 2px;
     }
+
     &:active {
         transform: scale(0.98);
     }
@@ -230,7 +232,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     border: 0.5px solid #c07a0a;
     border-radius: 6px;
     color: #8a520a;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     margin-bottom: 14px;
     padding: 10px 12px;
@@ -239,7 +241,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 .lpHref {
     color: #4d84b4;
     cursor: pointer;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     text-decoration: none;
     transition: color 120ms ease;

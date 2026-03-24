@@ -78,7 +78,7 @@ async function sendMagicLink() {
     border-left: 3px solid #e8a220;
     border-radius: 6px;
     color: #1e1e1c;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     line-height: 1.5;
     padding: 10px 14px;

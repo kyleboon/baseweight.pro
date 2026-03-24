@@ -101,7 +101,7 @@ function updateCurrencySymbol(evt) {
         align-items: center;
         cursor: pointer;
         display: flex;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         gap: 8px;
         padding: 4px 0;
@@ -128,7 +128,7 @@ function updateCurrencySymbol(evt) {
     label {
         align-items: center;
         display: flex;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         gap: 6px;
     }

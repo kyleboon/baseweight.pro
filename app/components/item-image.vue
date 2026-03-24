@@ -229,8 +229,8 @@ async function saveUrl() {
 
 .gallery-strip {
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
+    gap: 8px;
 }
 
 .gallery-item {
@@ -253,7 +253,7 @@ async function saveUrl() {
 
 .gallery-delete {
     align-items: center;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgb(0 0 0 / 60%);
     border: none;
     border-radius: 50%;
     color: #fff;
@@ -270,7 +270,7 @@ async function saveUrl() {
     width: 20px;
 
     &:hover {
-        background: rgba(0, 0, 0, 0.85);
+        background: rgb(0 0 0 / 85%);
     }
 }
 
@@ -364,7 +364,7 @@ async function saveUrl() {
     border-radius: 6px;
     color: #1e1e1c;
     flex: 1;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     min-width: 0;
     padding: 7px 10px;

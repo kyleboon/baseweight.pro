@@ -200,11 +200,11 @@ function handleCategoryReorder() {
 /* ── List header ─────────────────────────────────────────────── */
 .lp-list-header {
     align-items: center;
+    border-bottom: 1px solid #e8e7e1;
     display: flex;
     gap: 8px;
     margin: 0 -20px 20px;
     padding: 10px 16px;
-    border-bottom: 1px solid #e8e7e1;
 }
 
 .lp-list-title {
@@ -246,15 +246,15 @@ function handleCategoryReorder() {
     /* Style the share component trigger when rendered here */
     .headerItem {
         align-items: center;
+        border-radius: 6px;
         color: #8a8880;
         cursor: pointer;
         display: flex;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         font-weight: 500;
         gap: 5px;
         padding: 6px 10px;
-        border-radius: 6px;
         transition:
             color 120ms ease,
             background-color 120ms ease;
@@ -320,7 +320,7 @@ function handleCategoryReorder() {
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     height: 220px;
     justify-content: center;
     line-height: 1.6;
@@ -346,11 +346,11 @@ function handleCategoryReorder() {
 
 /* "Add new category" link */
 .addCategory {
+    align-items: center;
     color: #8a8880;
     cursor: pointer;
-    align-items: center;
     display: inline-flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     gap: 4px;
     margin-top: 16px;

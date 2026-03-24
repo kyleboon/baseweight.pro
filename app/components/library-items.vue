@@ -172,7 +172,7 @@ function removeItem(item) {
     border: 0.5px solid #3b3b37;
     border-radius: 6px;
     color: #c8c6bc;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     margin-bottom: 8px;
     outline: none;
@@ -218,6 +218,7 @@ function removeItem(item) {
     &:first-child {
         border-top: none;
     }
+
     &:last-child {
         border-bottom: none;
     }
@@ -226,6 +227,7 @@ function removeItem(item) {
         .lp-gear-drag-handle {
             opacity: 1;
         }
+
         .lp-gear-remove {
             opacity: 1;
         }
@@ -262,6 +264,7 @@ function removeItem(item) {
     &:active {
         cursor: grabbing;
     }
+
     &:hover {
         color: #5a5954;
     }
@@ -283,7 +286,7 @@ function removeItem(item) {
 
 .lp-gear-item-name {
     color: #c8c6bc;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 400;
     overflow: hidden;
@@ -306,7 +309,7 @@ function removeItem(item) {
 .lp-gear-item-desc {
     color: #5a5954;
     display: block;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 11px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -354,6 +357,7 @@ function removeItem(item) {
     &:hover {
         color: #c87171;
     }
+
     &:focus-visible {
         outline: 2px solid #e8a220;
         outline-offset: 2px;

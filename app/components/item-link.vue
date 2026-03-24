@@ -57,7 +57,7 @@ function addLink() {
         border: 1px solid #d0cfc9;
         border-radius: 6px;
         color: #1e1e1c;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         padding: 7px 10px;
         width: 100%;

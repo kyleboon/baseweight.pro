@@ -598,14 +598,17 @@ defineExpose({
     &.lpStar0 {
         color: #c8c7c2;
     }
+
     &.lpStar1 {
         color: #e8a220;
         visibility: visible;
     }
+
     &.lpStar2 {
         color: #d68a00;
         visibility: visible;
     }
+
     &.lpStar3 {
         color: #b06e00;
         visibility: visible;
@@ -617,8 +620,8 @@ defineExpose({
     color: #c8c7c2;
     cursor: pointer;
     display: inline-flex;
-    visibility: hidden;
     transition: color 120ms ease;
+    visibility: hidden;
 
     &:hover {
         color: #c05848;

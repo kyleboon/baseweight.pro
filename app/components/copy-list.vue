@@ -58,7 +58,7 @@ function copyList() {
     color: #1e1e1c;
     cursor: pointer;
     display: block;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     margin: 8px 0 16px;
     padding: 7px 32px 7px 10px;

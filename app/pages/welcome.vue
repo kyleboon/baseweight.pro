@@ -253,21 +253,17 @@ onBeforeMount(() => {
     --charcoal-500: #5a5954;
     --charcoal-300: #8a8880;
     --charcoal-100: #c8c6bc;
-
     --amber-50: #fdf0d5;
     --amber-400: #e8a220;
     --amber-600: #c07a0a;
-
     --stone-50: #fafaf7;
     --stone-100: #f3f2ee;
     --stone-200: #e8e7e2;
     --stone-300: #d0cfc9;
     --stone-500: #a8a79f;
-
-    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-display: 'DM Serif Display', georgia, serif;
     --font-ui: 'Figtree', system-ui, sans-serif;
     --font-mono: 'DM Mono', 'Fira Mono', monospace;
-
     --text-xs: 11px;
     --text-sm: 13px;
     --text-base: 15px;
@@ -275,7 +271,6 @@ onBeforeMount(() => {
     --text-xl: 20px;
     --text-2xl: 26px;
     --text-3xl: 34px;
-
     --space-1: 4px;
     --space-2: 8px;
     --space-3: 12px;
@@ -284,76 +279,74 @@ onBeforeMount(() => {
     --space-6: 24px;
     --space-8: 32px;
     --space-10: 40px;
-
     --radius-sm: 4px;
     --radius-md: 6px;
     --radius-lg: 10px;
     --radius-xl: 14px;
     --radius-pill: 999px;
-
     --transition-fast: 120ms ease;
 
-    font-family: var(--font-ui);
     background: var(--stone-50);
     color: var(--charcoal-950);
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: var(--font-ui);
+    min-height: 100vh;
 }
 
 /* ── Wordmark ──────────────────────────────────────────────── */
 .lp-landing .lp-wordmark {
+    color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: 19px;
     font-weight: 400;
-    color: var(--charcoal-100);
     letter-spacing: -0.01em;
-    user-select: none;
     line-height: 1;
+    user-select: none;
 }
 
 .lp-landing .lp-wordmark-beta {
+    color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
     font-weight: 500;
-    color: var(--charcoal-500);
     letter-spacing: 0.04em;
+    margin-left: 4px;
     text-transform: uppercase;
     vertical-align: middle;
-    margin-left: 4px;
 }
 
 /* ── HERO ──────────────────────────────────────────────────── */
 .lp-hero {
     display: flex;
-    min-height: 100vh;
     flex: 1;
+    min-height: 100vh;
 }
 
 /* Left dark panel */
 .lp-hero-left {
-    flex: 0 0 400px;
     background: var(--charcoal-900);
-    padding: 56px 48px;
     display: flex;
+    flex: 0 0 400px;
     flex-direction: column;
-    justify-content: center;
     gap: var(--space-8);
+    justify-content: center;
+    padding: 56px 48px;
 }
 
 .lp-hero-brand {
-    display: flex;
     align-items: baseline;
+    display: flex;
     gap: 0;
 }
 
 .lp-hero-headline {
+    color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: var(--text-3xl);
     font-weight: 400;
-    line-height: 1.1;
     letter-spacing: -0.02em;
-    color: var(--charcoal-100);
+    line-height: 1.1;
     margin: 0;
 
     em {
@@ -363,44 +356,44 @@ onBeforeMount(() => {
 }
 
 .lp-hero-body {
+    color: var(--charcoal-300);
     font-family: var(--font-ui);
     font-size: var(--text-base);
     font-weight: 400;
     line-height: 1.65;
-    color: var(--charcoal-300);
     margin: 0;
 }
 
 /* Signin form override — fits dark panel context */
 .lp-hero-signin {
     .lpSuccess {
+        color: var(--amber-400);
         font-family: var(--font-ui);
         font-size: var(--text-sm);
-        color: var(--amber-400);
         line-height: 1.5;
     }
 
     .lpError {
+        color: #c05848;
         font-family: var(--font-ui);
         font-size: var(--text-sm);
-        color: #c05848;
         line-height: 1.5;
     }
 
     .lpFields {
         input[type='email'] {
             background: var(--charcoal-800);
-            border: 0.5px solid rgba(200, 198, 188, 0.18);
+            border: 0.5px solid rgb(200 198 188 / 18%);
             border-radius: var(--radius-md);
             color: var(--charcoal-100);
+            display: block;
             font-family: var(--font-ui);
             font-size: var(--text-base);
-            padding: 10px 14px;
-            width: 100%;
-            display: block;
             margin: 0 0 var(--space-3);
             outline: none;
+            padding: 10px 14px;
             transition: border-color var(--transition-fast);
+            width: 100%;
 
             &::placeholder {
                 color: var(--charcoal-500);
@@ -417,23 +410,23 @@ onBeforeMount(() => {
     .lpButton {
         background: var(--amber-400) !important;
         background-image: none !important;
+        border-radius: var(--radius-lg) !important;
         box-shadow: none !important;
         color: var(--charcoal-900) !important;
         font-family: var(--font-ui) !important;
         font-size: var(--text-base) !important;
         font-weight: 600 !important;
         height: 42px;
-        border-radius: var(--radius-lg) !important;
+        letter-spacing: 0;
         padding: 11px 20px !important;
-        width: 100%;
         text-shadow: none !important;
         transition: background-color var(--transition-fast) !important;
-        letter-spacing: 0;
+        width: 100%;
 
         &:hover:not(:disabled) {
             background: var(--amber-600) !important;
-            color: #fff !important;
             box-shadow: none !important;
+            color: #fff !important;
         }
 
         &:focus-visible {
@@ -453,189 +446,189 @@ onBeforeMount(() => {
 
 /* Right light panel */
 .lp-hero-right {
-    flex: 1;
-    min-width: 0;
-    max-width: 760px;
     background: var(--stone-50);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: var(--space-8);
-    padding: var(--space-8) var(--space-8);
     border-left: 0.5px solid var(--stone-200);
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--space-8);
+    justify-content: center;
+    max-width: 760px;
+    min-width: 0;
+    padding: var(--space-8) var(--space-8);
 }
 
 /* ── Inline features ───────────────────────────────────────── */
 .lp-features-inline {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-6);
-    max-width: 620px;
-    width: 100%;
     align-self: center;
-    padding-bottom: var(--space-2);
     border-bottom: 0.5px solid var(--stone-200);
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 620px;
+    padding-bottom: var(--space-2);
+    width: 100%;
 }
 
 .lp-feature-inline {
+    align-items: flex-start;
     display: flex;
     gap: var(--space-2);
-    align-items: flex-start;
 }
 
 .lp-feature-inline-num {
+    color: var(--amber-400);
+    flex-shrink: 0;
     font-family: var(--font-mono);
     font-size: var(--text-lg);
-    font-weight: 500;
-    color: var(--amber-400);
     font-variant-numeric: tabular-nums;
+    font-weight: 500;
     line-height: 1.2;
-    flex-shrink: 0;
 }
 
 .lp-feature-inline-title {
+    color: var(--charcoal-950);
     font-family: var(--font-ui);
     font-size: var(--text-base);
     font-weight: 600;
-    color: var(--charcoal-950);
     line-height: 1.3;
     margin-bottom: 3px;
 }
 
 .lp-feature-inline-body {
+    color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
     font-weight: 400;
     line-height: 1.6;
-    color: var(--charcoal-500);
 }
 
 /* ── App mockup ────────────────────────────────────────────── */
 .lp-mockup {
-    width: 100%;
-    max-width: 620px;
-    height: 460px;
     align-self: center;
-    display: flex;
+    background: var(--stone-50);
     border: 0.5px solid var(--stone-300);
     border-radius: var(--radius-xl);
+    display: flex;
+    height: 460px;
+    max-width: 620px;
     overflow: hidden;
-    background: var(--stone-50);
+    width: 100%;
 }
 
 .lp-mockup-sidebar {
-    width: 148px;
-    flex-shrink: 0;
     background: var(--charcoal-900);
-    padding: 16px 12px;
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
     gap: 4px;
+    padding: 16px 12px;
+    width: 148px;
 }
 
 .lp-mockup-wordmark {
+    color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: 13px;
     font-weight: 400;
-    color: var(--charcoal-100);
     letter-spacing: -0.01em;
     margin-bottom: 14px;
     user-select: none;
 }
 
 .lp-mockup-section-label {
+    color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
     font-weight: 500;
     letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--charcoal-500);
-    padding: 4px 6px 2px;
     margin-top: 6px;
+    padding: 4px 6px 2px;
+    text-transform: uppercase;
 }
 
 .lp-mockup-divider {
-    height: 0.5px;
     background: var(--charcoal-700);
+    height: 0.5px;
     margin: 6px 0;
 }
 
 .lp-mockup-nav {
+    border-radius: var(--radius-sm);
+    color: var(--charcoal-300);
+    cursor: default;
     font-family: var(--font-ui);
     font-size: var(--text-sm);
-    color: var(--charcoal-300);
-    padding: 5px 8px;
-    border-radius: var(--radius-sm);
-    white-space: nowrap;
     overflow: hidden;
+    padding: 5px 8px;
     text-overflow: ellipsis;
-    cursor: default;
+    white-space: nowrap;
 
     &.active {
-        background: rgba(232, 162, 32, 0.12);
+        background: rgb(232 162 32 / 12%);
         color: var(--amber-400);
     }
 
     &.muted {
-        font-size: var(--text-xs);
         color: var(--charcoal-500);
-        padding-top: 3px;
+        font-size: var(--text-xs);
         padding-bottom: 3px;
+        padding-top: 3px;
     }
 }
 
 .lp-mockup-content {
-    flex: 1;
-    padding: 16px 20px;
-    overflow: hidden;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 12px;
+    overflow: hidden;
+    padding: 16px 20px;
 }
 
 .lp-mockup-header {
-    display: flex;
     align-items: center;
+    border-bottom: 0.5px solid var(--stone-200);
+    display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
-    border-bottom: 0.5px solid var(--stone-200);
 }
 
 .lp-mockup-list-title {
+    color: var(--charcoal-950);
     font-family: var(--font-display);
     font-size: var(--text-xl);
     font-weight: 400;
-    color: var(--charcoal-950);
     letter-spacing: -0.01em;
 }
 
 .lp-mockup-share-chip {
+    background: var(--amber-400);
+    border-radius: var(--radius-md);
+    color: var(--charcoal-900);
+    cursor: default;
     font-family: var(--font-ui);
     font-size: var(--text-xs);
     font-weight: 500;
-    color: var(--charcoal-900);
-    background: var(--amber-400);
     padding: 4px 10px;
-    border-radius: var(--radius-md);
-    cursor: default;
 }
 
 .lp-mockup-chart-block {
-    display: flex;
     align-items: flex-start;
-    gap: 16px;
+    display: flex;
     flex-shrink: 0;
+    gap: 16px;
 }
 
 .lp-mockup-donut {
-    width: 100px;
-    height: 100px;
     flex-shrink: 0;
+    height: 100px;
+    width: 100px;
 }
 
 .lp-mockup-right-col {
-    flex: 1;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 10px;
 }
@@ -647,27 +640,27 @@ onBeforeMount(() => {
 }
 
 .lp-mockup-legend-row {
-    display: flex;
     align-items: center;
-    gap: 5px;
+    color: var(--charcoal-950);
+    display: flex;
     font-family: var(--font-ui);
     font-size: var(--text-xs);
-    color: var(--charcoal-950);
+    gap: 5px;
 
     &.total {
         border-top: 0.5px solid var(--stone-200);
-        padding-top: 3px;
-        margin-top: 1px;
         font-weight: 600;
+        margin-top: 1px;
+        padding-top: 3px;
     }
 }
 
 .lp-mockup-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
     border-radius: 50%;
+    display: inline-block;
     flex-shrink: 0;
+    height: 8px;
+    width: 8px;
 }
 
 .lp-mockup-cat {
@@ -678,9 +671,9 @@ onBeforeMount(() => {
 }
 
 .lp-mockup-weight {
+    color: var(--charcoal-500);
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
-    color: var(--charcoal-500);
     white-space: nowrap;
 }
 
@@ -694,51 +687,51 @@ onBeforeMount(() => {
 }
 
 .lp-mockup-stat {
-    flex: 1;
     background: var(--stone-100);
     border-radius: var(--radius-md);
-    padding: 7px 8px;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 2px;
+    padding: 7px 8px;
 }
 
 .lp-mockup-stat-num {
+    color: var(--charcoal-950);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    font-weight: 500;
     font-variant-numeric: tabular-nums;
-    color: var(--charcoal-950);
+    font-weight: 500;
     line-height: 1;
 }
 
 .lp-mockup-stat-label {
+    color: var(--stone-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
-    color: var(--stone-500);
 }
 
 .lp-mockup-category {
+    color: var(--charcoal-950);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
     font-weight: 600;
-    color: var(--charcoal-950);
     letter-spacing: -0.01em;
     margin-bottom: 2px;
 }
 
 .lp-mockup-table {
-    width: 100%;
     border-collapse: collapse;
     font-family: var(--font-ui);
     font-size: var(--text-xs);
+    width: 100%;
 
     th {
-        text-align: left;
-        font-weight: 600;
-        color: var(--charcoal-500);
-        padding: 0 6px 4px;
         border-bottom: 0.5px solid var(--stone-300);
+        color: var(--charcoal-500);
+        font-weight: 600;
+        padding: 0 6px 4px;
+        text-align: left;
     }
 
     th:first-child {
@@ -746,9 +739,9 @@ onBeforeMount(() => {
     }
 
     td {
-        padding: 5px 6px;
-        color: var(--charcoal-950);
         border-bottom: 0.5px solid var(--stone-200);
+        color: var(--charcoal-950);
+        padding: 5px 6px;
         vertical-align: middle;
     }
 
@@ -760,10 +753,10 @@ onBeforeMount(() => {
     td:nth-child(3),
     th:nth-child(2),
     th:nth-child(3) {
-        text-align: right;
+        color: var(--charcoal-500);
         font-family: var(--font-mono);
         font-variant-numeric: tabular-nums;
-        color: var(--charcoal-500);
+        text-align: right;
         white-space: nowrap;
     }
 
@@ -773,7 +766,7 @@ onBeforeMount(() => {
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 900px) {
+@media (width <= 900px) {
     .lp-hero {
         flex-direction: column;
         min-height: auto;
@@ -791,19 +784,19 @@ onBeforeMount(() => {
     }
 
     .lp-mockup {
-        max-width: 100%;
         height: auto;
+        max-width: 100%;
         min-height: 360px;
     }
 
     .lp-features-inline {
-        grid-template-columns: 1fr;
         gap: var(--space-5);
+        grid-template-columns: 1fr;
         max-width: 100%;
     }
 }
 
-@media (max-width: 600px) {
+@media (width <= 600px) {
     .lp-hero-left {
         padding: 40px 24px;
     }

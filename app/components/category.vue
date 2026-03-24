@@ -187,7 +187,7 @@ function removeCategory(category) {
 }
 
 .lpCategoryName {
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 14px;
     font-weight: 600;
 
@@ -202,7 +202,7 @@ function removeCategory(category) {
     color: #8a8880;
     cursor: pointer;
     display: inline-flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     gap: 4px;
     text-decoration: none;

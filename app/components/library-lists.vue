@@ -133,7 +133,7 @@ function removeList(list) {
 
 .lp-label-xs {
     color: #5a5954;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.06em;
@@ -156,6 +156,7 @@ function removeList(list) {
     &:hover .lp-drag-handle {
         opacity: 1;
     }
+
     &:hover .lp-nav-remove {
         opacity: 1;
     }
@@ -178,6 +179,7 @@ function removeList(list) {
     &:active {
         cursor: grabbing;
     }
+
     &:hover {
         color: #5a5954;
     }
@@ -193,7 +195,7 @@ function removeList(list) {
     cursor: pointer;
     display: flex;
     flex: 1;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     font-weight: 400;
     min-width: 0;
@@ -216,7 +218,7 @@ function removeList(list) {
         font-weight: 500;
 
         &:hover {
-            background-color: rgba(232, 162, 32, 0.08);
+            background-color: rgb(232 162 32 / 8%);
         }
     }
 
@@ -249,6 +251,7 @@ function removeList(list) {
     &:hover {
         color: #c87171;
     }
+
     &:focus-visible {
         outline: 2px solid #e8a220;
         outline-offset: 2px;
@@ -270,11 +273,11 @@ function removeList(list) {
     color: #e8a220;
     cursor: pointer;
     display: inline-flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 500;
     gap: 4px;
-    padding: 4px 4px;
+    padding: 4px;
     text-align: left;
     text-decoration: none;
     transition: color 120ms ease;
@@ -282,10 +285,11 @@ function removeList(list) {
     &:hover {
         color: #c07a0a;
     }
+
     &:focus-visible {
+        border-radius: 4px;
         outline: 2px solid #e8a220;
         outline-offset: 2px;
-        border-radius: 4px;
     }
 }
 

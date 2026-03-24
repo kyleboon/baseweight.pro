@@ -58,7 +58,7 @@ function signout() {
     --amber-400: #e8a220;
     --amber-600: #c07a0a;
     --font-ui: 'Figtree', system-ui, sans-serif;
-    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-display: 'DM Serif Display', georgia, serif;
     --font-mono: 'DM Mono', 'Fira Mono', monospace;
     --radius-md: 6px;
     --radius-sm: 4px;

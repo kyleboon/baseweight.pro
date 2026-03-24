@@ -91,7 +91,7 @@ const sanitizedErrors = computed(() => {
     align-items: center;
     color: #c05848;
     display: flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 500;
     gap: 6px;

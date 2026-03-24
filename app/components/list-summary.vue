@@ -195,7 +195,7 @@ function colorToHex(color) {
     --col-weight: 96px;
     --cols: var(--col-dot) 1fr var(--col-weight);
 
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     width: 100%;
 
@@ -285,7 +285,7 @@ function colorToHex(color) {
 
 .lp-s-qty {
     color: #8a8880;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 11px;
     font-weight: 400;
 }

@@ -125,7 +125,7 @@ function focusShare(_evt) {
 
 .lp-share-label {
     color: #1e1e1c;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -156,7 +156,7 @@ textarea.lp-share-input {
     align-items: center;
     color: #8a8880;
     display: inline-flex;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     gap: 5px;
     margin-top: 4px;

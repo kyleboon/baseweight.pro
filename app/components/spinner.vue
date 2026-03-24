@@ -23,7 +23,7 @@ defineOptions({ name: 'Spinner' });
 
 .lp-spinner-ring {
     animation: lp-spin 0.65s linear infinite;
-    border: 1.5px solid rgba(232, 162, 32, 0.25);
+    border: 1.5px solid rgb(232 162 32 / 25%);
     border-radius: 50%;
     border-top-color: #e8a220;
     display: block;
@@ -43,7 +43,7 @@ defineOptions({ name: 'Spinner' });
     transform: translateY(-50%);
 
     .lp-spinner-ring {
-        border-color: rgba(255, 255, 255, 0.3);
+        border-color: rgb(255 255 255 / 30%);
         border-top-color: #fff;
         height: 14px;
         width: 14px;

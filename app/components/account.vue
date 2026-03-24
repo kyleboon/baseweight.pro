@@ -102,7 +102,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
 
 .lp-account-section-title {
     color: #1e1e1c;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.04em;
@@ -124,7 +124,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
         align-items: center;
         cursor: pointer;
         display: flex;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         gap: 8px;
         padding: 4px 0;
@@ -151,7 +151,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
     label {
         align-items: center;
         display: flex;
-        font-family: 'Figtree', system-ui, sans-serif;
+        font-family: Figtree, system-ui, sans-serif;
         font-size: 13px;
         gap: 6px;
     }

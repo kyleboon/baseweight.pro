@@ -209,7 +209,7 @@ function truncate(str, max = 18) {
 
 .lp-center-name {
     fill: #1e1e1c;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 600;
 }

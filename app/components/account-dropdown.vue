@@ -74,7 +74,7 @@ function signout() {
     color: #5a5954;
     cursor: pointer;
     display: block;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 13px;
     padding: 5px 8px;
     text-decoration: none;
