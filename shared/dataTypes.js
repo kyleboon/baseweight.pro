@@ -582,7 +582,9 @@ class Library {
      * @param {string} type
      */
     renderChart(type) {
-        return this.getListById(this.defaultListId).renderChart(type);
+        const list = this.getListById(this.defaultListId);
+        if (!list) return false;
+        return list.renderChart(type);
     }
 
     /**
@@ -607,8 +609,10 @@ class Library {
     }
 
     getItemsInCurrentList() {
+        /** @type {any[]} */
         const out = [];
         const list = this.getListById(this.defaultListId);
+        if (!list) return out;
         for (let i = 0; i < list.categoryIds.length; i++) {
             const category = this.getCategoryById(list.categoryIds[i]);
             if (category) {
