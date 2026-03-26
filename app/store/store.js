@@ -671,6 +671,10 @@ export const useLighterpackStore = defineStore('lighterpack', {
                     categoryItem.qty = parseFloat(row.qty);
                     item.weight = weightUtils.WeightToMg(parseFloat(row.weight), row.unit);
                     item.authorUnit = row.unit;
+                    item.url = row.url || '';
+                    item.price = row.price || 0;
+                    categoryItem.worn = row.worn || 0;
+                    categoryItem.consumable = row.consumable || false;
                     category.name = row.category;
                 }
                 list.calculateTotals();
@@ -700,6 +704,10 @@ export const useLighterpackStore = defineStore('lighterpack', {
                         weight,
                         author_unit: row.unit,
                         qty: parseFloat(row.qty),
+                        url: row.url || '',
+                        price: row.price || 0,
+                        worn: row.worn || 0,
+                        consumable: row.consumable || false,
                     });
                     addItemToLibrary(this.library, serverItem, category);
                 }
