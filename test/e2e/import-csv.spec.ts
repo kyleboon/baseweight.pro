@@ -18,6 +18,14 @@ const VALID_CSV = [
 /** A CSV whose only data row has an unrecognised unit — no valid rows after filtering. */
 const INVALID_UNIT_CSV = ['Item Name,Category,Description,Qty,Weight,Unit', 'Tent,Shelter,desc,1,16,stone'].join('\n');
 
+/** A full 10-column CSV matching the LighterPack export format. */
+const FULL_CSV = [
+    'Item Name,Category,desc,qty,weight,unit,url,price,worn,consumable',
+    'Tent,Shelter,3-season tent,1,32,ounce,https://example.com/tent,350,Worn,',
+    'Water Filter,Consumables,Squeeze filter,1,3,ounce,https://example.com/filter,35,,Consumable',
+    'Rain Jacket,Clothing,Lightweight shell,1,8,ounce,,200,Worn,',
+].join('\n');
+
 test.describe('CSV import', () => {
     test('should open the import validation modal with a valid CSV', async ({ page }) => {
         await freshUser(page);
@@ -101,5 +109,79 @@ test.describe('CSV import', () => {
         );
 
         await expect(page.locator('#importValidate')).toBeHidden();
+    });
+
+    test('should import all fields from a full 10-column CSV', async ({ page }) => {
+        await freshUser(page);
+
+        await page.locator('#csv').setInputFiles(
+            {
+                name: 'full_gear.csv',
+                mimeType: 'text/csv',
+                buffer: Buffer.from(FULL_CSV),
+            },
+            { force: true },
+        );
+
+        // The validation modal should appear with all three items
+        await expect(page.locator('#importValidate')).toBeVisible();
+        await expect(page.locator('#importData .lpRow:not(.lpHeader)')).toHaveCount(3);
+
+        // Price, Worn, and Consumable columns should be visible in the header
+        const header = page.locator('#importData .lpHeader');
+        await expect(header).toContainText('Price');
+        await expect(header).toContainText('Worn');
+        await expect(header).toContainText('Consumable');
+
+        // Confirm the import
+        await page.locator('#importConfirm').click();
+        await expect(page.locator('#importValidate')).toBeHidden();
+
+        // All three items should be in the list
+        await expect(page.locator('.lpItem')).toHaveCount(3);
+
+        // Verify the imported data via the store
+        const storeData = await page.evaluate(() => {
+            const app = (document.getElementById('lp') as any).__vue_app__;
+            const store = app.config.globalProperties.$store;
+            const lib = store.library;
+            const list = lib.getListById(lib.defaultListId);
+            const items = [];
+            for (const catId of list.categoryIds) {
+                const cat = lib.getCategoryById(catId);
+                for (const ci of cat.categoryItems) {
+                    const item = lib.getItemById(ci.itemId);
+                    items.push({
+                        name: item.name,
+                        url: item.url,
+                        price: item.price,
+                        worn: ci.worn,
+                        consumable: ci.consumable,
+                    });
+                }
+            }
+            return items;
+        });
+
+        // Tent: url set, price 350, worn, not consumable
+        const tent = storeData.find((i: any) => i.name === 'Tent');
+        expect(tent.url).toBe('https://example.com/tent');
+        expect(tent.price).toBe(350);
+        expect(tent.worn).toBeTruthy();
+        expect(tent.consumable).toBeFalsy();
+
+        // Water Filter: url set, price 35, not worn, consumable
+        const filter = storeData.find((i: any) => i.name === 'Water Filter');
+        expect(filter.url).toBe('https://example.com/filter');
+        expect(filter.price).toBe(35);
+        expect(filter.worn).toBeFalsy();
+        expect(filter.consumable).toBeTruthy();
+
+        // Rain Jacket: no url, price 200, worn, not consumable
+        const jacket = storeData.find((i: any) => i.name === 'Rain Jacket');
+        expect(jacket.url).toBe('');
+        expect(jacket.price).toBe(200);
+        expect(jacket.worn).toBeTruthy();
+        expect(jacket.consumable).toBeFalsy();
     });
 });
