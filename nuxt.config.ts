@@ -6,6 +6,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineNuxtConfig({
     runtimeConfig: {
         enableTestEndpoints: process.env.ENABLE_TEST_ENDPOINTS === 'true',
+        disableRateLimiting: process.env.DISABLE_RATE_LIMITING === 'true',
     },
     modules: ['@pinia/nuxt'],
     app: {
