@@ -22,6 +22,20 @@
             "when": 1773932702406,
             "tag": "0002_images_table",
             "breakpoints": true
+        },
+        {
+            "idx": 3,
+            "version": "6",
+            "when": 1773932702407,
+            "tag": "0003_remove_legacy_image_columns",
+            "breakpoints": true
+        },
+        {
+            "idx": 4,
+            "version": "6",
+            "when": 1773932702408,
+            "tag": "0004_add_compound_indexes",
+            "breakpoints": true
         }
     ]
 }
