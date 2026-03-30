@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { getDb } from '../db.js';
 import { eq, inArray } from 'drizzle-orm';
+import { SQLiteTransaction } from 'drizzle-orm/sqlite-core';
 import * as schema from '../schema.js';
 
 // ---------------------------------------------------------------------------
@@ -16,11 +17,14 @@ function generateExternalId(): string {
         .slice(0, 6);
 }
 
-export async function generateUniqueExternalId(): Promise<string> {
-    const db = getDb();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type DbOrTx = ReturnType<typeof getDb> | SQLiteTransaction<'sync', any, any, any>;
+
+export function generateUniqueExternalId(tx?: DbOrTx): string {
+    const conn = tx ?? getDb();
     while (true) {
         const id = generateExternalId();
-        const existing = await db.select().from(schema.lists).where(eq(schema.lists.external_id, id));
+        const existing = conn.select().from(schema.lists).where(eq(schema.lists.external_id, id)).all();
         if (!existing.length) return id;
     }
 }
@@ -29,34 +33,39 @@ export async function generateUniqueExternalId(): Promise<string> {
 // New-user library initialisation
 // ---------------------------------------------------------------------------
 
-export async function initNewUserLibrary(userId: string) {
+export function initNewUserLibrary(userId: string) {
     const db = getDb();
-    const now = Math.floor(Date.now() / 1000);
 
-    // Create library settings with defaults
-    await db.insert(schema.library_settings).values({ user_id: userId });
+    db.transaction((tx) => {
+        const now = Math.floor(Date.now() / 1000);
 
-    // Create the initial list
-    const externalId = await generateUniqueExternalId();
-    const [list] = await db
-        .insert(schema.lists)
-        .values({ user_id: userId, name: '', external_id: externalId, sort_order: 0, created_at: now })
-        .returning();
+        // Create library settings with defaults
+        tx.insert(schema.library_settings).values({ user_id: userId }).run();
 
-    // Set as default list
-    await db
-        .update(schema.library_settings)
-        .set({ default_list_id: list.id })
-        .where(eq(schema.library_settings.user_id, userId));
+        // Create the initial list
+        const externalId = generateUniqueExternalId(tx);
+        const [list] = tx
+            .insert(schema.lists)
+            .values({ user_id: userId, name: '', external_id: externalId, sort_order: 0, created_at: now })
+            .returning()
+            .all();
 
-    // Create the initial category
-    const [category] = await db
-        .insert(schema.categories)
-        .values({ user_id: userId, list_id: list.id, name: '', sort_order: 0 })
-        .returning();
+        // Set as default list
+        tx.update(schema.library_settings)
+            .set({ default_list_id: list.id })
+            .where(eq(schema.library_settings.user_id, userId))
+            .run();
 
-    // Create the initial item
-    await db.insert(schema.category_items).values({ category_id: category.id, user_id: userId, sort_order: 0 });
+        // Create the initial category
+        const [category] = tx
+            .insert(schema.categories)
+            .values({ user_id: userId, list_id: list.id, name: '', sort_order: 0 })
+            .returning()
+            .all();
+
+        // Create the initial item
+        tx.insert(schema.category_items).values({ category_id: category.id, user_id: userId, sort_order: 0 }).run();
+    });
 }
 
 // ---------------------------------------------------------------------------
