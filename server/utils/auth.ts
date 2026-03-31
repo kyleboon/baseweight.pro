@@ -6,13 +6,14 @@ import config from 'config';
 import { getDb } from '../db.js';
 import * as schema from '../schema.js';
 import { initNewUserLibrary } from './library.js';
+import { logger } from './logger.js';
 
 const _require = createRequire(import.meta.url);
 
 async function sendMagicLinkEmail(email: string, url: string) {
     const mailgunKey = config.get<string>('mailgunAPIKey');
     if (!mailgunKey) {
-        console.log({ message: 'Mailgun not configured — magic link URL:', url });
+        logger.info({ url }, 'Mailgun not configured — magic link URL');
         return;
     }
     const FormData = _require('form-data');

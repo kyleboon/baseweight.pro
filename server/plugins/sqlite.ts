@@ -1,5 +1,6 @@
 import config from 'config';
 import { initDb } from '../db.js';
+import { logger } from '../utils/logger.js';
 
 function validateConfig() {
     const required = ['betterAuthSecret', 'betterAuthBaseURL', 'betterAuthTrustedOrigins'];
@@ -14,7 +15,7 @@ function validateConfig() {
     }
 
     if (!config.get<string>('mailgunAPIKey')) {
-        console.warn('[config] mailgunAPIKey is not set — magic link emails will be logged to console instead of sent');
+        logger.warn('mailgunAPIKey not set — magic link emails will be logged to console');
     }
 }
 

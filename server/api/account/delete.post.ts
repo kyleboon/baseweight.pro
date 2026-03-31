@@ -19,6 +19,6 @@ export default defineEventHandler(async (event) => {
     const db = getDb();
     await db.delete(schema.user).where(eq(schema.user.id, user.id));
 
-    console.log({ message: 'Completed account delete', email: user.email });
+    event.context.logger.info({ email: user.email }, 'account deleted');
     return { message: 'success' };
 });
