@@ -22,14 +22,26 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = getDb();
-    const lists = await db.select().from(schema.lists).where(eq(schema.lists.external_id, id));
+
+    let lists;
+    try {
+        lists = await db.select().from(schema.lists).where(eq(schema.lists.external_id, id));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to look up list.' });
+    }
 
     if (!lists.length) {
         throw createError({ statusCode: 400, message: 'Invalid list specified.' });
     }
 
     const dbList = lists[0]!;
-    const libraryBlob = await buildLibraryBlob(dbList.user_id);
+
+    let libraryBlob;
+    try {
+        libraryBlob = await buildLibraryBlob(dbList.user_id);
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to load library data.' });
+    }
 
     const library = new Library();
     library.load(libraryBlob);

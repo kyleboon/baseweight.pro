@@ -11,16 +11,27 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = getDb();
-    const lists = await db.select().from(schema.lists).where(eq(schema.lists.external_id, id));
+
+    let lists;
+    try {
+        lists = await db.select().from(schema.lists).where(eq(schema.lists.external_id, id));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to look up list.' });
+    }
 
     if (!lists.length) {
         throw createError({ statusCode: 404, message: 'List not found' });
     }
 
     const list = lists[0]!;
-    const libraryBlob = await buildLibraryBlob(list.user_id);
 
-    // Set the default list to the requested one so the share page focuses on it
+    let libraryBlob;
+    try {
+        libraryBlob = await buildLibraryBlob(list.user_id);
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to load library data.' });
+    }
+
     libraryBlob.defaultListId = list.id;
 
     return {
