@@ -87,7 +87,7 @@ Playwright automatically starts the app server before running tests (via `npm ru
 ### High — Should fix before launch
 
 - [ ] Add structured logging (pino or similar) — replace scattered `console.log` calls, add request tracing
-- [ ] Standardize error handling on `createError` + throw pattern — only 4 try-catch blocks across 56+ error paths; wrap DB operations, Sharp image processing, and `unlinkSync` calls
+- [x] Standardize error handling on `createError` + throw pattern — only 4 try-catch blocks across 56+ error paths; wrap DB operations, Sharp image processing, and `unlinkSync` calls
 
 ### Medium — Should fix shortly after launch
 
