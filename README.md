@@ -83,22 +83,16 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - [ ] Create a simple logo and add it to the branding
 - [ ] Deploy to VPS
 - [ ] Replace email provider (Mailgun)
-
-### High — Should fix before launch
-
-- [ ] Add structured logging (pino or similar) — replace scattered `console.log` calls, add request tracing
-- [x] Standardize error handling on `createError` + throw pattern — only 4 try-catch blocks across 56+ error paths; wrap DB operations, Sharp image processing, and `unlinkSync` calls
+- [ ] Add database backup strategy — automated backups for the SQLite file
 
 ### Medium — Should fix shortly after launch
 
 - [ ] Fix silent frontend failures — 15+ `.catch(() => {})` blocks in Pinia store swallow errors without user feedback
 - [ ] Add Open Graph and Twitter Card meta tags to share pages (`/r/[id]`) so shared links preview correctly on social media
 - [ ] Accessibility: ARIA labels, `role="dialog"` on modals, `alt` text on images, keyboard navigation for drag-drop, focus trapping in modals, skip links
-- [ ] Add database backup strategy — automated backups for the SQLite file
 - [ ] Add LIMIT to unbounded queries — `buildLibraryBlob()` loads all user data with no bounds
 - [ ] Add graceful shutdown handling (SIGTERM handler to close DB connections and drain in-flight requests)
 - [ ] Create `.env.example` and deployment documentation (required env vars, secrets management, database setup)
-- [ ] Stop using imgur for image uploads (Cloudflare R2, S3, or local storage with CDN and backup strategy)
 - [ ] Update the UX to be responsive
 - [ ] Remove "popups" and improve the user experience
 - [ ] SEO improvements (sitemap, robots.txt, canonical links, structured data)
@@ -111,7 +105,6 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - [ ] Split monolithic 829-line Pinia store into modules
 - [ ] Add API documentation (OpenAPI spec)
 - [ ] Bundle size monitoring in CI (`rollup-plugin-visualizer`)
-- [ ] Consider PostgreSQL migration if expecting >100 concurrent users (SQLite single-writer limitation)
 - [ ] Add explicit CSRF token validation for sensitive endpoints (DELETE, account operations)
 - [ ] Switch to Tailwind and get rid of SCSS
 - [ ] Handle decimal display better
@@ -125,5 +118,5 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - [ ] Route-level code splitting with `defineAsyncComponent`
 - [ ] Virtual scrolling for large gear lists (`vue-virtual-scroller`)
 - [ ] Implement column sorting
-- [ ] Add additional fields (url, notes, condition, calories)
+- [ ] Add additional fields (notes, condition, calories)
 - [ ] Add a "pantry" section for food
