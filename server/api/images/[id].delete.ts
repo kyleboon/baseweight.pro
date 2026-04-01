@@ -8,25 +8,28 @@ import * as schema from '../../schema.js';
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) {
-        setResponseStatus(event, 401);
-        return { message: 'Please log in.' };
+        throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
     const id = parseInt(getRouterParam(event, 'id') ?? '', 10);
     if (isNaN(id)) {
-        setResponseStatus(event, 400);
-        return { message: 'Invalid image id.' };
+        throw createError({ statusCode: 400, message: 'Invalid image id.' });
     }
 
     const db = getDb();
-    const rows = await db
-        .select()
-        .from(schema.images)
-        .where(and(eq(schema.images.id, id), eq(schema.images.user_id, user.id)));
+
+    let rows;
+    try {
+        rows = await db
+            .select()
+            .from(schema.images)
+            .where(and(eq(schema.images.id, id), eq(schema.images.user_id, user.id)));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to look up image.' });
+    }
 
     if (!rows.length) {
-        setResponseStatus(event, 404);
-        return { message: 'Image not found.' };
+        throw createError({ statusCode: 404, message: 'Image not found.' });
     }
 
     const image = rows[0];
@@ -34,12 +37,21 @@ export default defineEventHandler(async (event) => {
     if (image.is_local) {
         const uploadsBase = resolve(process.cwd(), config.get('uploadsPath') as string);
         const filePath = join(uploadsBase, image.filename);
-        if (existsSync(filePath)) {
-            unlinkSync(filePath);
+        try {
+            if (existsSync(filePath)) {
+                unlinkSync(filePath);
+            }
+        } catch (err) {
+            // Log but don't fail — the DB record should still be deleted
+            event.context.logger?.warn({ err, filePath }, 'Failed to delete image file from disk');
         }
     }
 
-    await db.delete(schema.images).where(eq(schema.images.id, id));
+    try {
+        await db.delete(schema.images).where(eq(schema.images.id, id));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to delete image record.' });
+    }
 
     return { ok: true };
 });
