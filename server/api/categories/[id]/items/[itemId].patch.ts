@@ -19,15 +19,13 @@ const ITEM_FIELDS = [
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) {
-        setResponseStatus(event, 401);
-        return { message: 'Please log in.' };
+        throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
     const categoryId = Number(getRouterParam(event, 'id'));
     const itemId = Number(getRouterParam(event, 'itemId'));
     if (!categoryId || !itemId) {
-        setResponseStatus(event, 400);
-        return { errors: [{ message: 'Invalid id.' }] };
+        throw createError({ statusCode: 400, message: 'Invalid id.' });
     }
 
     const body = await readBody(event);
@@ -47,26 +45,29 @@ export default defineEventHandler(async (event) => {
     }
 
     if (!Object.keys(updates).length) {
-        setResponseStatus(event, 400);
-        return { errors: [{ message: 'No changes requested.' }] };
+        throw createError({ statusCode: 400, message: 'No changes requested.' });
     }
 
     const db = getDb();
-    const [updated] = await db
-        .update(schema.category_items)
-        .set(updates)
-        .where(
-            and(
-                eq(schema.category_items.id, itemId),
-                eq(schema.category_items.category_id, categoryId),
-                eq(schema.category_items.user_id, user.id),
-            ),
-        )
-        .returning();
+    let updated;
+    try {
+        [updated] = await db
+            .update(schema.category_items)
+            .set(updates)
+            .where(
+                and(
+                    eq(schema.category_items.id, itemId),
+                    eq(schema.category_items.category_id, categoryId),
+                    eq(schema.category_items.user_id, user.id),
+                ),
+            )
+            .returning();
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to update item.' });
+    }
 
     if (!updated) {
-        setResponseStatus(event, 404);
-        return { errors: [{ message: 'Item not found.' }] };
+        throw createError({ statusCode: 404, message: 'Item not found.' });
     }
 
     return updated;

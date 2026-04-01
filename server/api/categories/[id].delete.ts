@@ -5,27 +5,35 @@ import { getDb } from '../../db.js';
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) {
-        setResponseStatus(event, 401);
-        return { message: 'Please log in.' };
+        throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
     const id = Number(getRouterParam(event, 'id'));
     if (!id) {
-        setResponseStatus(event, 400);
-        return { errors: [{ message: 'Invalid category id.' }] };
+        throw createError({ statusCode: 400, message: 'Invalid category id.' });
     }
 
     const db = getDb();
-    const existing = await db
-        .select({ id: schema.categories.id })
-        .from(schema.categories)
-        .where(and(eq(schema.categories.id, id), eq(schema.categories.user_id, user.id)));
 
-    if (!existing.length) {
-        setResponseStatus(event, 404);
-        return { errors: [{ message: 'Category not found.' }] };
+    let existing;
+    try {
+        existing = await db
+            .select({ id: schema.categories.id })
+            .from(schema.categories)
+            .where(and(eq(schema.categories.id, id), eq(schema.categories.user_id, user.id)));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to look up category.' });
     }
 
-    await db.delete(schema.categories).where(eq(schema.categories.id, id));
+    if (!existing.length) {
+        throw createError({ statusCode: 404, message: 'Category not found.' });
+    }
+
+    try {
+        await db.delete(schema.categories).where(eq(schema.categories.id, id));
+    } catch (err) {
+        throw createError({ statusCode: 500, message: 'Failed to delete category.' });
+    }
+
     return { ok: true };
 });
