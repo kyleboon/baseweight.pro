@@ -32,15 +32,19 @@ export default defineEventHandler((event) => {
 
     try {
         db.transaction((tx) => {
-            tx.delete(schema.lists).where(eq(schema.lists.id, id)).run();
-
+            // Read the current default before deleting, since the FK ON DELETE SET NULL
+            // will automatically null default_list_id when the referenced list is removed.
             const settings = tx
                 .select({ default_list_id: schema.library_settings.default_list_id })
                 .from(schema.library_settings)
                 .where(eq(schema.library_settings.user_id, user.id))
                 .all();
 
-            if (settings.length && settings[0].default_list_id === id) {
+            const wasDefault = settings.length && settings[0].default_list_id === id;
+
+            tx.delete(schema.lists).where(eq(schema.lists.id, id)).run();
+
+            if (wasDefault) {
                 const remaining = tx
                     .select({ id: schema.lists.id })
                     .from(schema.lists)

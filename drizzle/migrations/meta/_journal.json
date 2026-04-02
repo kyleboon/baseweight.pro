@@ -36,6 +36,13 @@
             "when": 1773932702408,
             "tag": "0004_add_compound_indexes",
             "breakpoints": true
+        },
+        {
+            "idx": 5,
+            "version": "6",
+            "when": 1775075000000,
+            "tag": "0005_add_default_list_id_fk",
+            "breakpoints": true
         }
     ]
 }

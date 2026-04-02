@@ -68,7 +68,7 @@ export const library_settings = sqliteTable('library_settings', {
     item_unit: text('item_unit').default('oz'),
     show_sidebar: integer('show_sidebar').default(0),
     currency_symbol: text('currency_symbol').default('$'),
-    default_list_id: integer('default_list_id'),
+    default_list_id: integer('default_list_id').references(() => lists.id, { onDelete: 'set null' }),
     opt_images: integer('opt_images').default(0),
     opt_price: integer('opt_price').default(0),
     opt_worn: integer('opt_worn').default(1),
