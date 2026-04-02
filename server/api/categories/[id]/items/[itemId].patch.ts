@@ -1,20 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 import * as schema from '../../../../schema.js';
 import { getDb } from '../../../../db.js';
-
-const ITEM_FIELDS = [
-    'name',
-    'description',
-    'weight',
-    'author_unit',
-    'price',
-    'url',
-    'qty',
-    'worn',
-    'consumable',
-    'star',
-    'sort_order',
-] as const;
+import { readValidatedBody, updateItemSchema } from '../../../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -28,25 +15,21 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, message: 'Invalid id.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, updateItemSchema);
+
+    // Build updates from only the fields that were provided
     const updates: Partial<typeof schema.category_items.$inferInsert> = {};
-
-    for (const field of ITEM_FIELDS) {
-        if (body[field] === undefined) continue;
-        if (field === 'weight' || field === 'price') {
-            (updates as any)[field] = Number(body[field]);
-        } else if (field === 'worn' || field === 'consumable') {
-            (updates as any)[field] = body[field] ? 1 : 0;
-        } else if (field === 'qty' || field === 'star' || field === 'sort_order') {
-            (updates as any)[field] = Number(body[field]);
-        } else {
-            (updates as any)[field] = String(body[field]);
-        }
-    }
-
-    if (!Object.keys(updates).length) {
-        throw createError({ statusCode: 400, message: 'No changes requested.' });
-    }
+    if (body.name !== undefined) updates.name = body.name;
+    if (body.description !== undefined) updates.description = body.description;
+    if (body.weight !== undefined) updates.weight = body.weight;
+    if (body.author_unit !== undefined) updates.author_unit = body.author_unit;
+    if (body.price !== undefined) updates.price = body.price;
+    if (body.url !== undefined) updates.url = body.url;
+    if (body.qty !== undefined) updates.qty = body.qty;
+    if (body.worn !== undefined) (updates as any).worn = body.worn;
+    if (body.consumable !== undefined) (updates as any).consumable = body.consumable;
+    if (body.star !== undefined) updates.star = body.star;
+    if (body.sort_order !== undefined) updates.sort_order = body.sort_order;
 
     const db = getDb();
     let updated;

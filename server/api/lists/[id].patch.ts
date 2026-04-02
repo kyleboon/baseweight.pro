@@ -1,6 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 import * as schema from '../../schema.js';
 import { getDb } from '../../db.js';
+import { readValidatedBody, updateListSchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -13,17 +14,13 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, message: 'Invalid list id.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, updateListSchema);
     const db = getDb();
 
     const updates: Partial<typeof schema.lists.$inferInsert> = {};
-    if (body.name !== undefined) updates.name = String(body.name);
-    if (body.description !== undefined) updates.description = String(body.description);
-    if (body.sort_order !== undefined) updates.sort_order = Number(body.sort_order);
-
-    if (!Object.keys(updates).length) {
-        throw createError({ statusCode: 400, message: 'No changes requested.' });
-    }
+    if (body.name !== undefined) updates.name = body.name;
+    if (body.description !== undefined) updates.description = body.description;
+    if (body.sort_order !== undefined) updates.sort_order = body.sort_order;
 
     let updated;
     try {

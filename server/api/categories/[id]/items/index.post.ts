@@ -1,6 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 import * as schema from '../../../../schema.js';
 import { getDb } from '../../../../db.js';
+import { readValidatedBody, createItemSchema } from '../../../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -29,7 +30,7 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 404, message: 'Category not found.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, createItemSchema);
 
     try {
         const existing = await db
@@ -45,17 +46,17 @@ export default defineEventHandler(async (event) => {
             .values({
                 category_id: categoryId,
                 user_id: user.id,
-                global_item_id: body.global_item_id ? Number(body.global_item_id) : null,
-                name: String(body.name ?? ''),
-                description: String(body.description ?? ''),
-                weight: Number(body.weight ?? 0),
-                author_unit: String(body.author_unit ?? 'oz'),
-                price: Number(body.price ?? 0),
-                url: String(body.url ?? ''),
-                qty: Number(body.qty ?? 1),
-                worn: body.worn ? 1 : 0,
-                consumable: body.consumable ? 1 : 0,
-                star: Number(body.star ?? 0),
+                global_item_id: body.global_item_id ?? null,
+                name: body.name,
+                description: body.description,
+                weight: body.weight,
+                author_unit: body.author_unit,
+                price: body.price,
+                url: body.url,
+                qty: body.qty,
+                worn: body.worn,
+                consumable: body.consumable,
+                star: body.star,
                 sort_order: maxSort + 1,
             })
             .returning();

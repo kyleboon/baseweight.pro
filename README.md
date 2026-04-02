@@ -99,7 +99,6 @@ Playwright automatically starts the app server before running tests (via `npm ru
 
 - [ ] Add LIMIT to unbounded queries — `buildLibraryBlob()` loads all user data with no bounds
 - [ ] Standardize error response shapes across all API routes
-- [ ] Add request body validation with zod (negative weights, invalid unit values, string length limits)
 
 ### Low — Nice to have for v1
 

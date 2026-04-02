@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import * as schema from '../../schema.js';
 import { getDb } from '../../db.js';
 import { generateUniqueExternalId } from '../../utils/library.js';
+import { readValidatedBody, copyListSchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -9,12 +10,8 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, message: 'Authentication required' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, copyListSchema);
     const { externalId } = body;
-
-    if (!externalId) {
-        throw createError({ statusCode: 400, message: 'externalId is required' });
-    }
 
     const db = getDb();
 

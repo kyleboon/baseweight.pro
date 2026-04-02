@@ -1,6 +1,7 @@
 import { eq } from 'drizzle-orm';
 import { getDb } from '../../db.js';
 import * as schema from '../../schema.js';
+import { readValidatedBody, deleteAccountSchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -8,7 +9,7 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, deleteAccountSchema);
 
     if (body.email !== user.email) {
         throw createError({ statusCode: 400, message: 'Email does not match your account.' });

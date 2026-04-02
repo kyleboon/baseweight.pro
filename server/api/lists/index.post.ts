@@ -2,6 +2,7 @@ import { eq } from 'drizzle-orm';
 import * as schema from '../../schema.js';
 import { getDb } from '../../db.js';
 import { generateUniqueExternalId } from '../../utils/library.js';
+import { readValidatedBody, createListSchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -9,7 +10,7 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, createListSchema);
     const db = getDb();
     const now = Math.floor(Date.now() / 1000);
     const externalId = await generateUniqueExternalId();
@@ -27,8 +28,8 @@ export default defineEventHandler(async (event) => {
             .insert(schema.lists)
             .values({
                 user_id: user.id,
-                name: String(body.name ?? ''),
-                description: String(body.description ?? ''),
+                name: body.name,
+                description: body.description,
                 external_id: externalId,
                 sort_order: maxSort + 1,
                 created_at: now,

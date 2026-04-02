@@ -1,6 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 import * as schema from '../../schema.js';
 import { getDb } from '../../db.js';
+import { readValidatedBody, updateCategorySchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -13,14 +14,10 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 400, message: 'Invalid category id.' });
     }
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, updateCategorySchema);
     const updates: Partial<typeof schema.categories.$inferInsert> = {};
-    if (body.name !== undefined) updates.name = String(body.name);
-    if (body.sort_order !== undefined) updates.sort_order = Number(body.sort_order);
-
-    if (!Object.keys(updates).length) {
-        throw createError({ statusCode: 400, message: 'No changes requested.' });
-    }
+    if (body.name !== undefined) updates.name = body.name;
+    if (body.sort_order !== undefined) updates.sort_order = body.sort_order;
 
     const db = getDb();
     let updated;

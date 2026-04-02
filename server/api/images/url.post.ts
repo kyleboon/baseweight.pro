@@ -1,6 +1,7 @@
 import { and, count, eq, max } from 'drizzle-orm';
 import { getDb } from '../../db.js';
 import * as schema from '../../schema.js';
+import { readValidatedBody, addImageUrlSchema } from '../../utils/validation.js';
 
 const MAX_IMAGES_PER_ENTITY = 4;
 
@@ -8,18 +9,8 @@ export default defineEventHandler(async (event) => {
     const user = event.context.user;
     if (!user) throw createError({ statusCode: 401, message: 'Please log in.' });
 
-    const body = await readBody(event);
+    const body = await readValidatedBody(event, addImageUrlSchema);
     const { entityType, entityId, url } = body;
-
-    if (!url || typeof url !== 'string' || !url.trim()) {
-        throw createError({ statusCode: 400, message: 'URL is required.' });
-    }
-    if (!['item', 'category', 'list'].includes(entityType)) {
-        throw createError({ statusCode: 400, message: 'Invalid entityType.' });
-    }
-    if (!Number.isInteger(entityId)) {
-        throw createError({ statusCode: 400, message: 'Invalid entityId.' });
-    }
 
     const db = getDb();
 

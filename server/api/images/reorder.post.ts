@@ -1,11 +1,7 @@
 import { eq, and, inArray } from 'drizzle-orm';
 import { getDb } from '../../db.js';
 import * as schema from '../../schema.js';
-
-interface ReorderEntry {
-    id: number;
-    sort_order: number;
-}
+import { readValidatedBody, reorderImagesSchema } from '../../utils/validation.js';
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -13,11 +9,7 @@ export default defineEventHandler(async (event) => {
         throw createError({ statusCode: 401, message: 'Please log in.' });
     }
 
-    const body = (await readBody(event)) as ReorderEntry[];
-
-    if (!Array.isArray(body) || body.some((e) => typeof e.id !== 'number' || typeof e.sort_order !== 'number')) {
-        throw createError({ statusCode: 400, message: 'Body must be an array of { id, sort_order }.' });
-    }
+    const body = await readValidatedBody(event, reorderImagesSchema);
 
     const ids = body.map((e) => e.id);
     const db = getDb();
