@@ -2,10 +2,10 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 // Stub Nitro auto-imports before importing the middleware
 (globalThis as any).defineEventHandler = (fn: Function) => fn;
-(globalThis as any).createError = (opts: { statusCode: number; statusMessage: string }) => {
-    const err = new Error(opts.statusMessage) as Error & { statusCode: number; statusMessage: string };
+(globalThis as any).createError = (opts: { statusCode: number; message?: string; data?: any }) => {
+    const err = new Error(opts.message) as Error & { statusCode: number; data?: any };
     err.statusCode = opts.statusCode;
-    err.statusMessage = opts.statusMessage;
+    if (opts.data) err.data = opts.data;
     return err;
 };
 (globalThis as any).useRuntimeConfig = () => ({ disableRateLimiting: false });
@@ -54,17 +54,20 @@ describe('rate limit middleware', () => {
         }
     });
 
-    it('returns 429 for magic link requests exceeding the limit', async () => {
+    it('throws 429 for magic link requests exceeding the limit', async () => {
         const path = '/api/auth/sign-in/magic-link';
         for (let i = 0; i < 5; i++) {
             await handler(createMockEvent(path, { ip: '1.2.3.4' }));
         }
         const event = createMockEvent(path, { ip: '1.2.3.4' });
-        const result = await handler(event);
-        expect(event._statusCode).toBe(429);
+        try {
+            await handler(event);
+            expect.fail('Expected handler to throw');
+        } catch (err: any) {
+            expect(err.statusCode).toBe(429);
+            expect(err.message).toBe('Too many requests. Please try again later.');
+        }
         expect(event._responseHeaders['Retry-After']).toBeDefined();
-        expect(result).toHaveProperty('message', 'Too many requests. Please try again later.');
-        expect(result).toHaveProperty('retryAfter');
     });
 
     it('uses X-Forwarded-For for IP detection', async () => {
@@ -88,16 +91,19 @@ describe('rate limit middleware', () => {
         }
     });
 
-    it('returns 429 for image upload requests exceeding the limit', async () => {
+    it('throws 429 for image upload requests exceeding the limit', async () => {
         const path = '/api/image-upload';
         for (let i = 0; i < 10; i++) {
             await handler(createMockEvent(path, { userId: 'user-1' }));
         }
         const event = createMockEvent(path, { userId: 'user-1' });
-        const result = await handler(event);
-        expect(event._statusCode).toBe(429);
+        try {
+            await handler(event);
+            expect.fail('Expected handler to throw');
+        } catch (err: any) {
+            expect(err.statusCode).toBe(429);
+        }
         expect(event._responseHeaders['Retry-After']).toBeDefined();
-        expect(result).toHaveProperty('message');
     });
 
     it('tracks different users independently for image uploads', async () => {

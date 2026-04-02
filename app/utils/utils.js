@@ -22,7 +22,10 @@ class lpError extends Error {
             this.message = response.errors[0].message;
         }
 
-        if (response.errors) {
+        // Structured errors from H3's data field or direct errors array
+        if (response.data && response.data.errors instanceof Array) {
+            this.errors = response.data.errors;
+        } else if (response.errors) {
             this.errors = response.errors;
         }
     }

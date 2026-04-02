@@ -95,10 +95,6 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - [ ] SEO improvements (sitemap, robots.txt, canonical links, structured data)
 - [ ] Get rid of SCSS and use pure CSS
 
-### Backend Work
-
-- [ ] Standardize error response shapes across all API routes
-
 ### Low — Nice to have for v1
 
 - [ ] Split monolithic 829-line Pinia store into modules

@@ -4,9 +4,10 @@ import * as schema from '../../server/schema.js';
 
 // Stub Nitro auto-imports
 (globalThis as any).defineEventHandler = (fn: Function) => fn;
-(globalThis as any).createError = (opts: { statusCode: number; message: string }) => {
-    const err = new Error(opts.message) as Error & { statusCode: number };
+(globalThis as any).createError = (opts: { statusCode: number; message: string; data?: any }) => {
+    const err = new Error(opts.message) as Error & { statusCode: number; data?: any };
     err.statusCode = opts.statusCode;
+    if (opts.data) err.data = opts.data;
     return err;
 };
 (globalThis as any).getRouterParam = (_event: any, name: string) => _event._routerParams?.[name];

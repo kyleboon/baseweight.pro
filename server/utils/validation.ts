@@ -3,14 +3,21 @@ import type { H3Event } from 'h3';
 
 /**
  * Reads and validates the request body against a zod schema.
- * Throws a 400 error with structured validation messages on failure.
+ * Throws a 400 error with structured per-field validation errors on failure.
  */
 export async function readValidatedBody<T extends z.ZodType>(event: H3Event, schema: T): Promise<z.infer<T>> {
     const body = await readBody(event);
     const result = schema.safeParse(body);
     if (!result.success) {
-        const messages = result.error.issues.map((i) => i.message);
-        throw createError({ statusCode: 400, message: messages.join('; ') });
+        const errors = result.error.issues.map((issue) => ({
+            field: issue.path.join('.') || undefined,
+            message: issue.message,
+        }));
+        throw createError({
+            statusCode: 400,
+            message: 'Validation failed.',
+            data: { errors },
+        });
     }
     return result.data;
 }

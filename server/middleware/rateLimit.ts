@@ -12,9 +12,12 @@ function getClientIp(event: any): string {
 }
 
 function sendRateLimitResponse(event: any, retryAfter: number) {
-    setResponseStatus(event, 429);
     setResponseHeader(event, 'Retry-After', String(retryAfter));
-    return { message: 'Too many requests. Please try again later.', retryAfter };
+    throw createError({
+        statusCode: 429,
+        message: 'Too many requests. Please try again later.',
+        data: { retryAfter },
+    });
 }
 
 export default defineEventHandler((event) => {
