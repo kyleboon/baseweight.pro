@@ -97,7 +97,6 @@ Playwright automatically starts the app server before running tests (via `npm ru
 
 ### Backend Work
 
-- [ ] Add LIMIT to unbounded queries — `buildLibraryBlob()` loads all user data with no bounds
 - [ ] Standardize error response shapes across all API routes
 
 ### Low — Nice to have for v1

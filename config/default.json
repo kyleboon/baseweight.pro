@@ -17,5 +17,6 @@
     "betterAuthBaseURL": "http://localhost:3000",
     "betterAuthTrustedOrigins": ["http://localhost:*", "http://127.0.0.1:*"],
     "magicLinkExpiresIn": 300,
-    "logLevel": "info"
+    "logLevel": "info",
+    "maxItemsPerUser": 1000
 }

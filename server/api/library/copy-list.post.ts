@@ -1,8 +1,11 @@
-import { eq } from 'drizzle-orm';
+import { eq, count } from 'drizzle-orm';
+import config from 'config';
 import * as schema from '../../schema.js';
 import { getDb } from '../../db.js';
 import { generateUniqueExternalId } from '../../utils/library.js';
 import { readValidatedBody, copyListSchema } from '../../utils/validation.js';
+
+const MAX_ITEMS = config.get<number>('maxItemsPerUser');
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -25,6 +28,27 @@ export default defineEventHandler(async (event) => {
     // Verify the authenticated user owns the source list
     if (sourceList.user_id !== user.id) {
         throw createError({ statusCode: 403, message: 'You do not have permission to copy this list' });
+    }
+
+    // Count how many items the copy would add
+    const sourceItemCount = db
+        .select()
+        .from(schema.category_items)
+        .innerJoin(schema.categories, eq(schema.category_items.category_id, schema.categories.id))
+        .where(eq(schema.categories.list_id, sourceList.id))
+        .all().length;
+
+    const [{ currentTotal }] = db
+        .select({ currentTotal: count() })
+        .from(schema.category_items)
+        .where(eq(schema.category_items.user_id, user.id))
+        .all();
+
+    if (currentTotal + sourceItemCount > MAX_ITEMS) {
+        throw createError({
+            statusCode: 400,
+            message: `Copying this list would exceed the maximum of ${MAX_ITEMS} items. You currently have ${currentTotal} items and this list contains ${sourceItemCount}.`,
+        });
     }
 
     const now = Math.floor(Date.now() / 1000);

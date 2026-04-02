@@ -1,7 +1,10 @@
-import { and, eq } from 'drizzle-orm';
+import { and, eq, count } from 'drizzle-orm';
+import config from 'config';
 import * as schema from '../../../../schema.js';
 import { getDb } from '../../../../db.js';
 import { readValidatedBody, createItemSchema } from '../../../../utils/validation.js';
+
+const MAX_ITEMS = config.get<number>('maxItemsPerUser');
 
 export default defineEventHandler(async (event) => {
     const user = event.context.user;
@@ -15,6 +18,16 @@ export default defineEventHandler(async (event) => {
     }
 
     const db = getDb();
+
+    // Enforce per-user item limit
+    const [{ total }] = await db
+        .select({ total: count() })
+        .from(schema.category_items)
+        .where(eq(schema.category_items.user_id, user.id));
+
+    if (total >= MAX_ITEMS) {
+        throw createError({ statusCode: 400, message: `You have reached the maximum of ${MAX_ITEMS} items.` });
+    }
 
     let cats;
     try {
