@@ -243,7 +243,7 @@ useSeoMeta({
 });
 
 useSchemaOrg([
-    defineWebApplication({
+    defineSoftwareApp({
         name: 'LighterPack',
         description:
             'Track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
@@ -251,7 +251,7 @@ useSchemaOrg([
     }),
 ]);
 
-defineOgImage({
+defineOgImage('OgImageDefault', {
     title: 'LighterPack',
     description: 'Every ounce accounted for.',
 });

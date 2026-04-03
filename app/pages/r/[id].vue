@@ -150,7 +150,7 @@ useSchemaOrg([
     }),
 ]);
 
-defineOgImage({
+defineOgImage('OgImageDefault', {
     title: shareListName,
     description: shareDescription,
     itemCount: shareItemCount,
