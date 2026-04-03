@@ -228,6 +228,34 @@ useHead({
     ],
 });
 
+useSeoMeta({
+    title: 'LighterPack — Track Your Gear Weight',
+    description:
+        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+    ogType: 'website',
+    ogTitle: 'LighterPack — Track Your Gear Weight',
+    ogDescription:
+        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+    twitterCard: 'summary_large_image',
+    twitterTitle: 'LighterPack — Track Your Gear Weight',
+    twitterDescription:
+        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+});
+
+useSchemaOrg([
+    defineWebApplication({
+        name: 'LighterPack',
+        description:
+            'Track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        applicationCategory: 'Utility',
+    }),
+]);
+
+defineOgImage({
+    title: 'LighterPack',
+    description: 'Every ounce accounted for.',
+});
+
 const store = useLighterpackStore();
 const router = useRouter();
 
