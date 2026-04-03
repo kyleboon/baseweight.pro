@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     app: {
         rootId: 'lp',
         head: {
+            htmlAttrs: { lang: 'en' },
             title: 'LighterPack',
             meta: [
                 { charset: 'utf-8' },
