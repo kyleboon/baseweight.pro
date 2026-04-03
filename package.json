@@ -41,6 +41,7 @@
         "node": ">=22"
     },
     "dependencies": {
+        "@nuxtjs/seo": "^5.1.0",
         "@pinia/nuxt": "^0.11.3",
         "axios": "^1.13.6",
         "better-auth": "^1.5.6",
