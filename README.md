@@ -91,18 +91,7 @@ Playwright automatically starts the app server before running tests (via `npm ru
 - [ ] Add Open Graph and Twitter Card meta tags to share pages (`/r/[id]`) so shared links preview correctly on social media
 - [ ] Accessibility: ARIA labels, `role="dialog"` on modals, `alt` text on images, keyboard navigation for drag-drop, focus trapping in modals, skip links
 - [ ] Update the UX to be responsive
-- [ ] Remove "popups" and improve the user experience
 - [ ] SEO improvements (sitemap, robots.txt, canonical links, structured data)
-- [ ] Get rid of SCSS and use pure CSS
-
-### Low — Nice to have for v1
-
-- [ ] Split monolithic 829-line Pinia store into modules
-- [ ] Bundle size monitoring in CI (`rollup-plugin-visualizer`)
-- [ ] Fix disabled WebKit Playwright tests
-- [ ] Full TypeScript migration across client and server
-- [ ] Route-level code splitting with `defineAsyncComponent`
-- [ ] Virtual scrolling for large gear lists (`vue-virtual-scroller`)
 
 ### Future features
 
