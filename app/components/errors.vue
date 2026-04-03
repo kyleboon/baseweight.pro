@@ -78,7 +78,7 @@ const sanitizedErrors = computed(() => {
 });
 </script>
 
-<style lang="scss">
+<style>
 .lp-errors {
     border-left: 2px solid #c05848;
     border-radius: 0 4px 4px 0;

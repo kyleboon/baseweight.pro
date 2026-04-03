@@ -157,7 +157,7 @@ function removeItem(item) {
 }
 </script>
 
-<style lang="scss">
+<style>
 /* ── Gear section ───────────────────────────────────────────── */
 .lp-gear-section {
     display: flex;

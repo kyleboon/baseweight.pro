@@ -35,7 +35,7 @@ export default defineNuxtConfig({
         '/r/**': { ssr: true }, // share pages always SSR
         '/**': { ssr: false }, // SPA for authenticated app
     },
-    css: ['~/assets/css/lighterpack.scss'],
+    css: ['~/assets/css/lighterpack.css'],
     typescript: {
         tsConfig: {
             compilerOptions: {

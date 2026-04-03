@@ -55,7 +55,7 @@ function select(u) {
 defineExpose({ isOpen, isFocused, select, close, open });
 </script>
 
-<style lang="scss">
+<style>
 .lp-unit-select {
     appearance: none;
     background: transparent;
@@ -91,6 +91,35 @@ defineExpose({ isOpen, isFocused, select, close, open });
 
 /* Legacy selector still used by some global CSS */
 .lpUnit {
-    @extend .lp-unit-select;
+    appearance: none;
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #5a5954;
+    cursor: pointer;
+    font-family: 'DM Mono', 'Fira Mono', monospace;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    outline: none;
+    padding: 1px 2px;
+    transition:
+        color 120ms ease,
+        background-color 120ms ease;
+
+    &:hover {
+        color: #1e1e1c;
+    }
+
+    &:focus-visible {
+        background: #f3f2ee;
+        border-radius: 4px;
+        color: #1e1e1c;
+        outline: 2px solid #e8a220;
+        outline-offset: 1px;
+    }
+
+    option {
+        font-family: 'DM Mono', monospace;
+    }
 }
 </style>

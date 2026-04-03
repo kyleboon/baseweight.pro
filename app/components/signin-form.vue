@@ -72,7 +72,7 @@ async function sendMagicLink() {
 }
 </script>
 
-<style lang="scss">
+<style>
 .signin {
     display: flex;
     flex-direction: column;

@@ -1,6 +1,3 @@
-@use 'sass:color';
-@use '_globals' as *;
-
 .lpSilent {
     background: transparent;
     border: 1px solid transparent;
@@ -18,9 +15,9 @@
     }
 
     &.lpSilentError {
-        background-color: color.adjust(color.adjust($red1, $saturation: -10%), $lightness: 40%);
-        border: 1px solid $red1;
-        outline-color: $red1;
+        background-color: #f3bfc7;
+        border: 1px solid var(--red1);
+        outline-color: var(--red1);
 
         &:focus {
             background-color: #fff;

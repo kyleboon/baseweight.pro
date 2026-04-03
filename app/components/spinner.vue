@@ -8,7 +8,7 @@
 defineOptions({ name: 'Spinner' });
 </script>
 
-<style lang="scss">
+<style>
 @keyframes lp-spin {
     to {
         transform: rotate(360deg);

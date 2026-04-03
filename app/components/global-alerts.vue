@@ -35,7 +35,7 @@ defineOptions({ name: 'GlobalAlerts' });
 const store = useLighterpackStore();
 </script>
 
-<style lang="scss">
+<style>
 .lp-global-alerts {
     left: 50%;
     max-width: min(480px, 90vw);

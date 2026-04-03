@@ -1,14 +1,12 @@
-@use '_globals' as *;
-
 .lpList {
     background: inherit;
     min-height: 100%;
     padding: 0 20px;
     position: relative;
-    z-index: $aboveSidebar;
+    z-index: var(--above-sidebar);
 
     &.lpTransition {
-        transition: all $transitionDurationSlow;
+        transition: all var(--transition-duration-slow);
     }
 
     .lpHasSidebar & {
@@ -37,11 +35,11 @@
     margin: 0 0 20px;
 
     &.dropAccept {
-        background: $yellow2;
+        background: var(--yellow2);
     }
 
     &.dropHover {
-        background: $green2;
+        background: var(--green2);
     }
 
     &.sortable-drag {

@@ -6,7 +6,7 @@
         "dev": "nuxt dev",
         "start": "nuxt build && node .output/server/index.mjs",
         "build": "nuxt build",
-        "lint:css": "./node_modules/.bin/stylelint \"app/**/*.{scss,vue}\" --fix",
+        "lint:css": "./node_modules/.bin/stylelint \"app/**/*.{css,vue}\" --fix",
         "lint:js": "./node_modules/.bin/eslint --fix",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
@@ -23,7 +23,7 @@
             "prettier --write",
             "eslint --fix"
         ],
-        "*.{scss,css}": [
+        "*.css": [
             "prettier --write",
             "stylelint --fix"
         ],
@@ -58,7 +58,6 @@
         "nuxt": "^4.4.2",
         "pinia": "^3.0.4",
         "pino": "^10.3.1",
-        "sass": "^1.98.0",
         "sharp": "^0.34.5",
         "sortablejs": "^1.15.7",
         "uuid": "^13.0.0",
@@ -86,7 +85,6 @@
         "lint-staged": "^16.4.0",
         "pino-pretty": "^13.1.3",
         "postcss-html": "^1.8.1",
-        "postcss-scss": "^4.0.9",
         "prettier": "^3.8.1",
         "stylelint": "^17.5.0",
         "stylelint-config-standard": "^40.0.0",

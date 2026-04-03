@@ -210,7 +210,7 @@ async function saveUrl() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #itemImageDialog {
     width: 560px;
 }
@@ -221,7 +221,7 @@ async function saveUrl() {
     margin-bottom: 16px;
 }
 
-// ── Gallery ──────────────────────────────────────────────────────────────────
+/* ── Gallery ────────────────────────────────────────────────────────────────── */
 
 .image-gallery {
     margin-bottom: 20px;
@@ -280,7 +280,7 @@ async function saveUrl() {
     margin-top: 6px;
 }
 
-// ── Add section ──────────────────────────────────────────────────────────────
+/* ── Add section ────────────────────────────────────────────────────────────── */
 
 .add-section {
     display: flex;
@@ -343,7 +343,7 @@ async function saveUrl() {
     }
 }
 
-// ── URL form ─────────────────────────────────────────────────────────────────
+/* ── URL form ───────────────────────────────────────────────────────────────── */
 
 .url-label {
     color: #6b6964;

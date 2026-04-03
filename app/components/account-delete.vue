@@ -83,7 +83,7 @@ function deleteAccount() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #deleteAccount {
     width: 400px;
 }

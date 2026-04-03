@@ -89,7 +89,7 @@ function showDeleteAccount() {
 defineExpose({ shown, currentEmail, showDeleteAccount });
 </script>
 
-<style lang="scss">
+<style>
 #accountSettings {
     width: 380px;
 }

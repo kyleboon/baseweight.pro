@@ -108,7 +108,7 @@ function importList() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #importValidate {
     max-height: 80vh;
     overflow-y: auto;

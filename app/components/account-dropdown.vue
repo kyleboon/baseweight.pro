@@ -53,7 +53,7 @@ function signout() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #headerPopover .lp-popover-content,
 #headerPopover .lpContent {
     min-width: 9em;

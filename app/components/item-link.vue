@@ -41,7 +41,7 @@ function addLink() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #itemLinkDialog {
     width: 380px;
 }

@@ -78,7 +78,7 @@ function next() {
 }
 </script>
 
-<style lang="scss">
+<style>
 #lpImageDialog {
     max-width: 90vw;
     width: auto;

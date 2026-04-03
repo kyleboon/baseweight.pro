@@ -238,7 +238,7 @@ onBeforeMount(() => {
 });
 </script>
 
-<style lang="scss">
+<style>
 /* ================================================================
    LighterPack Landing Page
    Tokens follow docs/styleguide/tokens/tokens.css

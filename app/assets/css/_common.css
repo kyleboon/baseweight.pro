@@ -1,12 +1,9 @@
-@use 'sass:color';
-@use '_globals' as *;
-
 .lp {
     &,
     body {
-        background: $background1;
+        background: var(--background1);
         box-sizing: border-box;
-        color: $content;
+        color: var(--content);
         font-family: 'Open Sans', sans-serif;
         font-size: 13px;
         height: 100%;
@@ -24,21 +21,21 @@
     input,
     select,
     textarea {
-        color: $content;
+        color: var(--content);
         font-family: 'Open Sans', sans-serif;
         font-size: 13px;
     }
 
     h2 {
-        margin: 0 0 $spacingLarge;
+        margin: 0 0 var(--spacing-large);
     }
 
     h3 {
-        margin: 0 0 $spacingMedium;
+        margin: 0 0 var(--spacing-medium);
     }
 
     .hover {
-        background: $yellow2;
+        background: var(--yellow2);
     }
 
     .tooltip {
@@ -60,7 +57,7 @@
 }
 
 .lpHref {
-    color: $blue1;
+    color: var(--blue1);
     cursor: pointer;
     text-decoration: none;
 
@@ -78,7 +75,7 @@
 }
 
 .lpNotSupported {
-    background: $red1;
+    background: var(--red1);
     color: #fff;
     font-size: 24px;
     padding: 100px;
@@ -91,7 +88,7 @@
 
 .lpAdd,
 .lpCopy {
-    color: $green1;
+    color: var(--green1);
     cursor: pointer;
     display: inline-block;
     text-decoration: none;
@@ -105,7 +102,7 @@
     }
 
     #sidebar & {
-        color: $green1;
+        color: var(--green1);
     }
 }
 
@@ -125,7 +122,7 @@
     min-height: 100%;
     position: relative;
     text-align: left;
-    transition: all $transitionDurationSlow;
+    transition: all var(--transition-duration-slow);
 
     &.lpHasSidebar {
         max-width: 1280px;
@@ -143,7 +140,7 @@
     visibility: hidden;
 
     &:hover {
-        background: $red1;
+        background: var(--red1);
         box-shadow: 0 3px 3px rgb(0 0 0 / 25%) inset;
         opacity: 1;
     }
@@ -178,14 +175,14 @@
     input[type='password'],
     textarea {
         background: #fff;
-        border: 1px solid $border1;
+        border: 1px solid var(--border1);
         display: block;
-        margin: 0 0 $spacingMedium;
-        padding: $spacingSmall;
+        margin: 0 0 var(--spacing-medium);
+        padding: var(--spacing-small);
         width: 100%;
 
         &:focus {
-            border-color: $orange1;
+            border-color: var(--orange1);
             outline: none;
         }
     }
@@ -198,7 +195,7 @@
     text-align: center;
 
     > * {
-        margin-bottom: $spacingMedium;
+        margin-bottom: var(--spacing-medium);
 
         &:last-child {
             margin-bottom: 0;
@@ -208,7 +205,7 @@
 
 .lp .lpButton {
     /* TODO: find out why this specificity is needed */
-    background-image: linear-gradient(165deg, $orange1 50%, $orange2 100%);
+    background-image: linear-gradient(165deg, var(--orange1) 50%, var(--orange2) 100%);
     background-position: 100% 100%;
     background-size: 200%;
     border: none;
@@ -240,7 +237,7 @@
         background-position: 0 0;
         box-shadow:
             0 0 1px rgb(255 255 255 / 50%) inset,
-            0 1px 3px color.adjust($orange2, $lightness: -25%);
+            0 1px 3px #81420a;
     }
 
     &:focus,
@@ -250,8 +247,8 @@
 
     &:focus:not(:active) {
         box-shadow:
-            0 0 0 1px color.adjust($orange2, $lightness: -15%) inset,
-            0 1px 3px color.adjust($orange2, $lightness: -25%);
+            0 0 0 1px #b05b0d inset,
+            0 1px 3px #81420a;
         outline: none;
     }
 
@@ -332,16 +329,16 @@
 }
 
 .lpError {
-    color: $red1;
+    color: var(--red1);
 }
 
 .lpSuccess {
-    color: color.adjust($green1, $lightness: -10%);
+    color: #5b8611;
 }
 
 .lpWarning {
-    background: $yellow2;
-    border: 1px solid $darkYellow;
+    background: var(--yellow2);
+    border: 1px solid var(--dark-yellow);
     border-radius: 5px;
     padding: 10px;
 }
@@ -367,7 +364,7 @@
     display: flex;
     justify-content: space-between;
     left: 0;
-    padding: $spacingSmall;
+    padding: var(--spacing-small);
     position: fixed;
     right: 0;
     z-index: 999999999;

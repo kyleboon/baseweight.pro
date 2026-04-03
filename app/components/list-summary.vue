@@ -169,7 +169,7 @@ function colorToHex(color) {
 }
 </script>
 
-<style lang="scss">
+<style>
 /* ================================================================
    List Summary — donut chart + aligned weight/price table
    ================================================================ */

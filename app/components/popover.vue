@@ -45,7 +45,7 @@ onBeforeMount(() => window.addEventListener('keyup', closeOnEscape));
 onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 </script>
 
-<style lang="scss">
+<style>
 /* ================================================================
    Popover — floating content panel anchored to a trigger
    ================================================================ */

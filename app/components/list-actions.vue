@@ -195,7 +195,7 @@ function copyList() {
 }
 </script>
 
-<style lang="scss">
+<style>
 .lp-list-actions {
     position: relative;
 }

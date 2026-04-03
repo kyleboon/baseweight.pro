@@ -218,7 +218,7 @@ function handleCategoryReorder(Sortable) {
 }
 </script>
 
-<style lang="scss">
+<style>
 /* ── List header ─────────────────────────────────────────────── */
 .lp-list-header {
     align-items: center;

@@ -56,7 +56,7 @@ onBeforeMount(() => window.addEventListener('keyup', closeOnEscape));
 onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 </script>
 
-<style lang="scss">
+<style>
 /* ================================================================
    Modal
    Tokens follow docs/styleguide/tokens/tokens.css

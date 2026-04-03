@@ -134,9 +134,7 @@ async function copyList() {
 }
 </script>
 
-<style lang="scss">
-@use '../../assets/css/globals' as *;
-
+<style>
 .lp-share-page {
     --amber-400: #e8a220;
     --amber-600: #c07a0a;

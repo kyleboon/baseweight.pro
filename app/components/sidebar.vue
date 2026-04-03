@@ -36,7 +36,7 @@ function signout() {
 }
 </script>
 
-<style lang="scss">
+<style>
 /* ================================================================
    Sidebar shell
    Tokens follow docs/styleguide/tokens/tokens.css

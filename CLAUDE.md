@@ -13,7 +13,7 @@ npm run dev              # Start dev server with hot reload (Nuxt on :3000)
 npm run start            # Production build + start server
 npm run build            # Nuxt production build only
 npm run lint:js          # ESLint with auto-fix (.js and .vue files)
-npm run lint:css         # Stylelint with auto-fix (.scss and .vue files)
+npm run lint:css         # Stylelint with auto-fix (.css and .vue files)
 npm run test:unit        # Run Vitest unit tests
 npm run test:unit:watch  # Run Vitest in watch mode
 npm run test:server      # Run server-side integration tests
@@ -34,7 +34,7 @@ npx playwright test --update-snapshots                 # Regenerate screenshot b
 - Composables in `app/composables/`, utilities in `app/utils/`
 - Route middleware `app/middleware/auth.ts` — redirects to `/signin` if not logged in
 - Client plugin `app/plugins/session.client.ts` — restores auth state from session cookie on page load
-- SCSS styles in `app/assets/css/`
+- CSS styles in `app/assets/css/`
 
 ### Shared (`shared/`)
 
@@ -74,9 +74,9 @@ When Mailgun is not configured (dev), the magic link URL is logged to the consol
 
 ## Code Style
 
-- **4-space indentation** (both JS and SCSS)
+- **4-space indentation** (both JS and CSS)
 - ESLint extends `airbnb-base` + `plugin:vue/recommended`
-- Stylelint with alphabetically ordered CSS properties
+- Stylelint with alphabetically ordered CSS properties (uses native CSS nesting, no preprocessor)
 
 ## Testing
 

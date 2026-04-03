@@ -116,7 +116,7 @@ function removeList(list) {
 }
 </script>
 
-<style lang="scss">
+<style>
 /* ── Section header ─────────────────────────────────────────── */
 .lp-sidebar-section-header {
     align-items: center;

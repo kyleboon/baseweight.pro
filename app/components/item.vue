@@ -582,7 +582,7 @@ defineExpose({
 });
 </script>
 
-<style lang="scss">
+<style>
 .lpItem {
     &:hover,
     &.ui-sortable-helper {

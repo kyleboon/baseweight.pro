@@ -181,7 +181,7 @@ function removeCategory(category) {
 }
 </script>
 
-<style lang="scss">
+<style>
 .lpQtySubtotal {
     padding-right: 25px; /* Accommodates delete column */
 }

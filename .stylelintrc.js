@@ -6,42 +6,12 @@ module.exports = {
             files: ['**/*.vue'],
             customSyntax: 'postcss-html',
         },
-        {
-            files: ['**/*.scss'],
-            customSyntax: 'postcss-scss',
-        },
     ],
     rules: {
-        'at-rule-no-unknown': [
-            true,
-            {
-                ignoreAtRules: ['extend', 'function', 'for', 'each', 'include', 'mixin', 'use', 'forward'], // for SASS directives
-            },
-        ],
-        'function-no-unknown': [
-            true,
-            {
-                ignoreFunctions: [
-                    'adjust',
-                    'scale',
-                    'darken',
-                    'lighten',
-                    'saturate',
-                    'desaturate',
-                    'mix',
-                    'fade',
-                    'alpha',
-                    'rgba',
-                ],
-            },
-        ],
-        'declaration-property-value-no-unknown': null, // doesn't understand SCSS variables in values
-        'nesting-selector-no-missing-scoping-root': null, // doesn't understand SCSS nesting
         'no-descending-specificity': null, // stylistic preference
         'no-empty-source': null, // for vue file support
-        'no-invalid-double-slash-comments': null, // valid in SCSS
         'order/properties-alphabetical-order': true, // stylistic preference
-        'import-notation': null, // project uses Sass @import, not CSS url() notation
+        'import-notation': null, // project uses @import for CSS partials
         'selector-class-pattern': null, // project uses lp-prefixed camelCase
         'selector-id-pattern': null, // project uses lp-prefixed camelCase
     },

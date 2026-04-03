@@ -176,7 +176,7 @@ function truncate(str, max = 18) {
 }
 </script>
 
-<style lang="scss">
+<style>
 .lp-chart {
     cursor: default;
     display: block;

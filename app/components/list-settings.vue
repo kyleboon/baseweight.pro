@@ -81,7 +81,7 @@ function updateCurrencySymbol(evt) {
 }
 </script>
 
-<style lang="scss">
+<style>
 #settings .lp-popover-content,
 #settings .lpContent {
     width: 200px;
