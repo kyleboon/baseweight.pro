@@ -509,7 +509,6 @@
 }
 
 .visually-hidden {
-    clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
     overflow: hidden;
@@ -521,10 +520,9 @@
 .skip-link {
     background: #e8a220;
     border-radius: 0 0 4px 4px;
-    clip: rect(0 0 0 0);
     clip-path: inset(50%);
     color: #1e1e1c;
-    font-family: 'Figtree', system-ui, sans-serif;
+    font-family: Figtree, system-ui, sans-serif;
     font-size: 14px;
     font-weight: 600;
     height: auto;
@@ -541,6 +539,5 @@
 }
 
 .skip-link:focus-visible {
-    clip: auto;
     clip-path: none;
 }
