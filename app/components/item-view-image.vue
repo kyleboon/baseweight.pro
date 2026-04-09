@@ -1,5 +1,6 @@
 <template>
-    <modal id="lpImageDialog" :shown="shown" @hide="shown = false">
+    <modal id="lpImageDialog" :shown="shown" label-id="view-image-dialog-title" @hide="shown = false">
+        <h2 id="view-image-dialog-title" class="visually-hidden">Image viewer</h2>
         <!-- Main image display -->
         <div class="view-image-main">
             <button v-if="images.length > 1" class="nav-btn nav-prev" :disabled="activeIndex === 0" @click="prev">

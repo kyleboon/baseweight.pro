@@ -1,7 +1,7 @@
 <template>
     <div>
-        <modal id="itemImageDialog" :shown="shown" @hide="shown = false">
-            <h2 class="image-dialog-title">{{ dialogTitle }}</h2>
+        <modal id="itemImageDialog" :shown="shown" label-id="item-image-dialog-title" @hide="shown = false">
+            <h2 id="item-image-dialog-title" class="image-dialog-title">{{ dialogTitle }}</h2>
 
             <!-- Existing image gallery -->
             <div v-if="images.length" class="image-gallery">
