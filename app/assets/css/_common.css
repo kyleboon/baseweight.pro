@@ -524,6 +524,9 @@
             flex: 1 1 100%;
             min-width: 0;
             order: 98;
+            overflow: visible;
+            text-overflow: clip;
+            white-space: normal;
         }
 
         .lpActionsCell {
@@ -540,6 +543,17 @@
 
         .lpRemoveCell {
             display: none;
+        }
+    }
+
+    /* Footer: align totals with item rows */
+    .lpItemsFooter {
+        .lpPriceCell {
+            flex: 0 0 auto;
+        }
+
+        .lpWeightCell {
+            flex: 0 0 auto;
         }
     }
 
