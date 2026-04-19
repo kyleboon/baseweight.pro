@@ -498,8 +498,7 @@
             }
 
             &::after {
-                content: '\00d7';
-                margin: 0 4px;
+                display: none;
             }
         }
 
