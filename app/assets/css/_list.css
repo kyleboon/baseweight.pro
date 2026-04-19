@@ -12,6 +12,12 @@
     .lpHasSidebar & {
         margin-left: 280px;
     }
+
+    @media only screen and (width < 900px) {
+        .lpHasSidebar & {
+            margin-left: 0;
+        }
+    }
 }
 
 #totals {

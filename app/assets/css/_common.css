@@ -429,13 +429,6 @@
         z-index: 35;
     }
 
-    /* Content goes full-width — no sidebar margin */
-    .lpList {
-        .lpHasSidebar & {
-            margin-left: 0;
-        }
-    }
-
     /* Gear table: hide column headers for weight/price/qty */
     .lpItems {
         position: relative;
