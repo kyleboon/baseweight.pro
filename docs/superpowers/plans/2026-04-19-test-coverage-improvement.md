@@ -408,7 +408,7 @@ Add `vi` to the import and add `$fetch` mock:
 ```typescript
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { useLighterpackStore } from '../../../app/store/store';
+import { useBaseweightStore } from '../../../app/store/store';
 
 // Mock $fetch globally (Nuxt auto-import)
 const mockFetch = vi.fn();
@@ -427,7 +427,7 @@ describe('session actions', () => {
     });
 
     it('signout clears library and loggedIn state', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [],
             categories: [],
@@ -443,13 +443,13 @@ describe('session actions', () => {
     });
 
     it('setLoggedIn sets the loggedIn state', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.setLoggedIn('user@test.com');
         expect(store.loggedIn).toBe('user@test.com');
     });
 
     it('setLoggedIn can clear the logged in state', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.setLoggedIn('user@test.com');
         store.setLoggedIn(false);
         expect(store.loggedIn).toBe(false);
@@ -460,7 +460,7 @@ describe('loadLibraryData', () => {
     beforeEach(() => setActivePinia(createPinia()));
 
     it('loads a library from a plain object', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [{ id: 1, name: 'Tent', weight: 1000, authorUnit: 'oz', price: 0, url: '', images: [] }],
             categories: [
@@ -481,7 +481,7 @@ describe('loadLibraryData', () => {
     });
 
     it('loads a library from a JSON string', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [],
             categories: [],
@@ -492,7 +492,7 @@ describe('loadLibraryData', () => {
     });
 
     it('pushes alert on invalid data', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.loadLibraryData('not valid json {{{');
         expect(store.globalAlerts).toHaveLength(1);
         expect(store.globalAlerts[0].message).toContain('error');
@@ -503,7 +503,7 @@ describe('clearLibraryData', () => {
     beforeEach(() => setActivePinia(createPinia()));
 
     it('resets library to unloaded state', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [],
             categories: [],
@@ -521,14 +521,14 @@ describe('_showError', () => {
     beforeEach(() => setActivePinia(createPinia()));
 
     it('pushes the provided message as a global alert', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store._showError('Something went wrong');
         expect(store.globalAlerts).toHaveLength(1);
         expect(store.globalAlerts[0].message).toBe('Something went wrong');
     });
 
     it('uses default message for empty string', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store._showError('');
         expect(store.globalAlerts[0].message).toBe('An error occurred.');
     });
@@ -563,12 +563,12 @@ describe('activeList getter', () => {
     beforeEach(() => setActivePinia(createPinia()));
 
     it('returns null when library is not loaded', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         expect(store.activeList).toBeNull();
     });
 
     it('returns the list matching defaultListId', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = makeLibraryBlob({
             defaultListId: 2,
             items: [],
@@ -610,11 +610,11 @@ git commit -m "test: add activeList getter tests"
 
 ```typescript
 describe('library settings (offline)', () => {
-    let store: ReturnType<typeof useLighterpackStore>;
+    let store: ReturnType<typeof useBaseweightStore>;
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        store = useLighterpackStore();
+        store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [],
             categories: [],
@@ -679,11 +679,11 @@ git commit -m "test: add offline library settings action tests"
 
 ```typescript
 describe('list management (offline)', () => {
-    let store: ReturnType<typeof useLighterpackStore>;
+    let store: ReturnType<typeof useBaseweightStore>;
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        store = useLighterpackStore();
+        store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [{ id: 1, name: 'Tent', weight: 1000, authorUnit: 'oz', price: 0, url: '', images: [] }],
             categories: [
@@ -763,11 +763,11 @@ git commit -m "test: add offline list management store action tests"
 
 ```typescript
 describe('category management (offline)', () => {
-    let store: ReturnType<typeof useLighterpackStore>;
+    let store: ReturnType<typeof useBaseweightStore>;
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        store = useLighterpackStore();
+        store = useBaseweightStore();
         const blob = makeLibraryBlob({
             items: [{ id: 1, name: 'Tent', weight: 1000, authorUnit: 'oz', price: 0, url: '', images: [] }],
             categories: [
@@ -836,11 +836,11 @@ git commit -m "test: add offline category management store action tests"
 
 ```typescript
 describe('modal and UI actions', () => {
-    let store: ReturnType<typeof useLighterpackStore>;
+    let store: ReturnType<typeof useBaseweightStore>;
 
     beforeEach(() => {
         setActivePinia(createPinia());
-        store = useLighterpackStore();
+        store = useBaseweightStore();
     });
 
     it('showModal sets activeModal', () => {

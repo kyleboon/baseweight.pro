@@ -1,6 +1,6 @@
-# Rebrand: LighterPack → BaseWeight
+# Rebrand: BaseWeight → BaseWeight
 
-**Goal:** Rename the application from "LighterPack" / lighterpack.com to "BaseWeight" / baseweight.pro across the entire codebase — config, server, frontend, tests, and docs.
+**Goal:** Rename the application from "BaseWeight" / baseweight.pro to "BaseWeight" / baseweight.pro across the entire codebase — config, server, frontend, tests, and docs.
 
 **Architecture:** No structural changes. This is a pure rename executed bottom-up (config → server → frontend → tests → docs) so each layer is internally consistent before the next one changes. One branch, atomic commits per layer.
 
@@ -10,21 +10,21 @@
 
 ## Naming Conventions
 
-| Context            | Old                       | New                            |
-| ------------------ | ------------------------- | ------------------------------ |
-| Display name       | LighterPack               | BaseWeight ("Base" + "Weight") |
-| Domain             | lighterpack.com           | baseweight.pro                 |
-| CSS prefix         | `lp-`                     | `bw-`                          |
-| Store export       | `useLighterpackStore`     | `useBaseweightStore`           |
-| Store ID           | `'lighterpack'`           | `'baseweight'`                 |
-| DB filename        | `lighterpack.db`          | `baseweight.db`                |
-| Main CSS file      | `lighterpack.css`         | `baseweight.css`               |
-| Package name       | `lighterpack`             | `baseweight`                   |
-| Email sender       | `info@mg.lighterpack.com` | `noreply@mg.baseweight.pro`    |
-| Email reply-to     | `info@lighterpack.com`    | `info@baseweight.pro`          |
-| Error page contact | `info@lighterpack.com`    | `info@baseweight.pro`          |
-| Test emails        | `*@lighterpack.com`       | `*@baseweight.pro`             |
-| Wordmark CSS       | `.lp-wordmark`            | `.bw-wordmark`                 |
+| Context            | Old                      | New                            |
+| ------------------ | ------------------------ | ------------------------------ |
+| Display name       | BaseWeight               | BaseWeight ("Base" + "Weight") |
+| Domain             | baseweight.pro           | baseweight.pro                 |
+| CSS prefix         | `lp-`                    | `bw-`                          |
+| Store export       | `useBaseweightStore`     | `useBaseweightStore`           |
+| Store ID           | `'baseweight'`           | `'baseweight'`                 |
+| DB filename        | `baseweight.db`          | `baseweight.db`                |
+| Main CSS file      | `baseweight.css`         | `baseweight.css`               |
+| Package name       | `baseweight`             | `baseweight`                   |
+| Email sender       | `info@mg.baseweight.pro` | `noreply@mg.baseweight.pro`    |
+| Email reply-to     | `info@baseweight.pro`    | `info@baseweight.pro`          |
+| Error page contact | `info@baseweight.pro`    | `info@baseweight.pro`          |
+| Test emails        | `*@baseweight.pro`       | `*@baseweight.pro`             |
+| Wordmark CSS       | `.lp-wordmark`           | `.bw-wordmark`                 |
 
 The display name uses a two-tone split per the brand mark spec (`docs/styleguide/11-brand-mark.md`): "Base" in amber, "Weight" in the primary text color.
 
@@ -45,20 +45,20 @@ Each layer gets its own commit for clean review and bisectability.
 
 **Changes:**
 
-- `"name": "lighterpack"` → `"name": "baseweight"`
+- `"name": "baseweight"` → `"name": "baseweight"`
 - `"description"` updated to reference BaseWeight
 - Repository URL updated if applicable
-- `"databasePath": "./data/lighterpack.db"` → `"./data/baseweight.db"`
-- `url: './data/lighterpack.db'` → `'./data/baseweight.db'` in drizzle config
-- `name: 'LighterPack'` → `name: 'BaseWeight'` in nuxt site config
-- `title: 'LighterPack'` → `title: 'BaseWeight'` in nuxt head config
-- `css: ['~/assets/css/lighterpack.css']` → `css: ['~/assets/css/baseweight.css']`
+- `"databasePath": "./data/baseweight.db"` → `"./data/baseweight.db"`
+- `url: './data/baseweight.db'` → `'./data/baseweight.db'` in drizzle config
+- `name: 'BaseWeight'` → `name: 'BaseWeight'` in nuxt site config
+- `title: 'BaseWeight'` → `title: 'BaseWeight'` in nuxt head config
+- `css: ['~/assets/css/baseweight.css']` → `css: ['~/assets/css/baseweight.css']`
 
 ### Layer 2: CSS rename
 
 **Files:**
 
-- Rename `app/assets/css/lighterpack.css` → `app/assets/css/baseweight.css`
+- Rename `app/assets/css/baseweight.css` → `app/assets/css/baseweight.css`
 - All `.css` files in `app/assets/css/`
 - All `.vue` files in `app/components/` and `app/pages/`
 
@@ -74,13 +74,13 @@ Each layer gets its own commit for clean review and bisectability.
 **Files:**
 
 - `app/store/store.ts` — definition
-- All files that import `useLighterpackStore` (~30 components)
+- All files that import `useBaseweightStore` (~30 components)
 
 **Changes:**
 
-- `export const useLighterpackStore = defineStore('lighterpack', {` → `export const useBaseweightStore = defineStore('baseweight', {`
-- Update all imports across components: `import { useLighterpackStore }` → `import { useBaseweightStore }`
-- Update all call sites: `useLighterpackStore()` → `useBaseweightStore()`
+- `export const useBaseweightStore = defineStore('baseweight', {` → `export const useBaseweightStore = defineStore('baseweight', {`
+- Update all imports across components: `import { useBaseweightStore }` → `import { useBaseweightStore }`
+- Update all call sites: `useBaseweightStore()` → `useBaseweightStore()`
 
 ### Layer 4: Server
 
@@ -93,9 +93,9 @@ Each layer gets its own commit for clean review and bisectability.
 
 **Changes:**
 
-- `from: 'LighterPack <info@mg.lighterpack.com>'` → `from: 'BaseWeight <noreply@mg.baseweight.pro>'`
-- `'h:Reply-To': 'LighterPack <info@lighterpack.com>'` → `'h:Reply-To': 'BaseWeight <info@baseweight.pro>'`
-- `subject: 'Sign in to LighterPack'` → `subject: 'Sign in to BaseWeight'`
+- `from: 'BaseWeight <info@mg.baseweight.pro>'` → `from: 'BaseWeight <noreply@mg.baseweight.pro>'`
+- `'h:Reply-To': 'BaseWeight <info@baseweight.pro>'` → `'h:Reply-To': 'BaseWeight <info@baseweight.pro>'`
+- `subject: 'Sign in to BaseWeight'` → `subject: 'Sign in to BaseWeight'`
 - Email body text updated
 - SQLite plugin fallback path updated
 - Error page email addresses updated
@@ -112,7 +112,7 @@ Each layer gets its own commit for clean review and bisectability.
 
 **Changes:**
 
-- All user-facing instances of "LighterPack" → "BaseWeight"
+- All user-facing instances of "BaseWeight" → "BaseWeight"
 - Meta titles, OG titles, Twitter card titles
 - Welcome page hero text and descriptions
 - Share page branding
@@ -137,10 +137,10 @@ Each layer gets its own commit for clean review and bisectability.
 
 **Changes:**
 
-- `@lighterpack.com` → `@baseweight.pro` in all test email addresses
-- `@test.lighterpack.com` → `@test.baseweight.pro`
-- Title regex `/LighterPack/` → `/BaseWeight/`
-- `'Welcome to LighterPack!'` → `'Welcome to BaseWeight!'`
+- `@baseweight.pro` → `@baseweight.pro` in all test email addresses
+- `@test.baseweight.pro` → `@test.baseweight.pro`
+- Title regex `/BaseWeight/` → `/BaseWeight/`
+- `'Welcome to BaseWeight!'` → `'Welcome to BaseWeight!'`
 - CSV parser comment updated
 
 ### Layer 7: Docs
@@ -157,8 +157,8 @@ Each layer gets its own commit for clean review and bisectability.
 
 **Changes:**
 
-- All references to "LighterPack" → "BaseWeight"
-- All references to "lighterpack.com" → "baseweight.pro"
+- All references to "BaseWeight" → "BaseWeight"
+- All references to "baseweight.pro" → "baseweight.pro"
 - Repository URLs and clone commands updated
 - Store export name references in CLAUDE.md updated
 
@@ -170,13 +170,13 @@ Each layer gets its own commit for clean review and bisectability.
 - Run `npm install` to regenerate `package-lock.json` with new package name
 - Run `npm run lint:js` and `npm run lint:css` to catch any issues
 - Run `npm run test:unit` and `npm run test:server` to verify
-- Grep entire codebase for any remaining `lighterpack` references (case-insensitive)
+- Grep entire codebase for any remaining `baseweight` references (case-insensitive)
 
 ---
 
 ## Out of Scope
 
-- Renaming the local directory (`/Users/kyleboon/code/lighterpack`) or GitHub repo — user handles separately
+- Renaming the local directory (`/Users/kyleboon/code/baseweight`) or GitHub repo — user handles separately
 - DNS and Mailgun configuration for baseweight.pro
 - Generating favicon/app icon files from the brand mark SVGs in `docs/styleguide/11-brand-mark.md`
 - Any visual/design changes beyond the text rename
@@ -186,5 +186,5 @@ Each layer gets its own commit for clean review and bisectability.
 Low. No logic changes — purely a rename. Main risk is a missed reference causing a runtime error. Mitigated by:
 
 1. Running full test suites after rename
-2. Grepping for remaining "lighterpack" references
+2. Grepping for remaining "baseweight" references
 3. Atomic commits per layer for easy bisection

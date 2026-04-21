@@ -227,14 +227,14 @@ Triggered by the Settings button in the content header. Renders as a popover bel
     <input
         class="lp-share-input"
         type="text"
-        value="https://lighterpack.com/r/vf6tcz"
+        value="https://baseweight.pro/r/vf6tcz"
         readonly
         onclick="this.select()"
     />
 
     <div class="lp-label" style="margin: 12px 0 6px">Embed your list</div>
     <textarea class="lp-textarea" readonly rows="2" style="font-family:var(--font-mono);font-size:11px">
-&lt;script src="https://lighterpack.com/e/vf6tcz"&gt;&lt;/script&gt;
+&lt;script src="https://baseweight.pro/e/vf6tcz"&gt;&lt;/script&gt;
 &lt;div id="vf6tcz"&gt;&lt;/div&gt;
   </textarea
     >
@@ -305,7 +305,7 @@ Full-page overlay (not a small popover). Content is plain text — no icons, no 
         </p>
 
         <p style="margin-top:20px">
-            <a href="mailto:help@lighterpack.com" class="lp-link">More help available via email.</a>
+            <a href="mailto:help@baseweight.pro" class="lp-link">More help available via email.</a>
         </p>
     </div>
 </div>

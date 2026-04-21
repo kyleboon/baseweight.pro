@@ -1592,7 +1592,7 @@ Delete `app/utils/focus.js` and create `app/utils/focus.ts`:
 
 ```ts
 import type { App, DirectiveBinding } from 'vue';
-import { useLighterpackStore } from '../store/store';
+import { useBaseweightStore } from '../store/store';
 
 let _uniqueIdCounter = 0;
 const uniqueId = (): string => String(++_uniqueIdCounter);
@@ -1633,7 +1633,7 @@ export function registerDirectives(app: App): void {
 
     app.directive('click-outside', {
         mounted(el: HTMLElement, binding: DirectiveBinding) {
-            const store = useLighterpackStore();
+            const store = useBaseweightStore();
             const handler = (evt: Event) => {
                 if (el.contains(evt.target as Node)) {
                     return;
@@ -1649,7 +1649,7 @@ export function registerDirectives(app: App): void {
             store.addDirectiveInstance({ key: el.dataset.clickoutside, value: handler });
         },
         unmounted(el: HTMLElement) {
-            const store = useLighterpackStore();
+            const store = useBaseweightStore();
             const handler = store.directiveInstances[el.dataset.clickoutside!];
             store.removeDirectiveInstance(el.dataset.clickoutside!);
             window.removeEventListener('click', handler);
@@ -1690,7 +1690,7 @@ Delete `app/composables/useItemDrag.js` and create `app/composables/useItemDrag.
 
 ```ts
 import Sortable, { type SortableEvent } from 'sortablejs';
-import { useLighterpackStore } from '../store/store';
+import { useBaseweightStore } from '../store/store';
 import type { Ref } from 'vue';
 import type { IList } from '#shared/types';
 
@@ -1703,7 +1703,7 @@ function revertDOM(item: HTMLElement, container: HTMLElement, oldIndex: number, 
 }
 
 export function useItemDrag(): { setup: (list: Ref<IList>) => void; destroy: () => void } {
-    const store = useLighterpackStore();
+    const store = useBaseweightStore();
     let sortables: Sortable[] = [];
 
     function setup(list: Ref<IList>): void {
@@ -1870,7 +1870,7 @@ function addListToLibrary(library: LibraryType, serverList: ServerList): ListTyp
 Type the store state:
 
 ```ts
-export const useLighterpackStore = defineStore('lighterpack', {
+export const useBaseweightStore = defineStore('baseweight', {
     state: () => ({
         library: false as LibraryType | false,
         loggedIn: false as string | false,
@@ -1922,9 +1922,9 @@ Rename `test/unit/store/store.spec.js` → `test/unit/store/store.spec.ts` and u
 
 ```ts
 // Before
-import { useLighterpackStore } from '../../../app/store/store.js';
+import { useBaseweightStore } from '../../../app/store/store.js';
 // After
-import { useLighterpackStore } from '../../../app/store/store';
+import { useBaseweightStore } from '../../../app/store/store';
 ```
 
 - [ ] **Step 4: Run tests**
@@ -2001,9 +2001,9 @@ In every renamed file, update imports to drop `.js` extensions:
 
 ```ts
 // Before
-import { useLighterpackStore } from '../../../app/store/store.js';
+import { useBaseweightStore } from '../../../app/store/store.js';
 // After
-import { useLighterpackStore } from '../../../app/store/store';
+import { useBaseweightStore } from '../../../app/store/store';
 ```
 
 The store import is the most common one. Also check for and update any other `.js` imports.
@@ -2013,7 +2013,7 @@ The store import is the most common one. Also check for and update any other `.j
 Common patterns in component tests:
 
 - `wrapper` variables: `const wrapper = mount(Component)` — usually TS infers this, no annotation needed
-- Store references: `const store = useLighterpackStore()` — already typed from the converted store
+- Store references: `const store = useBaseweightStore()` — already typed from the converted store
 - Mock data: if passing partial objects, use type assertions like `as Partial<IItem>`
 
 - [ ] **Step 4: Run tests**

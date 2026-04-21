@@ -287,7 +287,7 @@ export default {
     out: './drizzle/migrations',
     dialect: 'sqlite',
     dbCredentials: {
-        url: process.env.DATABASE_PATH ?? './data/lighterpack.db',
+        url: process.env.DATABASE_PATH ?? './data/baseweight.db',
     },
 } satisfies Config;
 ```
@@ -329,7 +329,7 @@ import Database from 'better-sqlite3';
 import { drizzle } from 'drizzle-orm/better-sqlite3';
 import * as schema from './schema.js';
 
-const dbPath = process.env.DATABASE_PATH ?? './data/lighterpack.db';
+const dbPath = process.env.DATABASE_PATH ?? './data/baseweight.db';
 
 const sqlite = new Database(dbPath);
 
@@ -1867,10 +1867,10 @@ git commit -m "feat: wire store actions to granular API endpoints, remove auto-s
 - [ ] **Step 1: Update `app/plugins/session.client.ts`**
 
 ```ts
-import { useLighterpackStore } from '~/store/store.js';
+import { useBaseweightStore } from '~/store/store.js';
 
 export default defineNuxtPlugin(async () => {
-    const store = useLighterpackStore();
+    const store = useBaseweightStore();
     if (store.loggedIn) return;
 
     try {

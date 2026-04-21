@@ -43,12 +43,12 @@ export default defineNuxtConfig({
     modules: ['@pinia/nuxt', '@nuxtjs/seo'],
     site: {
         url: process.env.PUBLIC_URL || 'http://localhost:3000',
-        name: 'LighterPack',
+        name: 'BaseWeight',
     },
     app: {
         rootId: 'lp',
         head: {
-            title: 'LighterPack',
+            title: 'BaseWeight',
             meta: [
                 { charset: 'utf-8' },
                 { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -90,7 +90,7 @@ export default defineNuxtConfig({
         '/r/**': { ssr: true },
         '/**': { ssr: false },
     },
-    css: ['~/assets/css/lighterpack.css'],
+    css: ['~/assets/css/baseweight.css'],
     typescript: {
         tsConfig: {
             compilerOptions: {
@@ -223,22 +223,22 @@ useHead({
 });
 
 useSeoMeta({
-    title: 'LighterPack — Track Your Gear Weight',
+    title: 'BaseWeight — Track Your Gear Weight',
     description:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
     ogType: 'website',
-    ogTitle: 'LighterPack — Track Your Gear Weight',
+    ogTitle: 'BaseWeight — Track Your Gear Weight',
     ogDescription:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
     twitterCard: 'summary_large_image',
-    twitterTitle: 'LighterPack — Track Your Gear Weight',
+    twitterTitle: 'BaseWeight — Track Your Gear Weight',
     twitterDescription:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
 });
 
 useSchemaOrg([
     defineWebApplication({
-        name: 'LighterPack',
+        name: 'BaseWeight',
         description:
             'Track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
         applicationCategory: 'Utility',
@@ -246,7 +246,7 @@ useSchemaOrg([
 ]);
 
 defineOgImage({
-    title: 'LighterPack',
+    title: 'BaseWeight',
     description: 'Every ounce accounted for.',
 });
 ```
@@ -307,8 +307,8 @@ const shareCategoryCount = computed(() => {
 
 const shareDescription = computed(() => {
     const items = shareItemCount.value;
-    if (items === 0) return 'A gear list shared on LighterPack.';
-    return `A ${items}-item gear list shared on LighterPack.`;
+    if (items === 0) return 'A gear list shared on BaseWeight.';
+    return `A ${items}-item gear list shared on BaseWeight.`;
 });
 ```
 
@@ -320,8 +320,8 @@ Replace the existing `useSeoMeta` block (lines 111–116):
 useSeoMeta({
     title: shareListName,
     ogTitle: shareListName,
-    description: 'A gear list shared on LighterPack',
-    ogDescription: 'A gear list shared on LighterPack',
+    description: 'A gear list shared on BaseWeight',
+    ogDescription: 'A gear list shared on BaseWeight',
 });
 ```
 
@@ -329,13 +329,13 @@ With:
 
 ```javascript
 useSeoMeta({
-    title: () => `${shareListName.value} - LighterPack`,
+    title: () => `${shareListName.value} - BaseWeight`,
     description: shareDescription,
     ogType: 'website',
-    ogTitle: () => `${shareListName.value} - LighterPack`,
+    ogTitle: () => `${shareListName.value} - BaseWeight`,
     ogDescription: shareDescription,
     twitterCard: 'summary_large_image',
-    twitterTitle: () => `${shareListName.value} - LighterPack`,
+    twitterTitle: () => `${shareListName.value} - BaseWeight`,
     twitterDescription: shareDescription,
 });
 
@@ -414,7 +414,7 @@ Create `app/components/OgImage/OgImageDefault.vue`:
                     fontWeight: 400,
                 }"
             >
-                LighterPack
+                BaseWeight
             </span>
         </div>
 
@@ -477,7 +477,7 @@ Create `app/components/OgImage/OgImageDefault.vue`:
 defineProps({
     title: {
         type: String,
-        default: 'LighterPack',
+        default: 'BaseWeight',
     },
     description: {
         type: String,
@@ -505,7 +505,7 @@ Run:
 npm run dev
 ```
 
-Visit `http://localhost:3000/__og-image__/image/welcome/og.png` — should render a branded card with "LighterPack" title and "Every ounce accounted for." description.
+Visit `http://localhost:3000/__og-image__/image/welcome/og.png` — should render a branded card with "BaseWeight" title and "Every ounce accounted for." description.
 
 If a share page exists, visit `http://localhost:3000/__og-image__/image/r/<some-id>/og.png` — should show the list name, description, and item/category counts.
 
@@ -616,4 +616,4 @@ Expected: Dynamic title, description, OG tags, Twitter tags, canonical link, and
 - [ ] **Step 6: Verify OG image**
 
 Visit `http://localhost:3000/__og-image__/image/welcome/og.png`.
-Expected: Rendered PNG image with branded LighterPack design.
+Expected: Rendered PNG image with branded BaseWeight design.

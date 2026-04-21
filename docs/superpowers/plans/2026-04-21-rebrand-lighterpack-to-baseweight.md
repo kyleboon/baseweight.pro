@@ -1,10 +1,10 @@
-# Rebrand LighterPack → BaseWeight Implementation Plan
+# Rebrand BaseWeight → BaseWeight Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Rename the application from "LighterPack" to "BaseWeight" across the entire codebase — config, CSS, store, server, frontend, tests, and docs.
+**Goal:** Rename the application from "BaseWeight" to "BaseWeight" across the entire codebase — config, CSS, store, server, frontend, tests, and docs.
 
-**Architecture:** Bottom-up rename in 8 atomic commits. Each layer is internally consistent before the next one changes. No logic changes — purely a rename. Bulk find-and-replace for the CSS class prefix (`lp-` → `bw-`, `lp` camelCase → `bw` camelCase) and store export (`useLighterpackStore` → `useBaseweightStore`).
+**Architecture:** Bottom-up rename in 8 atomic commits. Each layer is internally consistent before the next one changes. No logic changes — purely a rename. Bulk find-and-replace for the CSS class prefix (`lp-` → `bw-`, `lp` camelCase → `bw` camelCase) and store export (`useBaseweightStore` → `useBaseweightStore`).
 
 **Tech Stack:** Nuxt 4, Vue 3, Pinia, Nitro, SQLite/Drizzle, Better Auth — all unchanged.
 
@@ -12,37 +12,37 @@
 
 ## File Structure
 
-| Action | File                                                | Responsibility                                    |
-| ------ | --------------------------------------------------- | ------------------------------------------------- |
-| Modify | `package.json`                                      | Package name, description                         |
-| Modify | `config/default.json`                               | Database path                                     |
-| Modify | `drizzle.config.ts`                                 | Database path fallback                            |
-| Modify | `nuxt.config.ts`                                    | Site name, title, rootId, CSS import              |
-| Rename | `app/assets/css/lighterpack.css` → `baseweight.css` | Main CSS entry point                              |
-| Modify | `app/assets/css/_common.css`                        | `#lp` selector → `#bw`                            |
-| Modify | `app/assets/css/*.css` (all 7 files)                | `lp-` and `lp` camelCase class prefixes           |
-| Modify | `app/components/*.vue` (all ~28 files)              | CSS classes, store imports, brand text            |
-| Modify | `app/pages/*.vue` (3 files)                         | CSS classes, store imports, brand text, meta tags |
-| Modify | `app/store/store.ts`                                | Store export and ID                               |
-| Modify | `app/plugins/*.client.ts` (2 files)                 | Store import                                      |
-| Modify | `app/middleware/auth.ts`                            | Store import                                      |
-| Modify | `app/composables/useItemDrag.ts`                    | Store import                                      |
-| Modify | `app/utils/focus.ts`                                | Store import                                      |
-| Modify | `server/utils/auth.ts`                              | Email from, reply-to, subject, body               |
-| Modify | `server/plugins/sqlite.ts`                          | Fallback DB path                                  |
-| Modify | `public/dist/error.html`                            | Contact email, brand text                         |
-| Modify | `public/dist/503.html`                              | Contact email, brand text                         |
-| Modify | `test/e2e/*.spec.ts` (10 files)                     | Test email domains, assertions                    |
-| Modify | `test/e2e/auth-utils.ts`                            | Test email domain                                 |
-| Modify | `test/unit/**/*.spec.ts` (~20 files)                | Store import references                           |
-| Modify | `test/unit/utils/csvParser.spec.ts`                 | Comment text                                      |
-| Modify | `README.md`                                         | Project name, description                         |
-| Modify | `CLAUDE.md`                                         | Project name, store reference                     |
-| Modify | `docs/styleguide/*.md` (8 files)                    | Brand references                                  |
-| Modify | `docs/*.md` (2 files)                               | Brand references                                  |
-| Modify | `docs/superpowers/plans/*.md` (~8 files)            | Brand references                                  |
-| Modify | `docs/superpowers/specs/*.md` (~6 files)            | Brand references                                  |
-| Delete | `public/dist/` (built assets)                       | Stale compiled files                              |
+| Action | File                                               | Responsibility                                    |
+| ------ | -------------------------------------------------- | ------------------------------------------------- |
+| Modify | `package.json`                                     | Package name, description                         |
+| Modify | `config/default.json`                              | Database path                                     |
+| Modify | `drizzle.config.ts`                                | Database path fallback                            |
+| Modify | `nuxt.config.ts`                                   | Site name, title, rootId, CSS import              |
+| Rename | `app/assets/css/baseweight.css` → `baseweight.css` | Main CSS entry point                              |
+| Modify | `app/assets/css/_common.css`                       | `#lp` selector → `#bw`                            |
+| Modify | `app/assets/css/*.css` (all 7 files)               | `lp-` and `lp` camelCase class prefixes           |
+| Modify | `app/components/*.vue` (all ~28 files)             | CSS classes, store imports, brand text            |
+| Modify | `app/pages/*.vue` (3 files)                        | CSS classes, store imports, brand text, meta tags |
+| Modify | `app/store/store.ts`                               | Store export and ID                               |
+| Modify | `app/plugins/*.client.ts` (2 files)                | Store import                                      |
+| Modify | `app/middleware/auth.ts`                           | Store import                                      |
+| Modify | `app/composables/useItemDrag.ts`                   | Store import                                      |
+| Modify | `app/utils/focus.ts`                               | Store import                                      |
+| Modify | `server/utils/auth.ts`                             | Email from, reply-to, subject, body               |
+| Modify | `server/plugins/sqlite.ts`                         | Fallback DB path                                  |
+| Modify | `public/dist/error.html`                           | Contact email, brand text                         |
+| Modify | `public/dist/503.html`                             | Contact email, brand text                         |
+| Modify | `test/e2e/*.spec.ts` (10 files)                    | Test email domains, assertions                    |
+| Modify | `test/e2e/auth-utils.ts`                           | Test email domain                                 |
+| Modify | `test/unit/**/*.spec.ts` (~20 files)               | Store import references                           |
+| Modify | `test/unit/utils/csvParser.spec.ts`                | Comment text                                      |
+| Modify | `README.md`                                        | Project name, description                         |
+| Modify | `CLAUDE.md`                                        | Project name, store reference                     |
+| Modify | `docs/styleguide/*.md` (8 files)                   | Brand references                                  |
+| Modify | `docs/*.md` (2 files)                              | Brand references                                  |
+| Modify | `docs/superpowers/plans/*.md` (~8 files)           | Brand references                                  |
+| Modify | `docs/superpowers/specs/*.md` (~6 files)           | Brand references                                  |
+| Delete | `public/dist/` (built assets)                      | Stale compiled files                              |
 
 ---
 
@@ -126,7 +126,7 @@ Expected: PASS (warnings about localhost URL and robots are pre-existing, ignore
 
 ```bash
 git add package.json config/default.json drizzle.config.ts nuxt.config.ts
-git commit -m "chore: rebrand config and metadata — LighterPack to BaseWeight"
+git commit -m "chore: rebrand config and metadata — BaseWeight to BaseWeight"
 ```
 
 ---
@@ -135,7 +135,7 @@ git commit -m "chore: rebrand config and metadata — LighterPack to BaseWeight"
 
 **Files:**
 
-- Rename: `app/assets/css/lighterpack.css` → `app/assets/css/baseweight.css`
+- Rename: `app/assets/css/baseweight.css` → `app/assets/css/baseweight.css`
 - Modify: `app/assets/css/_common.css:114` — `#lp` → `#bw`
 - Modify: All `.css` files in `app/assets/css/` — `lp-` → `bw-`, `lp` camelCase → `bw` camelCase
 - Modify: All `.vue` files in `app/components/` and `app/pages/` — same class prefix rename
@@ -148,7 +148,7 @@ There are ~200 unique CSS class names using the `lp` prefix in two patterns:
 - [ ] **Step 1: Rename the main CSS file**
 
 ```bash
-git mv app/assets/css/lighterpack.css app/assets/css/baseweight.css
+git mv app/assets/css/baseweight.css app/assets/css/baseweight.css
 ```
 
 - [ ] **Step 2: Rename `#lp` root ID selector**
@@ -204,7 +204,7 @@ Expected: PASS (or only pre-existing warnings)
 
 ```bash
 git add app/assets/css/ app/components/ app/pages/
-git commit -m "chore: rename CSS prefix lp- to bw- and rename lighterpack.css to baseweight.css"
+git commit -m "chore: rename CSS prefix lp- to bw- and rename baseweight.css to baseweight.css"
 ```
 
 ---
@@ -214,12 +214,12 @@ git commit -m "chore: rename CSS prefix lp- to bw- and rename lighterpack.css to
 **Files:**
 
 - Modify: `app/store/store.ts:113` — export and store ID
-- Modify: ~28 component/page files that import `useLighterpackStore`
+- Modify: ~28 component/page files that import `useBaseweightStore`
 - Modify: `app/plugins/session.client.ts`, `app/plugins/store-global.client.ts`
 - Modify: `app/middleware/auth.ts`
 - Modify: `app/composables/useItemDrag.ts`
 - Modify: `app/utils/focus.ts`
-- Modify: ~20 test files that import `useLighterpackStore`
+- Modify: ~20 test files that import `useBaseweightStore`
 
 - [ ] **Step 1: Update the store definition**
 
@@ -233,13 +233,13 @@ export const useBaseweightStore = defineStore('baseweight', {
 
 ```bash
 find app/ test/ -type f \( -name '*.ts' -o -name '*.vue' \) \
-  -exec sed -i '' 's/useLighterpackStore/useBaseweightStore/g' {} +
+  -exec sed -i '' 's/useBaseweightStore/useBaseweightStore/g' {} +
 ```
 
-- [ ] **Step 3: Verify no references to `useLighterpackStore` remain in app/ and test/**
+- [ ] **Step 3: Verify no references to `useBaseweightStore` remain in app/ and test/**
 
 ```bash
-grep -rn 'useLighterpackStore' app/ test/ --include='*.ts' --include='*.vue'
+grep -rn 'useBaseweightStore' app/ test/ --include='*.ts' --include='*.vue'
 ```
 
 Expected: No matches.
@@ -264,7 +264,7 @@ Expected: All 124 tests pass.
 
 ```bash
 git add app/ test/
-git commit -m "chore: rename useLighterpackStore to useBaseweightStore"
+git commit -m "chore: rename useBaseweightStore to useBaseweightStore"
 ```
 
 ---
@@ -427,7 +427,7 @@ Line 5 — update wordmark:
 >
 ```
 
-Also update any meta tag references to "LighterPack" in this file's `useHead`/`useSeoMeta` section.
+Also update any meta tag references to "BaseWeight" in this file's `useHead`/`useSeoMeta` section.
 
 - [ ] **Step 3: Update index.vue mobile wordmark**
 
@@ -451,7 +451,7 @@ Line 44:
 
 In `app/components/OgImage/OgImageDefault.satori.vue`:
 
-Line 29 — change template text from `LighterPack` to `BaseWeight`.
+Line 29 — change template text from `BaseWeight` to `BaseWeight`.
 
 Line 92 — change default prop:
 
@@ -459,10 +459,10 @@ Line 92 — change default prop:
 default: 'BaseWeight',
 ```
 
-- [ ] **Step 6: Verify all user-facing LighterPack references are gone**
+- [ ] **Step 6: Verify all user-facing BaseWeight references are gone**
 
 ```bash
-grep -rn 'LighterPack\|Lighterpack' app/ --include='*.vue' --include='*.ts'
+grep -rn 'BaseWeight\|Baseweight' app/ --include='*.vue' --include='*.ts'
 ```
 
 Expected: No matches.
@@ -496,9 +496,9 @@ git commit -m "chore: rebrand user-facing text and meta tags to BaseWeight"
 
 ```bash
 find test/e2e -type f \( -name '*.ts' \) \
-  -exec sed -i '' 's/@lighterpack\.com/@baseweight.pro/g' {} +
+  -exec sed -i '' 's/@baseweight\.com/@baseweight.pro/g' {} +
 find test/e2e -type f \( -name '*.ts' \) \
-  -exec sed -i '' 's/@test\.lighterpack\.com/@test.baseweight.pro/g' {} +
+  -exec sed -i '' 's/@test\.baseweight\.com/@test.baseweight.pro/g' {} +
 ```
 
 - [ ] **Step 2: Update auth.spec.ts assertions**
@@ -519,7 +519,7 @@ await expect(page.getByText('Welcome to BaseWeight!')).toBeVisible();
 
 - [ ] **Step 3: Update csvParser.spec.ts comment**
 
-In `test/unit/utils/csvParser.spec.ts`, update the comment on line 40 from "lighterpack CSV" to "baseweight CSV" (or similar).
+In `test/unit/utils/csvParser.spec.ts`, update the comment on line 40 from "baseweight CSV" to "baseweight CSV" (or similar).
 
 - [ ] **Step 4: Run unit tests**
 
@@ -562,23 +562,23 @@ git commit -m "chore: rebrand test email domains and assertions to BaseWeight"
 
 ```bash
 find . -name '*.md' -not -path './node_modules/*' \
-  -exec sed -i '' 's/LighterPack/BaseWeight/g' {} +
+  -exec sed -i '' 's/BaseWeight/BaseWeight/g' {} +
 find . -name '*.md' -not -path './node_modules/*' \
-  -exec sed -i '' 's/Lighterpack/Baseweight/g' {} +
+  -exec sed -i '' 's/Baseweight/Baseweight/g' {} +
 find . -name '*.md' -not -path './node_modules/*' \
-  -exec sed -i '' 's/lighterpack\.com/baseweight.pro/g' {} +
+  -exec sed -i '' 's/baseweight\.com/baseweight.pro/g' {} +
 find . -name '*.md' -not -path './node_modules/*' \
-  -exec sed -i '' 's/lighterpack/baseweight/g' {} +
+  -exec sed -i '' 's/baseweight/baseweight/g' {} +
 ```
 
 Note: Run the most specific patterns first (domain, proper case) before the catch-all lowercase pattern.
 
 - [ ] **Step 2: Update CLAUDE.md store reference**
 
-Verify that `CLAUDE.md` now references `useBaseweightStore` instead of `useLighterpackStore`. The bulk sed should have caught this, but double-check:
+Verify that `CLAUDE.md` now references `useBaseweightStore` instead of `useBaseweightStore`. The bulk sed should have caught this, but double-check:
 
 ```bash
-grep -n 'lighterpack\|LighterPack' CLAUDE.md
+grep -n 'baseweight\|BaseWeight' CLAUDE.md
 ```
 
 Expected: No matches.
@@ -612,10 +612,10 @@ git commit -m "chore: rebrand documentation to BaseWeight"
 
 - [ ] **Step 1: Delete stale built assets**
 
-Remove the old compiled JS/CSS files that contain "lighterpack" in their filenames. Keep `error.html`, `503.html`, and `assets.json`:
+Remove the old compiled JS/CSS files that contain "baseweight" in their filenames. Keep `error.html`, `503.html`, and `assets.json`:
 
 ```bash
-rm -f public/dist/lighterpack.*.js public/dist/lighterpack.*.css public/dist/share.*.css public/dist/share.*.js
+rm -f public/dist/baseweight.*.js public/dist/baseweight.*.css public/dist/share.*.css public/dist/share.*.js
 rm -f public/dist/assets.json
 ```
 
@@ -652,10 +652,10 @@ npm run test:server
 
 Expected: All tests pass.
 
-- [ ] **Step 6: Grep for any remaining "lighterpack" references**
+- [ ] **Step 6: Grep for any remaining "baseweight" references**
 
 ```bash
-grep -rni 'lighterpack' --include='*.ts' --include='*.vue' --include='*.css' --include='*.json' --include='*.html' . | grep -v node_modules | grep -v package-lock | grep -v '.output/' | grep -v 'docs/'
+grep -rni 'baseweight' --include='*.ts' --include='*.vue' --include='*.css' --include='*.json' --include='*.html' . | grep -v node_modules | grep -v package-lock | grep -v '.output/' | grep -v 'docs/'
 ```
 
 Expected: No matches in source code. (Docs may still have historical references in plan/spec filenames — that's fine.)
@@ -679,13 +679,13 @@ git commit -m "chore: cleanup stale dist assets and regenerate package-lock for 
 
 ## Summary
 
-| Task | Layer             | Commit message                                                                     |
-| ---- | ----------------- | ---------------------------------------------------------------------------------- |
-| 1    | Config & metadata | `chore: rebrand config and metadata — LighterPack to BaseWeight`                   |
-| 2    | CSS rename        | `chore: rename CSS prefix lp- to bw- and rename lighterpack.css to baseweight.css` |
-| 3    | Store rename      | `chore: rename useLighterpackStore to useBaseweightStore`                          |
-| 4    | Server            | `chore: rebrand server emails and error pages to BaseWeight`                       |
-| 5    | Frontend text     | `chore: rebrand user-facing text and meta tags to BaseWeight`                      |
-| 6    | Tests             | `chore: rebrand test email domains and assertions to BaseWeight`                   |
-| 7    | Docs              | `chore: rebrand documentation to BaseWeight`                                       |
-| 8    | Cleanup           | `chore: cleanup stale dist assets and regenerate package-lock for baseweight`      |
+| Task | Layer             | Commit message                                                                    |
+| ---- | ----------------- | --------------------------------------------------------------------------------- |
+| 1    | Config & metadata | `chore: rebrand config and metadata — BaseWeight to BaseWeight`                   |
+| 2    | CSS rename        | `chore: rename CSS prefix lp- to bw- and rename baseweight.css to baseweight.css` |
+| 3    | Store rename      | `chore: rename useBaseweightStore to useBaseweightStore`                          |
+| 4    | Server            | `chore: rebrand server emails and error pages to BaseWeight`                      |
+| 5    | Frontend text     | `chore: rebrand user-facing text and meta tags to BaseWeight`                     |
+| 6    | Tests             | `chore: rebrand test email domains and assertions to BaseWeight`                  |
+| 7    | Docs              | `chore: rebrand documentation to BaseWeight`                                      |
+| 8    | Cleanup           | `chore: cleanup stale dist assets and regenerate package-lock for baseweight`     |

@@ -20,7 +20,7 @@ The new `app/pages/r/[id].vue` renders:
 ```
 ┌─────────────────────────────────────────┐
 │  Share top bar                          │
-│  [LighterPack wordmark]   [Sign in]    │
+│  [BaseWeight wordmark]   [Sign in]    │
 │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  │
 │                                         │
 │  <list :readonly="true" />              │
@@ -70,7 +70,7 @@ Prop propagation: `list.vue` receives `readonly` and passes it to `list-summary`
 
 ### Share Page Top Bar
 
-- Horizontal bar with LighterPack wordmark on the left
+- Horizontal bar with BaseWeight wordmark on the left
 - Right side: inline `SigninForm` if not authenticated, or user email if authenticated
 - Styled with design tokens: `--font-ui`, `--stone-50` background, subtle bottom border
 

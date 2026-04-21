@@ -109,7 +109,7 @@ export const auth = betterAuth({
             sendMagicLink: async ({ email, url }) => {
                 await sendEmail({
                     to: email,
-                    subject: 'Sign in to LighterPack',
+                    subject: 'Sign in to BaseWeight',
                     text: `Click to sign in: ${url}`,
                 });
             },
@@ -181,7 +181,7 @@ Remove the `verifyPassword` call and `currentPassword` field. A typed confirmati
 
 ## Step 5 — Username Strategy
 
-Better Auth's user model has `name` (display name) but not `username`. LighterPack shows "Signed in as {username}" in the UI and uses `username` for moderation. The `users.username` column is kept as a custom field.
+Better Auth's user model has `name` (display name) but not `username`. BaseWeight shows "Signed in as {username}" in the UI and uses `username` for moderation. The `users.username` column is kept as a custom field.
 
 **Option A — Prompt on first login (recommended for UX):**
 After magic link verification succeeds for a new user, redirect to a `/setup-username` page to collect a username before continuing to the app.

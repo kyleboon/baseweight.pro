@@ -2,7 +2,7 @@
 
 ## Page structure
 
-The app has a two-zone layout: a persistent dark sidebar on the left, and a light content area on the right. This is the defining structural signature of LighterPack and must be preserved.
+The app has a two-zone layout: a persistent dark sidebar on the left, and a light content area on the right. This is the defining structural signature of BaseWeight and must be preserved.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -274,7 +274,7 @@ Do not use `position: fixed` for modals — it causes issues in embedded context
 
 ## Responsive breakpoints
 
-LighterPack is a power-user tool — mobile is secondary. Design desktop-first.
+BaseWeight is a power-user tool — mobile is secondary. Design desktop-first.
 
 | Breakpoint | Width         | Behavior                                                 |
 | ---------- | ------------- | -------------------------------------------------------- |

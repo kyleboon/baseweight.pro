@@ -1,6 +1,6 @@
-# LighterPack Design System
+# BaseWeight Design System
 
-This style guide is the source of truth for the LighterPack redesign. It is written for both humans and Claude Code — every section includes rationale, implementation rules, and copy-paste-ready code.
+This style guide is the source of truth for the BaseWeight redesign. It is written for both humans and Claude Code — every section includes rationale, implementation rules, and copy-paste-ready code.
 
 ## Directory structure
 
@@ -29,7 +29,7 @@ styleguide/
 When asking Claude Code to implement a component or page, include this instruction at the top of your prompt:
 
 ```
-Read the LighterPack style guide at styleguide/README.md before writing any code.
+Read the BaseWeight style guide at styleguide/README.md before writing any code.
 Follow all rules in the relevant sections. Do not introduce colors, fonts, spacing,
 or component patterns that are not defined in the style guide.
 ```

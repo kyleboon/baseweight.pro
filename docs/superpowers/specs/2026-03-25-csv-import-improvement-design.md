@@ -63,7 +63,7 @@ Add three conditional columns: **Price**, **Worn**, **Consumable**. Each column 
 
 **Unit tests** for the extracted parsing function in `app/utils/csvParser.js`:
 
-- Standard 10-column lighterpack CSV (current export format)
+- Standard 10-column baseweight CSV (current export format)
 - Legacy 6-column CSV with headers (name, category, desc, qty, weight, unit) — backward compatibility
 - Legacy headerless CSV — falls back to index-based parsing
 - Columns in a different order

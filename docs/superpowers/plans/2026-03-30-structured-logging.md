@@ -572,7 +572,7 @@ function validateConfig() {
 
 export default defineNitroPlugin(() => {
     validateConfig();
-    const dbPath = process.env.DATABASE_PATH ?? config.get<string>('databasePath') ?? './data/lighterpack.db';
+    const dbPath = process.env.DATABASE_PATH ?? config.get<string>('databasePath') ?? './data/baseweight.db';
     initDb(dbPath);
 });
 ```

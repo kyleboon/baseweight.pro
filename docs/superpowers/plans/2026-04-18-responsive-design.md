@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Make LighterPack work well on mobile and tablet screens with a CSS-only responsive layout, hamburger sidebar drawer, gear table reflow, and stacking chart/summary.
+**Goal:** Make BaseWeight work well on mobile and tablet screens with a CSS-only responsive layout, hamburger sidebar drawer, gear table reflow, and stacking chart/summary.
 
 **Architecture:** Desktop-first CSS with two breakpoints (900px and 600px) replacing existing 720px and 480px queries. The only new JS is a hamburger toggle and backdrop click handler in `index.vue`. The sidebar becomes a slide-in drawer at < 900px; gear table rows reflow to two lines; chart/summary stack vertically at < 600px.
 
@@ -35,7 +35,7 @@ Replace the current template in `app/pages/index.vue`:
                     <rect x="2" y="14" width="16" height="2" rx="1" fill="currentColor" />
                 </svg>
             </button>
-            <span class="lp-mobile-wordmark">LighterPack</span>
+            <span class="lp-mobile-wordmark">BaseWeight</span>
         </div>
 
         <div class="lp-sidebar-backdrop" @click="closeSidebar" />
@@ -67,7 +67,7 @@ Replace the `<script setup>` section:
 <script setup>
 import { ref, watch, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
-import { useLighterpackStore } from '~/store/store';
+import { useBaseweightStore } from '~/store/store';
 
 defineOptions({ name: 'Dashboard' });
 
@@ -82,7 +82,7 @@ useHead({
     ],
 });
 
-const store = useLighterpackStore();
+const store = useBaseweightStore();
 const router = useRouter();
 
 const isLoaded = ref(false);

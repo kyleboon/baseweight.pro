@@ -28,7 +28,7 @@ General-purpose inline links within prose or descriptions.
 ```
 
 ```html
-<a href="/community" class="lp-link">LighterPack community</a>
+<a href="/community" class="lp-link">BaseWeight community</a>
 ```
 
 ---
@@ -76,7 +76,7 @@ Monospace, copyable. Used in the "Share your list" input and anywhere the share 
 ```
 
 ```html
-<a href="https://lighterpack.com/r/vf6tcz" class="lp-link-url"> https://lighterpack.com/r/vf6tcz </a>
+<a href="https://baseweight.pro/r/vf6tcz" class="lp-link-url"> https://baseweight.pro/r/vf6tcz </a>
 ```
 
 ---

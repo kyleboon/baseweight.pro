@@ -31,7 +31,7 @@ Only three weights are used in the system. Never use 700 or 800.
 | `500`  | Medium   | Labels, DM Mono stat numbers, nav links (active)           |
 | `600`  | Semibold | Section headings, button labels, table column headers      |
 
-> **Why no 700?** At the densities LighterPack operates (small sidebar text, 13px table cells), 700 weight reads as aggressive. 600 provides clear hierarchy without shouting.
+> **Why no 700?** At the densities BaseWeight operates (small sidebar text, 13px table cells), 700 weight reads as aggressive. 600 provides clear hierarchy without shouting.
 
 ---
 

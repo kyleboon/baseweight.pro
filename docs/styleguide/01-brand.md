@@ -1,8 +1,8 @@
 # 01 — Brand
 
-## What LighterPack is
+## What BaseWeight is
 
-LighterPack is the gear nerd's spreadsheet. It does exactly one thing — tracks the weight and cost of gear across packing lists — and gets out of the way so you can get on the trail.
+BaseWeight is the gear nerd's spreadsheet. It does exactly one thing — tracks the weight and cost of gear across packing lists — and gets out of the way so you can get on the trail.
 
 It was built in 2014 by a hiker, for hikers. The original jQuery site earned trust through function, not flair. Any redesign must honor that legacy: the brand is defined by **restraint**, not style.
 
@@ -53,7 +53,7 @@ Modern/polished  ━━━━━━━━●━━━━━━━━━━━━
 
 ### The one-sentence pitch
 
-> LighterPack helps you track the gear you bring on adventures.
+> BaseWeight helps you track the gear you bring on adventures.
 
 This line (from the original site) is correct. Don't change it.
 
@@ -63,7 +63,7 @@ This line (from the original site) is correct. Don't change it.
 
 ### Preserve — these are load-bearing identity elements
 
-- **Dark sidebar + light content area** — the two-zone layout is the most recognizable LighterPack signature
+- **Dark sidebar + light content area** — the two-zone layout is the most recognizable BaseWeight signature
 - **Amber/gold accent** — warm, outdoorsy, indie. Not a standard SaaS blue.
 - **Donut chart as the hero** — the weight visualization is the emotional payoff of the tool
 - **Inline click-to-edit** — click a cell to change it. No separate edit mode. No save button.
@@ -87,7 +87,7 @@ This line (from the original site) is correct. Don't change it.
 The wordmark is set in **DM Serif Display**, regular weight, ~19px in the sidebar context. No bold, no italic, no icon mark.
 
 ```html
-<span class="lp-wordmark">LighterPack</span> <span class="lp-wordmark-beta">beta</span>
+<span class="lp-wordmark">BaseWeight</span> <span class="lp-wordmark-beta">beta</span>
 ```
 
 The `(beta)` label uses `var(--font-ui)`, 10px, uppercase, `var(--charcoal-500)`. It should feel parenthetical — subordinate to the wordmark, not a badge.

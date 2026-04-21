@@ -161,7 +161,7 @@ Add to `test/unit/utils/csvParser.spec.js`:
 import { CSVToArray, fullUnitToUnit, parseCSV } from '../../../app/utils/csvParser.js';
 
 describe('parseCSV', () => {
-    it('parses a standard 10-column lighterpack CSV', () => {
+    it('parses a standard 10-column baseweight CSV', () => {
         const csv = [
             'Item Name,Category,desc,qty,weight,unit,url,price,worn,consumable',
             'Tent,Shelter,3-season,1,32,ounce,https://example.com,350,Worn,',
@@ -448,13 +448,13 @@ Replace the `<script setup>` section in `app/components/import-csv.vue`. Remove 
 ```vue
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
-import { useLighterpackStore } from '../store/store.js';
+import { useBaseweightStore } from '../store/store.js';
 import { parseCSV } from '../utils/csvParser.js';
 import modal from './modal.vue';
 
 defineOptions({ name: 'ImportCsv' });
 
-const store = useLighterpackStore();
+const store = useBaseweightStore();
 
 const csvInput = ref(null);
 const shown = ref(false);
@@ -676,7 +676,7 @@ git commit -m "feat: show price, worn, consumable columns in import preview moda
 Add a new `FULL_CSV` constant and test to the existing `test.describe('CSV import')` block in `test/e2e/import-csv.spec.ts`:
 
 ```ts
-/** A full 10-column CSV matching the LighterPack export format. */
+/** A full 10-column CSV matching the BaseWeight export format. */
 const FULL_CSV = [
     'Item Name,Category,desc,qty,weight,unit,url,price,worn,consumable',
     'Tent,Shelter,3-season tent,1,32,ounce,https://example.com/tent,350,Worn,',

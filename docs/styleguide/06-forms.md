@@ -256,7 +256,7 @@ Styled differently — appears as a highlighted, copyable field, not a standard 
 <input
     type="text"
     class="lp-share-input"
-    value="https://lighterpack.com/r/vf6tcz"
+    value="https://baseweight.pro/r/vf6tcz"
     readonly
     onclick="this.select()"
     aria-label="Share URL — click to select all"

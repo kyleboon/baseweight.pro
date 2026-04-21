@@ -2,7 +2,7 @@
 
 ## Goal
 
-Make LighterPack work well on mobile and tablet screens. The share page should render beautifully on mobile. The main app should support full editing on small screens, with power-user features (gear library, CSV import/export) restricted to desktop.
+Make BaseWeight work well on mobile and tablet screens. The share page should render beautifully on mobile. The main app should support full editing on small screens, with power-user features (gear library, CSV import/export) restricted to desktop.
 
 ## Approach
 
@@ -31,7 +31,7 @@ A sticky top bar appears at viewports below 900px. Hidden on desktop via `displa
 Contents:
 
 - Hamburger icon button (left)
-- "LighterPack" wordmark (left of center)
+- "BaseWeight" wordmark (left of center)
 
 CSS class: `.lp-mobile-topbar`
 

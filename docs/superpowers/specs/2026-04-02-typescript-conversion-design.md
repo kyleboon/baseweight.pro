@@ -137,11 +137,11 @@ Update imports from `.js` to drop extensions entirely (Vite/Nuxt resolves them).
 ```ts
 // Before
 import weightUtils from '#shared/utils/weight.js';
-import { useLighterpackStore } from '../store/store.js';
+import { useBaseweightStore } from '../store/store.js';
 
 // After
 import { WeightToMg, MgToWeight } from '#shared/utils/weight';
-import { useLighterpackStore } from '../store/store';
+import { useBaseweightStore } from '../store/store';
 ```
 
 ## What's Not Changing

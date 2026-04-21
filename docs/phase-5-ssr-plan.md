@@ -108,7 +108,7 @@ export default defineNuxtConfig({
 
 `routeRules` is the key: the main app stays SPA (no server round-trip for navigation), while share pages are SSR. This replaces the multi-entry Vite setup cleanly.
 
-Delete: `vite.config.js`, `webpack.config.js`, `webpack.development.config.js`, `client/lighterpack.js` (entry point), `client/routes.js`.
+Delete: `vite.config.js`, `webpack.config.js`, `webpack.development.config.js`, `client/baseweight.js` (entry point), `client/routes.js`.
 
 ### Step 2 — Move shared code to `shared/`
 
@@ -149,7 +149,7 @@ Route guards (redirect to signin if not logged in) move from the store into `app
 
 ```ts
 export default defineNuxtRouteMiddleware(() => {
-    const store = useLighterpackStore();
+    const store = useBaseweightStore();
     if (!store.loggedIn) return navigateTo('/signin');
 });
 ```
@@ -315,4 +315,4 @@ Delete: `server/db.js`, `mongodb` npm package, Docker Compose file (or keep it c
 - **Mailgun / forgot password**: Keep as-is, just move to a Nitro API route.
 - **Moderation endpoints**: Small surface area — convert alongside the other API routes in Phase 5, Step 4.
 - **Config management**: The `config` npm package (default.json / local.json) can be replaced with Nuxt's built-in `runtimeConfig` in `nuxt.config.ts`. One less dependency.
-- **`localStorage` / local-only mode**: The current app supports using LighterPack without an account via `localStorage`. This works fine in Nuxt as a client-side-only feature. No changes needed — the `init()` store action already handles this branch.
+- **`localStorage` / local-only mode**: The current app supports using BaseWeight without an account via `localStorage`. This works fine in Nuxt as a client-side-only feature. No changes needed — the `init()` store action already handles this branch.

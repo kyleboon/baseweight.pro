@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Bring LighterPack to WCAG 2.1 Level AA compliance by adding semantic landmarks, ARIA attributes, focus management, image alt text, form labels, and keyboard reorder controls.
+**Goal:** Bring BaseWeight to WCAG 2.1 Level AA compliance by adding semantic landmarks, ARIA attributes, focus management, image alt text, form labels, and keyboard reorder controls.
 
 **Architecture:** Five sequential layers: (1) CSS utilities and semantic structure, (2) ARIA attributes across components, (3) focus trap composable integrated into modals/popovers, (4) image alt text and form labels, (5) keyboard reorder buttons with live announcements. Each layer builds on the previous.
 

@@ -37,7 +37,7 @@
 
     ```js
     it('copyList calls store.showModal with "copyList"', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         store.showModal = vi.fn();
         const wrapper = mount(LibraryLists, { global: { stubs } });
@@ -104,7 +104,7 @@ The goal of this task is the button only — visible when signed in, hidden when
     import { describe, it, expect, vi, beforeEach } from 'vitest';
     import { mount } from '@vue/test-utils';
     import { createPinia, setActivePinia } from 'pinia';
-    import { useLighterpackStore } from '../../../app/store/store.js';
+    import { useBaseweightStore } from '../../../app/store/store.js';
     import ListActions from '../../../app/components/list-actions.vue';
 
     vi.mock('../../../app/utils/utils.js', async (importOriginal) => {
@@ -122,7 +122,7 @@ The goal of this task is the button only — visible when signed in, hidden when
         const stubs = { Popover: PopoverStub };
 
         function makeStore(overrides = {}) {
-            const store = useLighterpackStore();
+            const store = useBaseweightStore();
             store.loggedIn = 'alice';
             store.library = {
                 defaultListId: 'list1',
@@ -133,7 +133,7 @@ The goal of this task is the button only — visible when signed in, hidden when
         }
 
         it('renders nothing when not signed in', () => {
-            const store = useLighterpackStore();
+            const store = useBaseweightStore();
             store.loggedIn = null;
             store.library = {
                 defaultListId: 'list1',
@@ -208,11 +208,11 @@ The goal of this task is the button only — visible when signed in, hidden when
 
     <script setup>
     import { ref, computed } from 'vue';
-    import { useLighterpackStore } from '../store/store.js';
+    import { useBaseweightStore } from '../store/store.js';
 
     defineOptions({ name: 'ListActions' });
 
-    const store = useLighterpackStore();
+    const store = useBaseweightStore();
 
     const menuOpen = ref(false);
     const copied = ref(false);
@@ -490,13 +490,13 @@ The goal of this task is the button only — visible when signed in, hidden when
 
     <script setup>
     import { ref, computed } from 'vue';
-    import { useLighterpackStore } from '../store/store.js';
+    import { useBaseweightStore } from '../store/store.js';
     import { fetchJson } from '../utils/utils.js';
     import Popover from './popover.vue';
 
     defineOptions({ name: 'ListActions' });
 
-    const store = useLighterpackStore();
+    const store = useBaseweightStore();
 
     const menuOpen = ref(false);
     const copied = ref(false);
@@ -721,7 +721,7 @@ The goal of this task is the button only — visible when signed in, hidden when
     it('copyShareLink calls fetchJson when no externalId', async () => {
         const { fetchJson } = await import('../../../app/utils/utils.js');
         fetchJson.mockResolvedValueOnce({ externalId: 'newid' });
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.loggedIn = 'alice';
         store.library = {
             defaultListId: 'list1',
@@ -750,7 +750,7 @@ The goal of this task is the button only — visible when signed in, hidden when
         const { fetchJson } = await import('../../../app/utils/utils.js');
         // fetchJson never resolves — simulates an in-flight request
         fetchJson.mockImplementation(() => new Promise(() => {}));
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.loggedIn = 'alice';
         store.library = {
             defaultListId: 'list1',

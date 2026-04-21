@@ -48,7 +48,7 @@ Add to `test/unit/components/item.spec.js`:
 ```js
 describe('readonly mode', () => {
     it('renders item name as static text instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps({ name: 'Tent' }), readonly: true },
@@ -59,7 +59,7 @@ describe('readonly mode', () => {
     });
 
     it('renders item name as a link when url is set', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps({ name: 'Tent', url: 'https://example.com' }), readonly: true },
@@ -72,7 +72,7 @@ describe('readonly mode', () => {
     });
 
     it('renders description as static text instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps({ description: 'A great tent' }), readonly: true },
@@ -83,7 +83,7 @@ describe('readonly mode', () => {
     });
 
     it('hides drag handle in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps(), readonly: true },
@@ -93,7 +93,7 @@ describe('readonly mode', () => {
     });
 
     it('hides action buttons in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps(), readonly: true },
@@ -105,7 +105,7 @@ describe('readonly mode', () => {
     });
 
     it('hides remove button in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps(), readonly: true },
@@ -115,7 +115,7 @@ describe('readonly mode', () => {
     });
 
     it('shows static weight and unit instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps({ weight: 28349, authorUnit: 'oz' }), readonly: true },
@@ -126,7 +126,7 @@ describe('readonly mode', () => {
     });
 
     it('shows static qty instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Item, {
             props: { ...makeProps(), readonly: true },
@@ -137,7 +137,7 @@ describe('readonly mode', () => {
     });
 
     it('shows static worn icon when worn is active', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         // Note: makeLibrary() must be updated to accept optionalFields overrides:
         // function makeLibrary(overrides = {}) {
         //     return { optionalFields: { images: false, worn: false, consumable: false, price: false, ...overrides } };
@@ -258,7 +258,7 @@ Add to `test/unit/components/category.spec.js`:
 ```js
 describe('readonly mode', () => {
     it('renders category name as h2 instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Category, {
             props: { category: makeCategory({ name: 'Shelter' }), readonly: true },
@@ -269,7 +269,7 @@ describe('readonly mode', () => {
     });
 
     it('hides drag handle in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Category, {
             props: { category: makeCategory(), readonly: true },
@@ -279,7 +279,7 @@ describe('readonly mode', () => {
     });
 
     it('hides remove button in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Category, {
             props: { category: makeCategory(), readonly: true },
@@ -289,7 +289,7 @@ describe('readonly mode', () => {
     });
 
     it('hides add item link in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(Category, {
             props: { category: makeCategory(), readonly: true },
@@ -299,7 +299,7 @@ describe('readonly mode', () => {
     });
 
     it('passes readonly prop to child item components', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const lib = makeLibrary();
         lib.getItemById = () => ({ id: 'i1', name: 'Tent', weight: 0, authorUnit: 'oz' });
         store.library = lib;
@@ -388,7 +388,7 @@ Add to `test/unit/components/list-summary.spec.js`:
 ```js
 describe('readonly mode', () => {
     it('renders a static color swatch instead of colorPicker when readonly', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(ListSummary, {
             props: { list: makeList(), readonly: true },
@@ -399,7 +399,7 @@ describe('readonly mode', () => {
     });
 
     it('renders static unit text instead of unitSelect when readonly', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         store.library = makeLibrary();
         const wrapper = mount(ListSummary, {
             props: { list: makeList(), readonly: true },
@@ -489,7 +489,7 @@ Add readonly tests:
 ```js
 describe('readonly mode', () => {
     it('renders list name as h1 instead of input', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const list = makeList({ name: 'Summer Pack' });
         store.library = makeLibrary(list);
         const wrapper = mount(List, {
@@ -501,7 +501,7 @@ describe('readonly mode', () => {
     });
 
     it('hides header actions in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const list = makeList();
         store.library = makeLibrary(list);
         const wrapper = mount(List, {
@@ -512,7 +512,7 @@ describe('readonly mode', () => {
     });
 
     it('hides add category link in readonly mode', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const list = makeList();
         store.library = makeLibrary(list);
         const wrapper = mount(List, {
@@ -523,7 +523,7 @@ describe('readonly mode', () => {
     });
 
     it('passes readonly to list-summary', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const list = makeList({ totalWeight: 100 });
         store.library = makeLibrary(list);
         const wrapper = mount(List, {
@@ -538,7 +538,7 @@ describe('readonly mode', () => {
     });
 
     it('passes readonly to category components', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const cat = makeCategory('cat1');
         const list = makeList({ categoryIds: ['cat1'] });
         store.library = makeLibrary(list, [cat]);
@@ -553,7 +553,7 @@ describe('readonly mode', () => {
     });
 
     it('renders markdown description in readonly mode when description exists', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const list = makeList({ description: '**Bold text**' });
         const lib = makeLibrary(list);
         lib.optionalFields = { listDescription: true };
@@ -827,13 +827,13 @@ Create `test/unit/store/store.spec.js` (or add to an existing store test file if
 ```js
 import { describe, it, expect, beforeEach } from 'vitest';
 import { createPinia, setActivePinia } from 'pinia';
-import { useLighterpackStore } from '../../../app/store/store.js';
+import { useBaseweightStore } from '../../../app/store/store.js';
 
 describe('loadShareData', () => {
     beforeEach(() => setActivePinia(createPinia()));
 
     it('populates library from blob and sets defaultListId by externalId', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = {
             totalUnit: 'oz',
             itemUnit: 'oz',
@@ -852,7 +852,7 @@ describe('loadShareData', () => {
     });
 
     it('sets library even if externalId is not found', () => {
-        const store = useLighterpackStore();
+        const store = useBaseweightStore();
         const blob = {
             totalUnit: 'oz',
             itemUnit: 'oz',
@@ -1020,7 +1020,7 @@ Replace the entire content of `app/pages/r/[id].vue` with:
     <div v-if="library && list" class="lp-share-page">
         <!-- ── Top bar ──────────────────────────────────── -->
         <header class="lp-share-topbar">
-            <span class="lp-wordmark">LighterPack</span>
+            <span class="lp-wordmark">BaseWeight</span>
             <div class="lp-share-topbar-right">
                 <template v-if="loggedIn">
                     <button class="lp-copy-btn" @click="showCopyConfirm = true">Copy to my account</button>
@@ -1060,7 +1060,7 @@ Replace the entire content of `app/pages/r/[id].vue` with:
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useLighterpackStore } from '~/store/store.js';
+import { useBaseweightStore } from '~/store/store.js';
 import ListComponent from '~/components/list.vue';
 import SigninForm from '~/components/signin-form.vue';
 
@@ -1069,7 +1069,7 @@ const components = { list: ListComponent };
 
 const route = useRoute();
 const router = useRouter();
-const store = useLighterpackStore();
+const store = useBaseweightStore();
 
 useHead({
     link: [
@@ -1098,8 +1098,8 @@ const loggedIn = computed(() => store.loggedIn);
 useSeoMeta({
     title: computed(() => list.value?.name || 'Shared List'),
     ogTitle: computed(() => list.value?.name || 'Shared List'),
-    description: 'A gear list shared on LighterPack',
-    ogDescription: 'A gear list shared on LighterPack',
+    description: 'A gear list shared on BaseWeight',
+    ogDescription: 'A gear list shared on BaseWeight',
 });
 
 const showCopyConfirm = ref(false);

@@ -1,6 +1,6 @@
-# LighterPack
+# BaseWeight
 
-LighterPack helps you track the gear you bring on adventures.
+BaseWeight helps you track the gear you bring on adventures.
 
 ## Tech Stack
 
@@ -17,8 +17,8 @@ LighterPack helps you track the gear you bring on adventures.
 1. Clone the repo:
 
     ```bash
-    git clone https://github.com/galenmaly/lighterpack.git
-    cd lighterpack
+    git clone https://github.com/galenmaly/baseweight.git
+    cd baseweight
     ```
 
 2. Install dependencies:

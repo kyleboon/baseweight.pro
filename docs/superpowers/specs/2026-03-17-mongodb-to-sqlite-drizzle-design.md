@@ -305,7 +305,7 @@ db.pragma('temp_store = MEMORY'); // Temp tables in RAM
 
 ### SQLite file location
 
-Configured via `DATABASE_PATH` env var, defaulting to `./data/lighterpack.db`. The `data/` directory is gitignored.
+Configured via `DATABASE_PATH` env var, defaulting to `./data/baseweight.db`. The `data/` directory is gitignored.
 
 ---
 

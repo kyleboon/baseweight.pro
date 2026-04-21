@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-LighterPack is a full-stack web application for tracking gear for adventures. Nuxt 4 full-stack app with Vue 3 SPA frontend, Nitro server backend, SQLite database via Drizzle ORM, and Better Auth for passwordless magic link authentication.
+BaseWeight is a full-stack web application for tracking gear for adventures. Nuxt 4 full-stack app with Vue 3 SPA frontend, Nitro server backend, SQLite database via Drizzle ORM, and Better Auth for passwordless magic link authentication.
 
 ## Common Commands
 
@@ -28,7 +28,7 @@ npx playwright test --update-snapshots                 # Regenerate screenshot b
 
 ### Frontend (`app/`)
 
-- **Vue 3.5** SPA with **Pinia** store (`app/store/store.js`, exported as `useLighterpackStore()`)
+- **Vue 3.5** SPA with **Pinia** store (`app/store/store.js`, exported as `useBaseweightStore()`)
 - Pages in `app/pages/`: `index.vue` (main app), `signin.vue`, `register.vue` (redirects to signin), `welcome.vue`, `r/[id].vue` (share page)
 - Components in `app/components/` (~30 `.vue` files)
 - Composables in `app/composables/`, utilities in `app/utils/`
@@ -53,7 +53,7 @@ npx playwright test --update-snapshots                 # Regenerate screenshot b
 
 ### Database Schema
 
-Tables: `user`, `session`, `account`, `verification` (Better Auth), plus `library_settings`, `lists`, `categories`, `category_items` (application data). Database file path configured via `databasePath` in config (default: `./data/lighterpack.db`).
+Tables: `user`, `session`, `account`, `verification` (Better Auth), plus `library_settings`, `lists`, `categories`, `category_items` (application data). Database file path configured via `databasePath` in config (default: `./data/baseweight.db`).
 
 ### Authentication
 
