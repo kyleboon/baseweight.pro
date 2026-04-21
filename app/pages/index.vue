@@ -10,7 +10,9 @@
                     <rect x="2" y="14" width="16" height="2" rx="1" fill="currentColor" />
                 </svg>
             </button>
-            <span class="bw-mobile-wordmark">LighterPack</span>
+            <span class="bw-mobile-wordmark"
+                ><span class="bw-wordmark-base">Base</span><span class="bw-wordmark-weight">Weight</span></span
+            >
         </div>
 
         <div class="bw-sidebar-backdrop" @click="closeSidebar" />

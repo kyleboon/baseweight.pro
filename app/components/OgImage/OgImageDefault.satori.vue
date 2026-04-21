@@ -26,7 +26,7 @@
                     fontWeight: 400,
                 }"
             >
-                LighterPack
+                BaseWeight
             </span>
         </div>
 
@@ -89,7 +89,7 @@
 defineProps({
     title: {
         type: String,
-        default: 'LighterPack',
+        default: 'BaseWeight',
     },
     description: {
         type: String,

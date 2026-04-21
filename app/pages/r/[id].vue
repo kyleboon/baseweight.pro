@@ -2,7 +2,9 @@
     <div v-if="library && list" class="bw-share-page">
         <!-- ── Top bar: wordmark + sign-in / copy ──── -->
         <header class="bw-share-topbar">
-            <NuxtLink to="/welcome" class="bw-share-wordmark">LighterPack</NuxtLink>
+            <NuxtLink to="/welcome" class="bw-share-wordmark"
+                ><span class="bw-wordmark-base">Base</span><span class="bw-wordmark-weight">Weight</span></NuxtLink
+            >
             <div class="bw-share-topbar-right">
                 <template v-if="loggedIn">
                     <button class="bw-share-copy-btn" @click="showCopyConfirm = true">Copy to my account</button>
@@ -128,18 +130,18 @@ const shareCategoryCount = computed(() => {
 
 const shareDescription = computed(() => {
     const items = shareItemCount.value;
-    if (items === 0) return 'A gear list shared on LighterPack.';
-    return `A ${items}-item gear list shared on LighterPack.`;
+    if (items === 0) return 'A gear list shared on BaseWeight.';
+    return `A ${items}-item gear list shared on BaseWeight.`;
 });
 
 useSeoMeta({
-    title: () => `${shareListName.value} - LighterPack`,
+    title: () => `${shareListName.value} - BaseWeight`,
     description: shareDescription,
     ogType: 'website',
-    ogTitle: () => `${shareListName.value} - LighterPack`,
+    ogTitle: () => `${shareListName.value} - BaseWeight`,
     ogDescription: shareDescription,
     twitterCard: 'summary_large_image',
-    twitterTitle: () => `${shareListName.value} - LighterPack`,
+    twitterTitle: () => `${shareListName.value} - BaseWeight`,
     twitterDescription: shareDescription,
 });
 

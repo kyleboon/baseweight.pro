@@ -41,7 +41,7 @@
         </header>
 
         <div v-if="!readonly && isListNew" id="getStarted">
-            <h2>Welcome to LighterPack!</h2>
+            <h2>Welcome to BaseWeight!</h2>
             <p>Here's what you need to get started:</p>
             <ol>
                 <li>Click on things to edit them. Give your list and category a name.</li>

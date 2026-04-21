@@ -5,7 +5,9 @@
             <!-- Left: dark CTA panel -->
             <div class="bw-hero-left">
                 <div class="bw-hero-brand">
-                    <span class="bw-wordmark">LighterPack</span>
+                    <span class="bw-wordmark"
+                        ><span class="bw-wordmark-base">Base</span><span class="bw-wordmark-weight">Weight</span></span
+                    >
                     <span class="bw-wordmark-beta">beta</span>
                 </div>
 
@@ -14,7 +16,7 @@
                     <em>accounted for.</em>
                 </h1>
 
-                <p class="bw-hero-body">LighterPack helps you track the gear you bring on adventures.</p>
+                <p class="bw-hero-body">BaseWeight helps you track the gear you bring on adventures.</p>
 
                 <div class="bw-hero-signin">
                     <SigninForm />
@@ -56,7 +58,7 @@
                 <div class="bw-mockup" aria-hidden="true">
                     <!-- Mini sidebar -->
                     <div class="bw-mockup-sidebar">
-                        <div class="bw-mockup-wordmark">LighterPack</div>
+                        <div class="bw-mockup-wordmark">BaseWeight</div>
                         <div class="bw-mockup-section-label">Lists</div>
                         <div class="bw-mockup-nav active">Summer Sierra</div>
                         <div class="bw-mockup-nav">PCT Section J</div>
@@ -229,22 +231,22 @@ useHead({
 });
 
 useSeoMeta({
-    title: 'LighterPack — Track Your Gear Weight',
+    title: 'BaseWeight — Track Your Gear Weight',
     description:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
     ogType: 'website',
-    ogTitle: 'LighterPack — Track Your Gear Weight',
+    ogTitle: 'BaseWeight — Track Your Gear Weight',
     ogDescription:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
     twitterCard: 'summary_large_image',
-    twitterTitle: 'LighterPack — Track Your Gear Weight',
+    twitterTitle: 'BaseWeight — Track Your Gear Weight',
     twitterDescription:
-        'LighterPack helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
+        'BaseWeight helps you track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
 });
 
 useSchemaOrg([
     defineSoftwareApp({
-        name: 'LighterPack',
+        name: 'BaseWeight',
         description:
             'Track the gear you bring on adventures. Enter packing lists, visualize pack weight, and share with the community.',
         applicationCategory: 'Utility',
@@ -252,7 +254,7 @@ useSchemaOrg([
 ]);
 
 defineOgImage('OgImageDefault', {
-    title: 'LighterPack',
+    title: 'BaseWeight',
     description: 'Every ounce accounted for.',
 });
 
@@ -268,7 +270,7 @@ onBeforeMount(() => {
 
 <style>
 /* ================================================================
-   LighterPack Landing Page
+   BaseWeight Landing Page
    Tokens follow docs/styleguide/tokens/tokens.css
    ================================================================ */
 
