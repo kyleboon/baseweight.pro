@@ -1,10 +1,10 @@
 <template>
     <div>
-        <div v-if="emailSent" class="lpSuccess">
+        <div v-if="emailSent" class="bwSuccess">
             <p>Check your email for a sign-in link. It expires in 5 minutes.</p>
         </div>
         <form v-else class="signin" @submit.prevent="sendMagicLink">
-            <div class="lpFields">
+            <div class="bwFields">
                 <label for="signin-email" class="visually-hidden">Email address</label>
                 <input
                     id="signin-email"
@@ -20,8 +20,8 @@
 
             <errors :errors="errors_" />
 
-            <div class="lpButtons">
-                <button class="lpButton">
+            <div class="bwButtons">
+                <button class="bwButton">
                     Send sign-in link
                     <spinner v-if="fetching" />
                 </button>
@@ -81,8 +81,8 @@ async function sendMagicLink() {
     gap: 8px;
 }
 
-/* Base success state — overridden by .lp-hero-signin context in welcome.vue */
-.lpSuccess {
+/* Base success state — overridden by .bw-hero-signin context in welcome.vue */
+.bwSuccess {
     background: #f3f2ee;
     border-left: 3px solid #e8a220;
     border-radius: 6px;

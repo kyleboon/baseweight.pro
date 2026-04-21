@@ -14,9 +14,9 @@ async function setupSharedList(page: any): Promise<string> {
 
     // Name the list and add one item with a weight so the donut chart renders
     await page.getByPlaceholder('List name').fill('Summer Pack');
-    await page.locator('input.lpCategoryName').first().fill('Shelter');
-    await page.locator('.lpCategory').first().locator('input.lpName').first().fill('Tent');
-    await page.locator('.lpCategory').first().locator('input.lpWeight').first().fill('800');
+    await page.locator('input.bwCategoryName').first().fill('Shelter');
+    await page.locator('.bwCategory').first().locator('input.bwName').first().fill('Tent');
+    await page.locator('.bwCategory').first().locator('input.bwWeight').first().fill('800');
 
     const shareUrl = await getShareUrl(page);
 
@@ -36,8 +36,8 @@ test.describe('Share page', () => {
         await page.context().clearCookies();
         await page.goto(shareUrl);
 
-        // Now uses h1.lp-list-title instead of .lpListName
-        await expect(page.locator('h1.lp-list-title')).toContainText('Summer Pack');
+        // Now uses h1.bw-list-title instead of .bwListName
+        await expect(page.locator('h1.bw-list-title')).toContainText('Summer Pack');
     });
 
     test('should show category and item names on the share page', async ({ page }) => {
@@ -45,9 +45,9 @@ test.describe('Share page', () => {
         await page.context().clearCookies();
         await page.goto(shareUrl);
 
-        // Uses the same .lpCategory and .lpItem classes as index
-        await expect(page.locator('.lpCategory')).toContainText('Shelter');
-        await expect(page.locator('.lpItem')).toContainText('Tent');
+        // Uses the same .bwCategory and .bwItem classes as index
+        await expect(page.locator('.bwCategory')).toContainText('Shelter');
+        await expect(page.locator('.bwItem')).toContainText('Tent');
     });
 
     test('should render a donut chart SVG on the share page', async ({ page }) => {
@@ -55,7 +55,7 @@ test.describe('Share page', () => {
         await page.context().clearCookies();
         await page.goto(shareUrl);
 
-        await expect(page.locator('.lpChartContainer svg')).toBeVisible();
+        await expect(page.locator('.bwChartContainer svg')).toBeVisible();
     });
 
     test('should show total weight in the share page summary', async ({ page }) => {
@@ -63,7 +63,7 @@ test.describe('Share page', () => {
         await page.context().clearCookies();
         await page.goto(shareUrl);
 
-        await expect(page.locator('.lpTotalsContainer')).toContainText('800');
+        await expect(page.locator('.bwTotalsContainer')).toContainText('800');
     });
 
     test('should not show edit controls on the share page', async ({ page }) => {
@@ -72,9 +72,9 @@ test.describe('Share page', () => {
         await page.goto(shareUrl);
 
         // No editable inputs, no add buttons, no drag handles
-        await expect(page.locator('input.lpName')).toHaveCount(0);
+        await expect(page.locator('input.bwName')).toHaveCount(0);
         await expect(page.locator('.addCategory')).toHaveCount(0);
-        await expect(page.locator('.lpHandle')).toHaveCount(0);
+        await expect(page.locator('.bwHandle')).toHaveCount(0);
     });
 
     test('should show sign-in form when not authenticated', async ({ page }) => {
@@ -90,6 +90,6 @@ test.describe('Share page', () => {
         // Navigate to share page while still logged in
         await page.goto(shareUrl);
 
-        await expect(page.locator('.lp-share-copy-btn')).toBeVisible();
+        await expect(page.locator('.bw-share-copy-btn')).toBeVisible();
     });
 });

@@ -5,9 +5,9 @@
             <libraryItems />
         </div>
 
-        <footer v-if="isSignedIn" class="lp-sidebar-footer">
-            <button class="lp-sidebar-footer-link" @click="showAccount">Account settings</button>
-            <button class="lp-sidebar-footer-link lp-sidebar-footer-signout" @click="signout">Sign out</button>
+        <footer v-if="isSignedIn" class="bw-sidebar-footer">
+            <button class="bw-sidebar-footer-link" @click="showAccount">Account settings</button>
+            <button class="bw-sidebar-footer-link bw-sidebar-footer-signout" @click="signout">Sign out</button>
         </footer>
     </aside>
 </template>
@@ -74,7 +74,7 @@ function signout() {
     width: 280px;
     z-index: 20;
 
-    .lpHasSidebar & {
+    .bwHasSidebar & {
         transform: translateX(0);
     }
 }
@@ -93,7 +93,7 @@ function signout() {
 }
 
 /* ── Footer ─────────────────────────────────────────────────── */
-.lp-sidebar-footer {
+.bw-sidebar-footer {
     border-top: 0.5px solid var(--charcoal-700);
     display: flex;
     flex-direction: column;
@@ -102,7 +102,7 @@ function signout() {
     padding: 10px 10px 14px;
 }
 
-.lp-sidebar-footer-link {
+.bw-sidebar-footer-link {
     align-items: center;
     background: transparent;
     border: none;
@@ -130,7 +130,7 @@ function signout() {
         outline-offset: 2px;
     }
 
-    &.lp-sidebar-footer-signout:hover {
+    &.bw-sidebar-footer-signout:hover {
         color: #c87171;
     }
 }
@@ -140,17 +140,17 @@ function signout() {
     #sidebar {
         z-index: 40;
 
-        .lpHasSidebar & {
+        .bwHasSidebar & {
             transform: translateX(-280px);
         }
 
-        .lpSidebarOpen & {
+        .bwSidebarOpen & {
             transform: translateX(0);
         }
     }
 
     /* Hide gear library on mobile — desktop only feature */
-    .lp-library-section {
+    .bw-library-section {
         display: none;
     }
 }

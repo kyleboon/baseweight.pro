@@ -1,83 +1,83 @@
 <template>
-    <div class="lp-landing">
+    <div class="bw-landing">
         <!-- ── HERO ────────────────────────────────────────────── -->
-        <section class="lp-hero">
+        <section class="bw-hero">
             <!-- Left: dark CTA panel -->
-            <div class="lp-hero-left">
-                <div class="lp-hero-brand">
-                    <span class="lp-wordmark">LighterPack</span>
-                    <span class="lp-wordmark-beta">beta</span>
+            <div class="bw-hero-left">
+                <div class="bw-hero-brand">
+                    <span class="bw-wordmark">LighterPack</span>
+                    <span class="bw-wordmark-beta">beta</span>
                 </div>
 
-                <h1 class="lp-hero-headline">
+                <h1 class="bw-hero-headline">
                     Every ounce<br />
                     <em>accounted for.</em>
                 </h1>
 
-                <p class="lp-hero-body">LighterPack helps you track the gear you bring on adventures.</p>
+                <p class="bw-hero-body">LighterPack helps you track the gear you bring on adventures.</p>
 
-                <div class="lp-hero-signin">
+                <div class="bw-hero-signin">
                     <SigninForm />
                 </div>
             </div>
 
             <!-- Right: features + app mockup -->
-            <div class="lp-hero-right">
-                <div class="lp-features-inline">
-                    <div class="lp-feature-inline">
-                        <span class="lp-feature-inline-num">1.</span>
+            <div class="bw-hero-right">
+                <div class="bw-features-inline">
+                    <div class="bw-feature-inline">
+                        <span class="bw-feature-inline-num">1.</span>
                         <div>
-                            <div class="lp-feature-inline-title">Enter your packing lists</div>
-                            <div class="lp-feature-inline-body">
+                            <div class="bw-feature-inline-title">Enter your packing lists</div>
+                            <div class="bw-feature-inline-body">
                                 Add items with weights in oz, lb, g, or kg. Categories keep gear organized.
                             </div>
                         </div>
                     </div>
-                    <div class="lp-feature-inline">
-                        <span class="lp-feature-inline-num">2.</span>
+                    <div class="bw-feature-inline">
+                        <span class="bw-feature-inline-num">2.</span>
                         <div>
-                            <div class="lp-feature-inline-title">Visualize your pack weight</div>
-                            <div class="lp-feature-inline-body">
+                            <div class="bw-feature-inline-title">Visualize your pack weight</div>
+                            <div class="bw-feature-inline-body">
                                 The donut chart breaks down your load. Base weight, consumables, worn — all tracked.
                             </div>
                         </div>
                     </div>
-                    <div class="lp-feature-inline">
-                        <span class="lp-feature-inline-num">3.</span>
+                    <div class="bw-feature-inline">
+                        <span class="bw-feature-inline-num">3.</span>
                         <div>
-                            <div class="lp-feature-inline-title">Share your lists</div>
-                            <div class="lp-feature-inline-body">
+                            <div class="bw-feature-inline-title">Share your lists</div>
+                            <div class="bw-feature-inline-body">
                                 Every list gets a public URL. Post it to trail forums for gear feedback.
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="lp-mockup" aria-hidden="true">
+                <div class="bw-mockup" aria-hidden="true">
                     <!-- Mini sidebar -->
-                    <div class="lp-mockup-sidebar">
-                        <div class="lp-mockup-wordmark">LighterPack</div>
-                        <div class="lp-mockup-section-label">Lists</div>
-                        <div class="lp-mockup-nav active">Summer Sierra</div>
-                        <div class="lp-mockup-nav">PCT Section J</div>
-                        <div class="lp-mockup-nav">Shakedown 2024</div>
-                        <div class="lp-mockup-divider"></div>
-                        <div class="lp-mockup-section-label">Gear</div>
-                        <div class="lp-mockup-nav muted">Big Agnes UL2</div>
-                        <div class="lp-mockup-nav muted">Nemo Tensor pad</div>
-                        <div class="lp-mockup-nav muted">Lezyne pump</div>
+                    <div class="bw-mockup-sidebar">
+                        <div class="bw-mockup-wordmark">LighterPack</div>
+                        <div class="bw-mockup-section-label">Lists</div>
+                        <div class="bw-mockup-nav active">Summer Sierra</div>
+                        <div class="bw-mockup-nav">PCT Section J</div>
+                        <div class="bw-mockup-nav">Shakedown 2024</div>
+                        <div class="bw-mockup-divider"></div>
+                        <div class="bw-mockup-section-label">Gear</div>
+                        <div class="bw-mockup-nav muted">Big Agnes UL2</div>
+                        <div class="bw-mockup-nav muted">Nemo Tensor pad</div>
+                        <div class="bw-mockup-nav muted">Lezyne pump</div>
                     </div>
 
                     <!-- Content area -->
-                    <div class="lp-mockup-content">
-                        <div class="lp-mockup-header">
-                            <span class="lp-mockup-list-title">Summer Sierra</span>
-                            <span class="lp-mockup-share-chip">Share</span>
+                    <div class="bw-mockup-content">
+                        <div class="bw-mockup-header">
+                            <span class="bw-mockup-list-title">Summer Sierra</span>
+                            <span class="bw-mockup-share-chip">Share</span>
                         </div>
 
                         <!-- Chart + legend + stats -->
-                        <div class="lp-mockup-chart-block">
-                            <svg class="lp-mockup-donut" viewBox="0 0 120 120">
+                        <div class="bw-mockup-chart-block">
+                            <svg class="bw-mockup-donut" viewBox="0 0 120 120">
                                 <!-- Bike 40% -->
                                 <circle
                                     cx="60"
@@ -126,56 +126,56 @@
                                 <circle cx="60" cy="60" r="28" fill="#FAFAF7" />
                             </svg>
 
-                            <div class="lp-mockup-right-col">
+                            <div class="bw-mockup-right-col">
                                 <!-- Legend -->
-                                <div class="lp-mockup-legend">
-                                    <div class="lp-mockup-legend-row">
-                                        <span class="lp-mockup-dot" style="background: #4d84b4"></span>
-                                        <span class="lp-mockup-cat">Bike</span>
-                                        <span class="lp-mockup-weight">350 oz</span>
+                                <div class="bw-mockup-legend">
+                                    <div class="bw-mockup-legend-row">
+                                        <span class="bw-mockup-dot" style="background: #4d84b4"></span>
+                                        <span class="bw-mockup-cat">Bike</span>
+                                        <span class="bw-mockup-weight">350 oz</span>
                                     </div>
-                                    <div class="lp-mockup-legend-row">
-                                        <span class="lp-mockup-dot" style="background: #c05848"></span>
-                                        <span class="lp-mockup-cat">Shelter</span>
-                                        <span class="lp-mockup-weight">32 oz</span>
+                                    <div class="bw-mockup-legend-row">
+                                        <span class="bw-mockup-dot" style="background: #c05848"></span>
+                                        <span class="bw-mockup-cat">Shelter</span>
+                                        <span class="bw-mockup-weight">32 oz</span>
                                     </div>
-                                    <div class="lp-mockup-legend-row">
-                                        <span class="lp-mockup-dot" style="background: #5a8c6a"></span>
-                                        <span class="lp-mockup-cat">Clothing</span>
-                                        <span class="lp-mockup-weight">24 oz</span>
+                                    <div class="bw-mockup-legend-row">
+                                        <span class="bw-mockup-dot" style="background: #5a8c6a"></span>
+                                        <span class="bw-mockup-cat">Clothing</span>
+                                        <span class="bw-mockup-weight">24 oz</span>
                                     </div>
-                                    <div class="lp-mockup-legend-row">
-                                        <span class="lp-mockup-dot" style="background: #7b6ea8"></span>
-                                        <span class="lp-mockup-cat">Sleep</span>
-                                        <span class="lp-mockup-weight">21 oz</span>
+                                    <div class="bw-mockup-legend-row">
+                                        <span class="bw-mockup-dot" style="background: #7b6ea8"></span>
+                                        <span class="bw-mockup-cat">Sleep</span>
+                                        <span class="bw-mockup-weight">21 oz</span>
                                     </div>
-                                    <div class="lp-mockup-legend-row total">
-                                        <span class="lp-mockup-cat">Base weight</span>
-                                        <span class="lp-mockup-weight">371 oz</span>
+                                    <div class="bw-mockup-legend-row total">
+                                        <span class="bw-mockup-cat">Base weight</span>
+                                        <span class="bw-mockup-weight">371 oz</span>
                                     </div>
                                 </div>
 
                                 <!-- Stat cards -->
-                                <div class="lp-mockup-stats">
-                                    <div class="lp-mockup-stat">
-                                        <span class="lp-mockup-stat-num">371</span>
-                                        <span class="lp-mockup-stat-label">base oz</span>
+                                <div class="bw-mockup-stats">
+                                    <div class="bw-mockup-stat">
+                                        <span class="bw-mockup-stat-num">371</span>
+                                        <span class="bw-mockup-stat-label">base oz</span>
                                     </div>
-                                    <div class="lp-mockup-stat">
-                                        <span class="lp-mockup-stat-num">382</span>
-                                        <span class="lp-mockup-stat-label">total oz</span>
+                                    <div class="bw-mockup-stat">
+                                        <span class="bw-mockup-stat-num">382</span>
+                                        <span class="bw-mockup-stat-label">total oz</span>
                                     </div>
-                                    <div class="lp-mockup-stat">
-                                        <span class="lp-mockup-stat-num">$486</span>
-                                        <span class="lp-mockup-stat-label">cost</span>
+                                    <div class="bw-mockup-stat">
+                                        <span class="bw-mockup-stat-num">$486</span>
+                                        <span class="bw-mockup-stat-label">cost</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Gear table -->
-                        <div class="lp-mockup-category">Bike</div>
-                        <table class="lp-mockup-table">
+                        <div class="bw-mockup-category">Bike</div>
+                        <table class="bw-mockup-table">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -272,7 +272,7 @@ onBeforeMount(() => {
    Tokens follow docs/styleguide/tokens/tokens.css
    ================================================================ */
 
-.lp-landing {
+.bw-landing {
     /* ── Design tokens ──────────────────────────────────────── */
     --charcoal-950: #1e1e1c;
     --charcoal-900: #252523;
@@ -323,7 +323,7 @@ onBeforeMount(() => {
 }
 
 /* ── Wordmark ──────────────────────────────────────────────── */
-.lp-landing .lp-wordmark {
+.bw-landing .bw-wordmark {
     color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: 19px;
@@ -333,7 +333,7 @@ onBeforeMount(() => {
     user-select: none;
 }
 
-.lp-landing .lp-wordmark-beta {
+.bw-landing .bw-wordmark-beta {
     color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
@@ -345,14 +345,14 @@ onBeforeMount(() => {
 }
 
 /* ── HERO ──────────────────────────────────────────────────── */
-.lp-hero {
+.bw-hero {
     display: flex;
     flex: 1;
     min-height: 100vh;
 }
 
 /* Left dark panel */
-.lp-hero-left {
+.bw-hero-left {
     background: var(--charcoal-900);
     display: flex;
     flex: 0 0 400px;
@@ -362,13 +362,13 @@ onBeforeMount(() => {
     padding: 56px 48px;
 }
 
-.lp-hero-brand {
+.bw-hero-brand {
     align-items: baseline;
     display: flex;
     gap: 0;
 }
 
-.lp-hero-headline {
+.bw-hero-headline {
     color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: var(--text-3xl);
@@ -383,7 +383,7 @@ onBeforeMount(() => {
     }
 }
 
-.lp-hero-body {
+.bw-hero-body {
     color: var(--charcoal-300);
     font-family: var(--font-ui);
     font-size: var(--text-base);
@@ -393,22 +393,22 @@ onBeforeMount(() => {
 }
 
 /* Signin form override — fits dark panel context */
-.lp-hero-signin {
-    .lpSuccess {
+.bw-hero-signin {
+    .bwSuccess {
         color: var(--amber-400);
         font-family: var(--font-ui);
         font-size: var(--text-sm);
         line-height: 1.5;
     }
 
-    .lpError {
+    .bwError {
         color: #c05848;
         font-family: var(--font-ui);
         font-size: var(--text-sm);
         line-height: 1.5;
     }
 
-    .lpFields {
+    .bwFields {
         input[type='email'] {
             background: var(--charcoal-800);
             border: 0.5px solid rgb(200 198 188 / 18%);
@@ -434,8 +434,8 @@ onBeforeMount(() => {
     }
 
     /* Override the gradient button from _common.scss */
-    .lp .lpButton,
-    .lpButton {
+    .lp .bwButton,
+    .bwButton {
         background: var(--amber-400) !important;
         background-image: none !important;
         border-radius: var(--radius-lg) !important;
@@ -467,13 +467,13 @@ onBeforeMount(() => {
         }
     }
 
-    .lpButtons {
+    .bwButtons {
         margin-top: var(--space-1);
     }
 }
 
 /* Right light panel */
-.lp-hero-right {
+.bw-hero-right {
     background: var(--stone-50);
     border-left: 0.5px solid var(--stone-200);
     display: flex;
@@ -487,7 +487,7 @@ onBeforeMount(() => {
 }
 
 /* ── Inline features ───────────────────────────────────────── */
-.lp-features-inline {
+.bw-features-inline {
     align-self: center;
     border-bottom: 0.5px solid var(--stone-200);
     display: grid;
@@ -498,13 +498,13 @@ onBeforeMount(() => {
     width: 100%;
 }
 
-.lp-feature-inline {
+.bw-feature-inline {
     align-items: flex-start;
     display: flex;
     gap: var(--space-2);
 }
 
-.lp-feature-inline-num {
+.bw-feature-inline-num {
     color: var(--amber-400);
     flex-shrink: 0;
     font-family: var(--font-mono);
@@ -514,7 +514,7 @@ onBeforeMount(() => {
     line-height: 1.2;
 }
 
-.lp-feature-inline-title {
+.bw-feature-inline-title {
     color: var(--charcoal-950);
     font-family: var(--font-ui);
     font-size: var(--text-base);
@@ -523,7 +523,7 @@ onBeforeMount(() => {
     margin-bottom: 3px;
 }
 
-.lp-feature-inline-body {
+.bw-feature-inline-body {
     color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
@@ -532,7 +532,7 @@ onBeforeMount(() => {
 }
 
 /* ── App mockup ────────────────────────────────────────────── */
-.lp-mockup {
+.bw-mockup {
     align-self: center;
     background: var(--stone-50);
     border: 0.5px solid var(--stone-300);
@@ -544,7 +544,7 @@ onBeforeMount(() => {
     width: 100%;
 }
 
-.lp-mockup-sidebar {
+.bw-mockup-sidebar {
     background: var(--charcoal-900);
     display: flex;
     flex-direction: column;
@@ -554,7 +554,7 @@ onBeforeMount(() => {
     width: 148px;
 }
 
-.lp-mockup-wordmark {
+.bw-mockup-wordmark {
     color: var(--charcoal-100);
     font-family: var(--font-display);
     font-size: 13px;
@@ -564,7 +564,7 @@ onBeforeMount(() => {
     user-select: none;
 }
 
-.lp-mockup-section-label {
+.bw-mockup-section-label {
     color: var(--charcoal-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
@@ -575,13 +575,13 @@ onBeforeMount(() => {
     text-transform: uppercase;
 }
 
-.lp-mockup-divider {
+.bw-mockup-divider {
     background: var(--charcoal-700);
     height: 0.5px;
     margin: 6px 0;
 }
 
-.lp-mockup-nav {
+.bw-mockup-nav {
     border-radius: var(--radius-sm);
     color: var(--charcoal-300);
     cursor: default;
@@ -605,7 +605,7 @@ onBeforeMount(() => {
     }
 }
 
-.lp-mockup-content {
+.bw-mockup-content {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -614,7 +614,7 @@ onBeforeMount(() => {
     padding: 16px 20px;
 }
 
-.lp-mockup-header {
+.bw-mockup-header {
     align-items: center;
     border-bottom: 0.5px solid var(--stone-200);
     display: flex;
@@ -622,7 +622,7 @@ onBeforeMount(() => {
     padding-bottom: 10px;
 }
 
-.lp-mockup-list-title {
+.bw-mockup-list-title {
     color: var(--charcoal-950);
     font-family: var(--font-display);
     font-size: var(--text-xl);
@@ -630,7 +630,7 @@ onBeforeMount(() => {
     letter-spacing: -0.01em;
 }
 
-.lp-mockup-share-chip {
+.bw-mockup-share-chip {
     background: var(--amber-400);
     border-radius: var(--radius-md);
     color: var(--charcoal-900);
@@ -641,33 +641,33 @@ onBeforeMount(() => {
     padding: 4px 10px;
 }
 
-.lp-mockup-chart-block {
+.bw-mockup-chart-block {
     align-items: flex-start;
     display: flex;
     flex-shrink: 0;
     gap: 16px;
 }
 
-.lp-mockup-donut {
+.bw-mockup-donut {
     flex-shrink: 0;
     height: 100px;
     width: 100px;
 }
 
-.lp-mockup-right-col {
+.bw-mockup-right-col {
     display: flex;
     flex: 1;
     flex-direction: column;
     gap: 10px;
 }
 
-.lp-mockup-legend {
+.bw-mockup-legend {
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
-.lp-mockup-legend-row {
+.bw-mockup-legend-row {
     align-items: center;
     color: var(--charcoal-950);
     display: flex;
@@ -683,7 +683,7 @@ onBeforeMount(() => {
     }
 }
 
-.lp-mockup-dot {
+.bw-mockup-dot {
     border-radius: 50%;
     display: inline-block;
     flex-shrink: 0;
@@ -691,30 +691,30 @@ onBeforeMount(() => {
     width: 8px;
 }
 
-.lp-mockup-cat {
+.bw-mockup-cat {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.lp-mockup-weight {
+.bw-mockup-weight {
     color: var(--charcoal-500);
     font-family: var(--font-mono);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
-.lp-mockup-legend-row.total .lp-mockup-weight {
+.bw-mockup-legend-row.total .bw-mockup-weight {
     color: var(--charcoal-950);
 }
 
-.lp-mockup-stats {
+.bw-mockup-stats {
     display: flex;
     gap: 6px;
 }
 
-.lp-mockup-stat {
+.bw-mockup-stat {
     background: var(--stone-100);
     border-radius: var(--radius-md);
     display: flex;
@@ -724,7 +724,7 @@ onBeforeMount(() => {
     padding: 7px 8px;
 }
 
-.lp-mockup-stat-num {
+.bw-mockup-stat-num {
     color: var(--charcoal-950);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
@@ -733,13 +733,13 @@ onBeforeMount(() => {
     line-height: 1;
 }
 
-.lp-mockup-stat-label {
+.bw-mockup-stat-label {
     color: var(--stone-500);
     font-family: var(--font-ui);
     font-size: var(--text-xs);
 }
 
-.lp-mockup-category {
+.bw-mockup-category {
     color: var(--charcoal-950);
     font-family: var(--font-ui);
     font-size: var(--text-sm);
@@ -748,7 +748,7 @@ onBeforeMount(() => {
     margin-bottom: 2px;
 }
 
-.lp-mockup-table {
+.bw-mockup-table {
     border-collapse: collapse;
     font-family: var(--font-ui);
     font-size: var(--text-xs);
@@ -795,29 +795,29 @@ onBeforeMount(() => {
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (width <= 900px) {
-    .lp-hero {
+    .bw-hero {
         flex-direction: column;
         min-height: auto;
     }
 
-    .lp-hero-left {
+    .bw-hero-left {
         flex: none;
         padding: 48px 32px;
     }
 
-    .lp-hero-right {
+    .bw-hero-right {
         border-left: none;
         border-top: 0.5px solid var(--stone-200);
         padding: 32px 24px;
     }
 
-    .lp-mockup {
+    .bw-mockup {
         height: auto;
         max-width: 100%;
         min-height: 360px;
     }
 
-    .lp-features-inline {
+    .bw-features-inline {
         gap: var(--space-5);
         grid-template-columns: 1fr;
         max-width: 100%;
@@ -825,15 +825,15 @@ onBeforeMount(() => {
 }
 
 @media (width <= 600px) {
-    .lp-hero-left {
+    .bw-hero-left {
         padding: 40px 24px;
     }
 
-    .lp-hero-headline {
+    .bw-hero-headline {
         font-size: var(--text-2xl);
     }
 
-    .lp-mockup-sidebar {
+    .bw-mockup-sidebar {
         width: 120px;
     }
 }

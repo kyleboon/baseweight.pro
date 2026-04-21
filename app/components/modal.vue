@@ -1,11 +1,11 @@
 <template>
-    <div class="lp-modal-container">
-        <transition name="lp-modal" @after-enter="onAfterEnter" @after-leave="onAfterLeave">
+    <div class="bw-modal-container">
+        <transition name="bw-modal" @after-enter="onAfterEnter" @after-leave="onAfterLeave">
             <div
                 v-if="shown"
                 ref="modalRef"
                 :id="id"
-                class="lp-modal"
+                class="bw-modal"
                 role="dialog"
                 aria-modal="true"
                 :aria-labelledby="labelId"
@@ -13,10 +13,10 @@
                 <slot />
             </div>
         </transition>
-        <transition name="lp-modal">
+        <transition name="bw-modal">
             <div
                 v-if="shown"
-                class="lp-modal-overlay"
+                class="bw-modal-overlay"
                 :class="{ 'is-transparent': transparentOverlay }"
                 @click="hide"
             />
@@ -87,7 +87,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
    Tokens follow docs/styleguide/tokens/tokens.css
    ================================================================ */
 
-.lp-modal {
+.bw-modal {
     --stone-50: #fafaf7;
     --stone-300: #d0cfc9;
     --font-ui: 'Figtree', system-ui, sans-serif;
@@ -130,7 +130,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     }
 }
 
-.lp-modal-overlay {
+.bw-modal-overlay {
     background: rgb(30 30 28 / 50%);
     height: 100%;
     inset: 0;
@@ -143,11 +143,11 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 }
 
 /* ── Transition ─────────────────────────────────────────────── */
-.lp-modal-enter-active,
-.lp-modal-leave-active {
+.bw-modal-enter-active,
+.bw-modal-leave-active {
     transition: opacity 160ms ease;
 
-    &.lp-modal {
+    &.bw-modal {
         transition:
             opacity 160ms ease,
             transform 160ms ease;
@@ -158,17 +158,17 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     }
 }
 
-.lp-modal-enter-from,
-.lp-modal-leave-to {
+.bw-modal-enter-from,
+.bw-modal-leave-to {
     opacity: 0;
 
-    &.lp-modal {
+    &.bw-modal {
         transform: translateX(-50%) translateY(-50%) scale(0.97);
     }
 }
 
 /* ── Legacy class forwarding (used by child modal components) ── */
-.lpFields {
+.bwFields {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -206,14 +206,14 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     }
 }
 
-.lpButtons {
+.bwButtons {
     align-items: center;
     display: flex;
     gap: 12px;
     margin-top: 20px;
 }
 
-.lpButton {
+.bwButton {
     align-items: center;
     background: #e8a220;
     border: none;
@@ -243,7 +243,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
         transform: scale(0.98);
     }
 
-    &.lpButtonDisabled,
+    &.bwButtonDisabled,
     &[disabled] {
         background: #e8e7e2;
         color: #a8a79f;
@@ -252,7 +252,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     }
 }
 
-.lpWarning {
+.bwWarning {
     background: #fdf0d5;
     border: 0.5px solid #c07a0a;
     border-radius: 6px;
@@ -263,7 +263,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     padding: 10px 12px;
 }
 
-.lpHref {
+.bwHref {
     color: #4d84b4;
     cursor: pointer;
     font-family: Figtree, system-ui, sans-serif;

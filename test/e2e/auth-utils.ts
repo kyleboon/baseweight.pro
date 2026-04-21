@@ -20,7 +20,7 @@ export async function loginUser(page: Page, email: string): Promise<void> {
     // to / — fully browser-native, so Chromium, Firefox, and WebKit all pick it up.
     await page.goto(`${testRoot}api/test/login?email=${encodeURIComponent(email)}`);
     // Wait for the sidebar footer — it renders only after the session is restored and library loaded
-    await page.waitForSelector('.lp-sidebar-footer', { state: 'visible', timeout: 15000 });
+    await page.waitForSelector('.bw-sidebar-footer', { state: 'visible', timeout: 15000 });
 }
 
 /**

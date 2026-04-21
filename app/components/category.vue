@@ -1,23 +1,23 @@
 <template>
-    <li :id="category.id" class="lpCategory">
-        <ul class="lpItems lpDataTable">
-            <li class="lpHeader lpItemsHeader">
-                <span v-if="!readonly" class="lpHandleCell">
-                    <div class="lpHandle lpCategoryHandle" title="Reorder this category" />
+    <li :id="category.id" class="bwCategory">
+        <ul class="bwItems bwDataTable">
+            <li class="bwHeader bwItemsHeader">
+                <span v-if="!readonly" class="bwHandleCell">
+                    <div class="bwHandle bwCategoryHandle" title="Reorder this category" />
                 </span>
-                <h2 v-if="readonly" class="lpCategoryName">{{ category.name }}</h2>
+                <h2 v-if="readonly" class="bwCategoryName">{{ category.name }}</h2>
                 <input
                     v-else
                     v-focus-on-create="category._isNew"
                     type="text"
                     :value="category.name"
                     placeholder="Category Name"
-                    class="lpCategoryName lpSilent"
+                    class="bwCategoryName bwSilent"
                     @input="updateCategoryName"
                 />
                 <button
                     v-if="!readonly && library.optionalFields['images']"
-                    class="lp-icon-btn lpCategoryCamera"
+                    class="bw-icon-btn bwCategoryCamera"
                     title="Manage category images"
                     aria-label="Manage category images"
                     @click="manageCategoryImages"
@@ -37,12 +37,12 @@
                         <circle cx="8" cy="8.5" r="2" />
                     </svg>
                 </button>
-                <span v-if="library.optionalFields['price']" class="lpPriceCell">Price</span>
-                <span class="lpWeightCell">Weight</span>
-                <span class="lpQtyCell">qty</span>
-                <span v-if="!readonly" class="lpRemoveCell"
+                <span v-if="library.optionalFields['price']" class="bwPriceCell">Price</span>
+                <span class="bwWeightCell">Weight</span>
+                <span class="bwQtyCell">qty</span>
+                <span v-if="!readonly" class="bwRemoveCell"
                     ><a
-                        class="lpRemove lpRemoveCategory"
+                        class="bwRemove bwRemoveCategory"
                         title="Remove this category"
                         aria-label="Remove category"
                         @click="removeCategory(category)"
@@ -59,12 +59,12 @@
                             <line x1="12" y1="4" x2="4" y2="12" /></svg></a
                 ></span>
             </li>
-            <li v-if="library.optionalFields['images'] && categoryImages.length > 0" class="lpCategoryImageRow">
-                <span class="lpImageStrip">
+            <li v-if="library.optionalFields['images'] && categoryImages.length > 0" class="bwCategoryImageRow">
+                <span class="bwImageStrip">
                     <img
                         v-for="(img, i) in visibleCategoryThumbs"
                         :key="img.id ?? i"
-                        class="lpItemThumb"
+                        class="bwItemThumb"
                         :src="img.url"
                         :alt="`${category.name} image ${i + 1}`"
                         :title="`Image ${i + 1}`"
@@ -72,7 +72,7 @@
                     />
                     <span
                         v-if="extraCategoryImageCount > 0"
-                        class="lpThumbMore"
+                        class="bwThumbMore"
                         @click="viewCategoryImageAt(visibleCategoryThumbs.length)"
                         >+{{ extraCategoryImageCount }}</span
                     >
@@ -85,9 +85,9 @@
                 :category="category"
                 :readonly="readonly"
             />
-            <li class="lpFooter lpItemsFooter">
-                <span class="lpAddItemCell">
-                    <a v-if="!readonly" class="lpAdd lpAddItem lp-action-link" @click="newItem">
+            <li class="bwFooter bwItemsFooter">
+                <span class="bwAddItemCell">
+                    <a v-if="!readonly" class="bwAdd bwAddItem bw-action-link" @click="newItem">
                         <svg
                             width="16"
                             height="16"
@@ -103,19 +103,19 @@
                         Add new item
                     </a>
                 </span>
-                <span v-if="library.optionalFields['price']" class="lpPriceCell lpNumber lpSubtotal">
+                <span v-if="library.optionalFields['price']" class="bwPriceCell bwNumber bwSubtotal">
                     {{ displayPrice(category.subtotalPrice, library.currencySymbol) }}
                 </span>
-                <span class="lpWeightCell lpNumber lpSubtotal">
-                    <span class="lpDisplaySubtotal">{{
+                <span class="bwWeightCell bwNumber bwSubtotal">
+                    <span class="bwDisplaySubtotal">{{
                         displayWeight(category.subtotalWeight, library.totalUnit)
                     }}</span>
-                    <span class="lpSubtotalUnit">{{ library.totalUnit }}</span>
+                    <span class="bwSubtotalUnit">{{ library.totalUnit }}</span>
                 </span>
-                <span class="lpQtyCell lpSubtotal">
-                    <span class="lpQtySubtotal">{{ category.subtotalQty }}</span>
+                <span class="bwQtyCell bwSubtotal">
+                    <span class="bwQtySubtotal">{{ category.subtotalQty }}</span>
                 </span>
-                <span class="lpRemoveCell" />
+                <span class="bwRemoveCell" />
             </li>
         </ul>
     </li>
@@ -188,15 +188,15 @@ function removeCategory(category) {
 </script>
 
 <style>
-.lpQtySubtotal {
+.bwQtySubtotal {
     padding-right: 25px; /* Accommodates delete column */
 }
 
-.lpPriceSubtotal {
+.bwPriceSubtotal {
     padding-right: 4px;
 }
 
-.lpCategoryName {
+.bwCategoryName {
     font-family: Figtree, system-ui, sans-serif;
     font-size: 14px;
     font-weight: 600;
@@ -207,7 +207,7 @@ function removeCategory(category) {
 }
 
 /* Action link for adding items */
-.lp-action-link {
+.bw-action-link {
     align-items: center;
     color: #8a8880;
     cursor: pointer;
@@ -228,10 +228,10 @@ function removeCategory(category) {
 }
 
 /* Category image thumbnail row */
-.lpCategoryImageRow {
+.bwCategoryImageRow {
     padding: 6px 8px 6px 28px;
 
-    .lpImageStrip {
+    .bwImageStrip {
         align-items: center;
         display: flex;
         gap: 4px;
@@ -239,16 +239,16 @@ function removeCategory(category) {
 }
 
 /* Category camera button */
-.lpCategoryCamera {
+.bwCategoryCamera {
     visibility: hidden;
 
-    .lpHeader:hover & {
+    .bwHeader:hover & {
         visibility: visible;
     }
 }
 
 /* Remove button */
-.lpRemoveCategory {
+.bwRemoveCategory {
     align-items: center;
     color: #c8c7c2;
     cursor: pointer;

@@ -2,7 +2,7 @@ export function useAnnounce() {
     let clearTimer: ReturnType<typeof setTimeout> | null = null;
 
     function announce(message: string) {
-        const el = document.getElementById('lp-announce');
+        const el = document.getElementById('bw-announce');
         if (!el) return;
 
         if (clearTimer) {

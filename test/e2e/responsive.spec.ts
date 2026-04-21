@@ -12,7 +12,7 @@ test.describe('Responsive: Mobile viewport (375x667)', () => {
     });
 
     test('hamburger button is visible', async ({ page }) => {
-        await expect(page.locator('.lp-hamburger')).toBeVisible();
+        await expect(page.locator('.bw-hamburger')).toBeVisible();
     });
 
     test('sidebar is hidden by default', async ({ page }) => {
@@ -24,30 +24,30 @@ test.describe('Responsive: Mobile viewport (375x667)', () => {
         const sidebar = page.locator('#sidebar');
 
         // Open
-        await page.locator('.lp-hamburger').click();
+        await page.locator('.bw-hamburger').click();
         await expect(sidebar).toBeInViewport();
 
         // Close
-        await page.locator('.lp-hamburger').click();
+        await page.locator('.bw-hamburger').click();
         await expect(sidebar).not.toBeInViewport();
     });
 
     test('sidebar backdrop dismisses the sidebar', async ({ page }) => {
         const sidebar = page.locator('#sidebar');
 
-        await page.locator('.lp-hamburger').click();
+        await page.locator('.bw-hamburger').click();
         await expect(sidebar).toBeInViewport();
 
         // Click backdrop — click right side of screen to avoid hitting the 280px-wide sidebar
-        await page.locator('.lp-sidebar-backdrop').click({ position: { x: 350, y: 300 } });
+        await page.locator('.bw-sidebar-backdrop').click({ position: { x: 350, y: 300 } });
         await expect(sidebar).not.toBeInViewport();
     });
 
     test('gear library is not visible in the sidebar', async ({ page }) => {
-        await page.locator('.lp-hamburger').click();
+        await page.locator('.bw-hamburger').click();
 
         // libraryItems component should be hidden
-        const gearLibrary = page.locator('.lp-library-section');
+        const gearLibrary = page.locator('.bw-library-section');
         await expect(gearLibrary).toBeHidden();
     });
 
@@ -60,14 +60,14 @@ test.describe('Responsive: Mobile viewport (375x667)', () => {
         });
 
         // Item name input should be visible and editable
-        const nameInput = page.locator('input.lpName').first();
+        const nameInput = page.locator('input.bwName').first();
         await expect(nameInput).toBeVisible({ timeout: 10000 });
         await nameInput.fill('Test Item');
         await expect(nameInput).toHaveValue('Test Item');
     });
 
     test('chart stacks vertically at mobile width', async ({ page }) => {
-        const summary = page.locator('.lpListSummary');
+        const summary = page.locator('.bwListSummary');
         if (await summary.isVisible()) {
             const box = await summary.boundingBox();
             // In column layout, height should be greater than a single row
@@ -91,20 +91,20 @@ test.describe('Responsive: Tablet viewport (768x1024)', () => {
         await expect(sidebar).not.toBeInViewport();
 
         // Hamburger visible
-        await expect(page.locator('.lp-hamburger')).toBeVisible();
+        await expect(page.locator('.bw-hamburger')).toBeVisible();
 
         // Open sidebar
-        await page.locator('.lp-hamburger').click();
+        await page.locator('.bw-hamburger').click();
         await expect(sidebar).toBeInViewport();
 
         // Close via backdrop — click right side to avoid hitting the 280px-wide sidebar
-        await page.locator('.lp-sidebar-backdrop').click({ position: { x: 500, y: 400 } });
+        await page.locator('.bw-sidebar-backdrop').click({ position: { x: 500, y: 400 } });
         await expect(sidebar).not.toBeInViewport();
     });
 
     test('gear table reflows correctly', async ({ page }) => {
         // Drag handles should be hidden
-        const handle = page.locator('.lpHandleCell .lpHandle').first();
+        const handle = page.locator('.bwHandleCell .bwHandle').first();
         if ((await handle.count()) > 0) {
             await expect(handle).toBeHidden();
         }
@@ -130,12 +130,12 @@ test.describe('Responsive: Share page mobile (375x667)', () => {
         // Switch to mobile viewport and navigate to share page
         await page.setViewportSize({ width: 375, height: 667 });
         await page.goto(shareUrl);
-        await expect(page.locator('.lp-share-page')).toBeVisible();
+        await expect(page.locator('.bw-share-page')).toBeVisible();
 
         // Topbar should be visible
-        await expect(page.locator('.lp-share-topbar')).toBeVisible();
+        await expect(page.locator('.bw-share-topbar')).toBeVisible();
 
         // Content should render
-        await expect(page.locator('.lpList')).toBeVisible();
+        await expect(page.locator('.bwList')).toBeVisible();
     });
 });

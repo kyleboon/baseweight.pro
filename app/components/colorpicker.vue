@@ -1,8 +1,8 @@
 <template>
-    <Popover id="lpPickerContainer" :shown="shown" @hide="shown = false">
+    <Popover id="bwPickerContainer" :shown="shown" @hide="shown = false">
         <template #target>
             <button
-                class="lp-color-swatch"
+                class="bw-color-swatch"
                 :style="{ backgroundColor: color }"
                 :title="`Change color (${color})`"
                 aria-label="Change category color"
@@ -10,7 +10,7 @@
             />
         </template>
         <template #content>
-            <input type="color" class="lp-color-input" :value="color" @input="onColorChange" />
+            <input type="color" class="bw-color-input" :value="color" @input="onColorChange" />
         </template>
     </Popover>
 </template>
@@ -40,7 +40,7 @@ defineExpose({ shown, onColorChange });
 </script>
 
 <style>
-.lp-color-swatch {
+.bw-color-swatch {
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -65,8 +65,8 @@ defineExpose({ shown, onColorChange });
     }
 }
 
-/* Also style the old .lpLegend class used by list-summary */
-.lpLegend {
+/* Also style the old .bwLegend class used by list-summary */
+.bwLegend {
     border: none;
     border-radius: 50%;
     cursor: pointer;
@@ -91,7 +91,7 @@ defineExpose({ shown, onColorChange });
     }
 }
 
-.lp-color-input {
+.bw-color-input {
     cursor: pointer;
     height: 32px;
     padding: 0;

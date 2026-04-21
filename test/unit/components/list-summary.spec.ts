@@ -44,7 +44,7 @@ describe('ListSummary component', () => {
             props: { list: makeList() },
             global: { stubs },
         });
-        expect(wrapper.find('.lpListSummary').exists()).toBe(true);
+        expect(wrapper.find('.bwListSummary').exists()).toBe(true);
     });
 
     it('displayWeight returns formatted weight', () => {
@@ -113,7 +113,7 @@ describe('ListSummary component', () => {
             global: { stubs },
         });
         expect(wrapper.findComponent({ name: 'colorPicker' }).exists()).toBe(false);
-        expect(wrapper.find('.lpLegend').exists()).toBe(true);
+        expect(wrapper.find('.bwLegend').exists()).toBe(true);
     });
 
     it('renders static unit text instead of unitSelect when readonly', () => {
@@ -124,6 +124,6 @@ describe('ListSummary component', () => {
             global: { stubs },
         });
         expect(wrapper.findComponent({ name: 'unitSelect' }).exists()).toBe(false);
-        expect(wrapper.find('.lp-s-unit').text()).toBe('oz');
+        expect(wrapper.find('.bw-s-unit').text()).toBe('oz');
     });
 });

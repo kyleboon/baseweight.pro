@@ -1,6 +1,6 @@
 <template>
     <select
-        class="lp-unit-select"
+        class="bw-unit-select"
         :value="unit"
         :aria-label="`Weight unit: ${unit}`"
         @change="handleChange"
@@ -56,7 +56,7 @@ defineExpose({ isOpen, isFocused, select, close, open });
 </script>
 
 <style>
-.lp-unit-select {
+.bw-unit-select {
     appearance: none;
     background: transparent;
     border: none;
@@ -90,7 +90,7 @@ defineExpose({ isOpen, isFocused, select, close, open });
 }
 
 /* Legacy selector still used by some global CSS */
-.lpUnit {
+.bwUnit {
     appearance: none;
     background: transparent;
     border: none;

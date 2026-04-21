@@ -1,6 +1,6 @@
 <template>
-    <ul v-if="sanitizedErrors && sanitizedErrors.length" class="lp-errors" role="alert" aria-live="polite">
-        <li v-for="error in sanitizedErrors" :key="error.message" class="lp-errors-item">
+    <ul v-if="sanitizedErrors && sanitizedErrors.length" class="bw-errors" role="alert" aria-live="polite">
+        <li v-for="error in sanitizedErrors" :key="error.message" class="bw-errors-item">
             <svg
                 width="14"
                 height="14"
@@ -79,7 +79,7 @@ const sanitizedErrors = computed(() => {
 </script>
 
 <style>
-.lp-errors {
+.bw-errors {
     border-left: 2px solid #c05848;
     border-radius: 0 4px 4px 0;
     list-style: none;
@@ -87,7 +87,7 @@ const sanitizedErrors = computed(() => {
     padding: 0;
 }
 
-.lp-errors-item {
+.bw-errors-item {
     align-items: center;
     color: #c05848;
     display: flex;

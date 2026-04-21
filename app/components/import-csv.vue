@@ -3,33 +3,33 @@
         <modal id="importValidate" :shown="shown" label-id="import-csv-dialog-title" @hide="shown = false">
             <h2 id="import-csv-dialog-title">Confirm your import</h2>
             <div id="importData">
-                <ul class="lpTable lpDataTable">
-                    <li class="lpRow lpHeader">
-                        <span class="lpCell">Item Name</span>
-                        <span class="lpCell">Category</span>
-                        <span class="lpCell">Description</span>
-                        <span class="lpCell">Qty</span>
-                        <span class="lpCell">Weight</span>
-                        <span class="lpCell">Unit</span>
-                        <span v-if="hasPrice" class="lpCell">Price</span>
-                        <span v-if="hasWorn" class="lpCell">Worn</span>
-                        <span v-if="hasConsumable" class="lpCell">Consumable</span>
+                <ul class="bwTable bwDataTable">
+                    <li class="bwRow bwHeader">
+                        <span class="bwCell">Item Name</span>
+                        <span class="bwCell">Category</span>
+                        <span class="bwCell">Description</span>
+                        <span class="bwCell">Qty</span>
+                        <span class="bwCell">Weight</span>
+                        <span class="bwCell">Unit</span>
+                        <span v-if="hasPrice" class="bwCell">Price</span>
+                        <span v-if="hasWorn" class="bwCell">Worn</span>
+                        <span v-if="hasConsumable" class="bwCell">Consumable</span>
                     </li>
-                    <li v-for="(row, index) in importData.data" :key="index" class="lpRow">
-                        <span class="lpCell">{{ row.name }}</span>
-                        <span class="lpCell">{{ row.category }}</span>
-                        <span class="lpCell">{{ row.description }}</span>
-                        <span class="lpCell">{{ row.qty }}</span>
-                        <span class="lpCell">{{ row.weight }}</span>
-                        <span class="lpCell">{{ row.unit }}</span>
-                        <span v-if="hasPrice" class="lpCell">{{ row.price || '' }}</span>
-                        <span v-if="hasWorn" class="lpCell">{{ row.worn ? '&#10003;' : '' }}</span>
-                        <span v-if="hasConsumable" class="lpCell">{{ row.consumable ? '&#10003;' : '' }}</span>
+                    <li v-for="(row, index) in importData.data" :key="index" class="bwRow">
+                        <span class="bwCell">{{ row.name }}</span>
+                        <span class="bwCell">{{ row.category }}</span>
+                        <span class="bwCell">{{ row.description }}</span>
+                        <span class="bwCell">{{ row.qty }}</span>
+                        <span class="bwCell">{{ row.weight }}</span>
+                        <span class="bwCell">{{ row.unit }}</span>
+                        <span v-if="hasPrice" class="bwCell">{{ row.price || '' }}</span>
+                        <span v-if="hasWorn" class="bwCell">{{ row.worn ? '&#10003;' : '' }}</span>
+                        <span v-if="hasConsumable" class="bwCell">{{ row.consumable ? '&#10003;' : '' }}</span>
                     </li>
                 </ul>
             </div>
-            <a id="importConfirm" class="lpButton" @click="importList">Import List</a>
-            <a class="lpButton close" @click="shown = false">Cancel Import</a>
+            <a id="importConfirm" class="bwButton" @click="importList">Import List</a>
+            <a class="bwButton close" @click="shown = false">Cancel Import</a>
         </modal>
         <form id="csvUpload">
             <input id="csv" ref="csvInput" type="file" name="csv" />

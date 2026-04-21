@@ -1,6 +1,6 @@
 <template>
     <svg
-        class="lp-chart"
+        class="bw-chart"
         viewBox="0 0 260 260"
         width="260"
         height="260"
@@ -13,7 +13,7 @@
             :key="slice.id"
             :d="slice.path"
             :fill="slice.fill"
-            class="lp-donut-slice"
+            class="bw-donut-slice"
             :class="{ 'is-expanded': expandedId === slice.id }"
             @mouseenter="onSliceEnter(slice)"
             @click.stop="onCategoryClick(slice)"
@@ -22,14 +22,14 @@
         </path>
 
         <!-- Inner ring: items within the expanded category -->
-        <Transition name="lp-ring">
+        <Transition name="bw-ring">
             <g v-if="expandedId && itemSlices.length">
                 <path
                     v-for="(slice, i) in itemSlices"
                     :key="`item-${i}`"
                     :d="slice.path"
                     :fill="slice.fill"
-                    class="lp-donut-slice lp-donut-slice--inner"
+                    class="bw-donut-slice bw-donut-slice--inner"
                     @mouseenter="onSliceEnter(slice)"
                 >
                     <title>{{ slice.name }}: {{ slice.weight }}</title>
@@ -38,11 +38,11 @@
         </Transition>
 
         <!-- Center label shown on hover -->
-        <g v-if="hovered" class="lp-center-label">
-            <text x="130" y="123" text-anchor="middle" class="lp-center-name">
+        <g v-if="hovered" class="bw-center-label">
+            <text x="130" y="123" text-anchor="middle" class="bw-center-name">
                 {{ truncate(hovered.name) }}
             </text>
-            <text x="130" y="140" text-anchor="middle" class="lp-center-weight">
+            <text x="130" y="140" text-anchor="middle" class="bw-center-weight">
                 {{ hovered.weight }}
             </text>
         </g>
@@ -177,12 +177,12 @@ function truncate(str, max = 18) {
 </script>
 
 <style>
-.lp-chart {
+.bw-chart {
     cursor: default;
     display: block;
 }
 
-.lp-donut-slice {
+.bw-donut-slice {
     cursor: pointer;
     stroke: #fafaf7;
     stroke-width: 2;
@@ -197,32 +197,32 @@ function truncate(str, max = 18) {
         stroke-width: 3;
     }
 
-    &.lp-donut-slice--inner {
+    &.bw-donut-slice--inner {
         stroke-width: 1;
     }
 }
 
-.lp-center-label {
+.bw-center-label {
     pointer-events: none;
     user-select: none;
 }
 
-.lp-center-name {
+.bw-center-name {
     fill: #1e1e1c;
     font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
     font-weight: 600;
 }
 
-.lp-center-weight {
+.bw-center-weight {
     fill: #5a5954;
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     font-variant-numeric: tabular-nums;
 }
 
-.lp-ring-enter-active,
-.lp-ring-leave-active {
+.bw-ring-enter-active,
+.bw-ring-leave-active {
     transition: opacity 200ms ease;
 
     @media (prefers-reduced-motion: reduce) {
@@ -230,8 +230,8 @@ function truncate(str, max = 18) {
     }
 }
 
-.lp-ring-enter-from,
-.lp-ring-leave-to {
+.bw-ring-enter-from,
+.bw-ring-leave-to {
     opacity: 0;
 }
 </style>

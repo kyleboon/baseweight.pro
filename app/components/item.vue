@@ -1,37 +1,37 @@
 <template>
-    <li :id="item.id" :class="'lpItem ' + item.classes">
-        <span v-if="!readonly" class="lpHandleCell">
-            <div class="lpItemHandle lpHandle" title="Reorder this item" />
+    <li :id="item.id" :class="'bwItem ' + item.classes">
+        <span v-if="!readonly" class="bwHandleCell">
+            <div class="bwItemHandle bwHandle" title="Reorder this item" />
         </span>
-        <span v-if="library.optionalFields['images']" class="lpImageCell">
-            <span v-if="item.images && item.images.length > 0" class="lpImageStrip">
+        <span v-if="library.optionalFields['images']" class="bwImageCell">
+            <span v-if="item.images && item.images.length > 0" class="bwImageStrip">
                 <img
                     v-for="(img, i) in visibleThumbnails"
                     :key="img.id ?? i"
-                    class="lpItemThumb"
+                    class="bwItemThumb"
                     :src="img.url"
                     :alt="`${item.name} image ${i + 1}`"
                     :title="`Image ${i + 1}`"
                     @click="viewItemImageAt(i)"
                 />
-                <span v-if="extraImageCount > 0" class="lpThumbMore" @click="viewItemImageAt(visibleThumbnails.length)">
+                <span v-if="extraImageCount > 0" class="bwThumbMore" @click="viewItemImageAt(visibleThumbnails.length)">
                     +{{ extraImageCount }}
                 </span>
             </span>
             <img
                 v-else-if="thumbnailImage"
-                class="lpItemImage"
+                class="bwItemImage"
                 :src="thumbnailImage"
                 :alt="item.name + ' thumbnail'"
                 @click="viewItemImage()"
             />
         </span>
         <template v-if="readonly">
-            <span class="lpName">
-                <a v-if="item.url" class="lpHref" :href="item.url">{{ item.name }}</a>
+            <span class="bwName">
+                <a v-if="item.url" class="bwHref" :href="item.url">{{ item.name }}</a>
                 <template v-else>{{ item.name }}</template>
             </span>
-            <span class="lpDescription">{{ item.description }}</span>
+            <span class="bwDescription">{{ item.description }}</span>
         </template>
         <template v-else>
             <label :for="'item-name-' + item.id" class="visually-hidden">Item name</label>
@@ -40,7 +40,7 @@
                 v-model="item.name"
                 v-focus-on-create="categoryItem._isNew"
                 type="text"
-                class="lpName lpSilent"
+                class="bwName bwSilent"
                 placeholder="Name"
                 @input="saveItem"
             />
@@ -49,23 +49,23 @@
                 :id="'item-desc-' + item.id"
                 v-model="item.description"
                 type="text"
-                class="lpDescription lpSilent"
+                class="bwDescription bwSilent"
                 placeholder="Description"
                 @input="saveItem"
             />
         </template>
-        <span v-if="readonly" class="lpActionsCell">
-            <i v-if="library.optionalFields['worn']" class="lpSprite lpWorn" :class="{ lpActive: categoryItem.worn }" />
+        <span v-if="readonly" class="bwActionsCell">
+            <i v-if="library.optionalFields['worn']" class="bwSprite bwWorn" :class="{ bwActive: categoryItem.worn }" />
             <i
                 v-if="library.optionalFields['consumable']"
-                class="lpSprite lpConsumable"
-                :class="{ lpActive: categoryItem.consumable }"
+                class="bwSprite bwConsumable"
+                :class="{ bwActive: categoryItem.consumable }"
             />
-            <i v-if="categoryItem.star" class="lpSprite lpStar" :class="'lpStar' + categoryItem.star" />
+            <i v-if="categoryItem.star" class="bwSprite bwStar" :class="'bwStar' + categoryItem.star" />
         </span>
-        <span v-else class="lpActionsCell">
+        <span v-else class="bwActionsCell">
             <button
-                class="lp-icon-btn lpCamera"
+                class="bw-icon-btn bwCamera"
                 title="Upload a photo or use a photo from the web"
                 aria-label="Upload photo"
                 @click="updateItemImage"
@@ -86,8 +86,8 @@
                 </svg>
             </button>
             <button
-                class="lp-icon-btn lpLink"
-                :class="{ lpActive: item.url }"
+                class="bw-icon-btn bwLink"
+                :class="{ bwActive: item.url }"
                 title="Add a link for this item"
                 aria-label="Add link"
                 @click="updateItemLink"
@@ -107,8 +107,8 @@
             </button>
             <button
                 v-if="library.optionalFields['worn']"
-                class="lp-icon-btn lpWorn"
-                :class="{ lpActive: categoryItem.worn }"
+                class="bw-icon-btn bwWorn"
+                :class="{ bwActive: categoryItem.worn }"
                 title="Mark this item as worn"
                 :aria-label="categoryItem.worn ? 'Worn (active)' : 'Mark as worn'"
                 @click="toggleWorn"
@@ -129,8 +129,8 @@
             </button>
             <button
                 v-if="library.optionalFields['consumable']"
-                class="lp-icon-btn lpConsumable"
-                :class="{ lpActive: categoryItem.consumable }"
+                class="bw-icon-btn bwConsumable"
+                :class="{ bwActive: categoryItem.consumable }"
                 title="Mark this item as a consumable"
                 :aria-label="categoryItem.consumable ? 'Consumable (active)' : 'Mark as consumable'"
                 @click="toggleConsumable"
@@ -150,8 +150,8 @@
                 </svg>
             </button>
             <button
-                class="lp-icon-btn lpStar"
-                :class="'lpStar' + categoryItem.star"
+                class="bw-icon-btn bwStar"
+                :class="'bwStar' + categoryItem.star"
                 title="Star this item"
                 :aria-label="categoryItem.star ? 'Star level ' + categoryItem.star : 'Add star'"
                 @click="cycleStar"
@@ -166,7 +166,7 @@
                 </svg>
             </button>
         </span>
-        <span v-if="library.optionalFields['price']" class="lpPriceCell">
+        <span v-if="library.optionalFields['price']" class="bwPriceCell">
             <template v-if="readonly"
                 >{{ library.currencySymbol }}{{ item.price ? item.price.toFixed(2) : '0.00' }}</template
             >
@@ -176,14 +176,14 @@
                 v-empty-if-zero
                 type="text"
                 aria-label="Price"
-                :class="{ lpPrice: true, lpNumber: true, lpSilent: true, lpSilentError: priceError }"
+                :class="{ bwPrice: true, bwNumber: true, bwSilent: true, bwSilentError: priceError }"
                 @input="savePrice"
                 @keydown.up="incrementPrice($event)"
                 @keydown.down="decrementPrice($event)"
                 @blur="setDisplayPrice"
             />
         </span>
-        <span class="lpWeightCell lpNumber">
+        <span class="bwWeightCell bwNumber">
             <template v-if="readonly">{{ displayWeight }} {{ item.authorUnit }}</template>
             <template v-else>
                 <input
@@ -191,7 +191,7 @@
                     v-empty-if-zero
                     type="text"
                     aria-label="Weight"
-                    :class="{ lpWeight: true, lpNumber: true, lpSilent: true, lpSilentError: weightError }"
+                    :class="{ bwWeight: true, bwNumber: true, bwSilent: true, bwSilentError: weightError }"
                     @input="saveWeight"
                     @keydown.up="incrementWeight($event)"
                     @keydown.down="decrementWeight($event)"
@@ -199,22 +199,22 @@
                 <unitSelect :unit="item.authorUnit" :on-change="setUnit" />
             </template>
         </span>
-        <span class="lpQtyCell">
+        <span class="bwQtyCell">
             <template v-if="readonly">{{ displayQty }}</template>
             <template v-else>
                 <input
                     v-model="displayQty"
                     type="text"
                     aria-label="Quantity"
-                    :class="{ lpQty: true, lpNumber: true, lpSilent: true, lpSilentError: qtyError }"
+                    :class="{ bwQty: true, bwNumber: true, bwSilent: true, bwSilentError: qtyError }"
                     @input="saveQty"
                     @keydown.up="incrementQty($event)"
                     @keydown.down="decrementQty($event)"
                 />
-                <span class="lpArrows">
+                <span class="bwArrows">
                     <button
                         type="button"
-                        class="lp-arrow lpUp"
+                        class="bw-arrow bwUp"
                         aria-label="Increase quantity"
                         @click="incrementQty($event)"
                     >
@@ -232,7 +232,7 @@
                     </button>
                     <button
                         type="button"
-                        class="lp-arrow lpDown"
+                        class="bw-arrow bwDown"
                         aria-label="Decrease quantity"
                         @click="decrementQty($event)"
                     >
@@ -251,8 +251,8 @@
                 </span>
             </template>
         </span>
-        <span v-if="!readonly" class="lpRemoveCell">
-            <a class="lpRemove lpRemoveItem" title="Remove this item" aria-label="Remove item" @click="removeItem">
+        <span v-if="!readonly" class="bwRemoveCell">
+            <a class="bwRemove bwRemoveItem" title="Remove this item" aria-label="Remove item" @click="removeItem">
                 <svg
                     width="16"
                     height="16"
@@ -612,15 +612,15 @@ defineExpose({
 </script>
 
 <style>
-.lpItem {
+.bwItem {
     &:hover,
     &.ui-sortable-helper {
         background: #f3f2ee;
 
-        .lpRemove,
-        .lpHandle,
-        .lpArrows,
-        .lp-icon-btn {
+        .bwRemove,
+        .bwHandle,
+        .bwArrows,
+        .bw-icon-btn {
             visibility: visible;
         }
     }
@@ -632,7 +632,7 @@ defineExpose({
 }
 
 /* Action icon buttons (camera, link, worn, consumable, star) */
-.lp-icon-btn {
+.bw-icon-btn {
     align-items: center;
     background: none;
     border: none;
@@ -648,36 +648,36 @@ defineExpose({
         color: #5a5954;
     }
 
-    &.lpActive {
+    &.bwActive {
         color: #e8a220;
         visibility: visible;
     }
 }
 
 /* Star states */
-.lpStar {
-    &.lpStar0 {
+.bwStar {
+    &.bwStar0 {
         color: #c8c7c2;
     }
 
-    &.lpStar1 {
+    &.bwStar1 {
         color: #e8a220;
         visibility: visible;
     }
 
-    &.lpStar2 {
+    &.bwStar2 {
         color: #d68a00;
         visibility: visible;
     }
 
-    &.lpStar3 {
+    &.bwStar3 {
         color: #b06e00;
         visibility: visible;
     }
 }
 
 /* Remove link */
-.lpRemoveItem {
+.bwRemoveItem {
     color: #c8c7c2;
     cursor: pointer;
     display: inline-flex;
@@ -690,13 +690,13 @@ defineExpose({
 }
 
 /* Multi-image thumbnail strip */
-.lpImageStrip {
+.bwImageStrip {
     align-items: center;
     display: flex;
     gap: 2px;
 }
 
-.lpItemThumb {
+.bwItemThumb {
     border-radius: 3px;
     cursor: pointer;
     flex-shrink: 0;
@@ -711,7 +711,7 @@ defineExpose({
     }
 }
 
-.lpThumbMore {
+.bwThumbMore {
     align-items: center;
     background: #e8e7e2;
     border-radius: 3px;
@@ -732,14 +732,14 @@ defineExpose({
 }
 
 /* Qty arrows */
-.lpArrows {
+.bwArrows {
     display: inline-flex;
     flex-direction: column;
     gap: 1px;
     visibility: hidden;
 }
 
-.lp-arrow {
+.bw-arrow {
     background: none;
     border: none;
     color: #8a8880;

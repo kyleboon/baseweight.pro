@@ -116,9 +116,9 @@ describe('List component', () => {
                 props: { readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('h1.lp-list-title').exists()).toBe(true);
-            expect(wrapper.find('h1.lp-list-title').text()).toBe('Test List');
-            expect(wrapper.find('input.lp-list-title').exists()).toBe(false);
+            expect(wrapper.find('h1.bw-list-title').exists()).toBe(true);
+            expect(wrapper.find('h1.bw-list-title').text()).toBe('Test List');
+            expect(wrapper.find('input.bw-list-title').exists()).toBe(false);
         });
 
         it('hides header actions in readonly mode', () => {
@@ -129,7 +129,7 @@ describe('List component', () => {
                 props: { readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('.lp-list-header-actions').exists()).toBe(false);
+            expect(wrapper.find('.bw-list-header-actions').exists()).toBe(false);
         });
 
         it('hides add category link in readonly mode', () => {
@@ -151,7 +151,7 @@ describe('List component', () => {
                 props: { readonly: true },
                 global: { stubs },
             });
-            const descEl = wrapper.find('#lpListDescription');
+            const descEl = wrapper.find('#bwListDescription');
             expect(descEl.exists()).toBe(true);
             expect(descEl.html()).toContain('<strong>bold text</strong>');
         });

@@ -18,7 +18,7 @@ describe('SigninForm component', () => {
 
     it('does not show success message initially', () => {
         const wrapper = mount(SigninForm, { global: { stubs } });
-        expect(wrapper.find('.lpSuccess').exists()).toBe(false);
+        expect(wrapper.find('.bwSuccess').exists()).toBe(false);
     });
 
     it('adds a validation error when email is empty', async () => {

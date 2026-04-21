@@ -21,7 +21,7 @@ describe('Modal component', () => {
 
     it('emits hide when overlay is clicked', async () => {
         const wrapper = mount(Modal, { props: { shown: true } });
-        await wrapper.find('.lp-modal-overlay').trigger('click');
+        await wrapper.find('.bw-modal-overlay').trigger('click');
         expect(wrapper.emitted('hide')).toBeTruthy();
     });
 
@@ -34,7 +34,7 @@ describe('Modal component', () => {
 
     it('applies transparent overlay class when transparentOverlay is true', () => {
         const wrapper = mount(Modal, { props: { shown: true, transparentOverlay: true } });
-        expect(wrapper.find('.lp-modal-overlay.is-transparent').exists()).toBe(true);
+        expect(wrapper.find('.bw-modal-overlay.is-transparent').exists()).toBe(true);
     });
 
     it('has role="dialog" and aria-modal="true" when shown', () => {
@@ -42,7 +42,7 @@ describe('Modal component', () => {
             props: { shown: true },
             slots: { default: '<h2 id="modal-title">Title</h2>' },
         });
-        const dialog = wrapper.find('.lp-modal');
+        const dialog = wrapper.find('.bw-modal');
         expect(dialog.attributes('role')).toBe('dialog');
         expect(dialog.attributes('aria-modal')).toBe('true');
     });
@@ -52,7 +52,7 @@ describe('Modal component', () => {
             props: { shown: true, labelId: 'my-title' },
             slots: { default: '<h2 id="my-title">Title</h2>' },
         });
-        const dialog = wrapper.find('.lp-modal');
+        const dialog = wrapper.find('.bw-modal');
         expect(dialog.attributes('aria-labelledby')).toBe('my-title');
     });
 });

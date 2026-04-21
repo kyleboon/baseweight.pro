@@ -1,12 +1,12 @@
 <template>
     <div
         v-if="store.globalAlerts && store.globalAlerts.length"
-        class="lp-global-alerts"
+        class="bw-global-alerts"
         role="status"
         aria-live="polite"
         aria-atomic="true"
     >
-        <div v-for="alert in store.globalAlerts" :key="alert.message" class="lp-global-alert">
+        <div v-for="alert in store.globalAlerts" :key="alert.message" class="bw-global-alert">
             <svg
                 width="14"
                 height="14"
@@ -36,7 +36,7 @@ const store = useLighterpackStore();
 </script>
 
 <style>
-.lp-global-alerts {
+.bw-global-alerts {
     left: 50%;
     max-width: min(480px, 90vw);
     position: fixed;
@@ -46,7 +46,7 @@ const store = useLighterpackStore();
     z-index: 110;
 }
 
-.lp-global-alert {
+.bw-global-alert {
     align-items: center;
     background: #fdf0d5;
     border: 0.5px solid #c07a0a;

@@ -1,22 +1,22 @@
 <template>
-    <div v-if="isLoaded" id="main" class="lpHasSidebar">
+    <div v-if="isLoaded" id="main" class="bwHasSidebar">
         <a href="#main-content" class="skip-link">Skip to main content</a>
 
-        <div class="lp-mobile-topbar">
-            <button class="lp-hamburger" aria-label="Toggle sidebar" @click="toggleSidebar">
+        <div class="bw-mobile-topbar">
+            <button class="bw-hamburger" aria-label="Toggle sidebar" @click="toggleSidebar">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                     <rect x="2" y="4" width="16" height="2" rx="1" fill="currentColor" />
                     <rect x="2" y="9" width="16" height="2" rx="1" fill="currentColor" />
                     <rect x="2" y="14" width="16" height="2" rx="1" fill="currentColor" />
                 </svg>
             </button>
-            <span class="lp-mobile-wordmark">LighterPack</span>
+            <span class="bw-mobile-wordmark">LighterPack</span>
         </div>
 
-        <div class="lp-sidebar-backdrop" @click="closeSidebar" />
+        <div class="bw-sidebar-backdrop" @click="closeSidebar" />
         <sidebar />
 
-        <main id="main-content" class="lpList">
+        <main id="main-content" class="bwList">
             <list />
         </main>
 
@@ -29,7 +29,7 @@
         <account />
         <accountDelete />
 
-        <div id="lp-announce" class="visually-hidden" aria-live="polite" role="status" />
+        <div id="bw-announce" class="visually-hidden" aria-live="polite" role="status" />
     </div>
 </template>
 
@@ -67,14 +67,14 @@ onBeforeMount(() => {
 function toggleSidebar() {
     const main = document.getElementById('main');
     if (main) {
-        main.classList.toggle('lpSidebarOpen');
+        main.classList.toggle('bwSidebarOpen');
     }
 }
 
 function closeSidebar() {
     const main = document.getElementById('main');
     if (main) {
-        main.classList.remove('lpSidebarOpen');
+        main.classList.remove('bwSidebarOpen');
     }
 }
 

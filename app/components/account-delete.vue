@@ -3,7 +3,7 @@
         <h2 id="account-delete-dialog-title">Delete account?</h2>
 
         <form id="accountForm" @submit.prevent="deleteAccount()">
-            <p class="lpWarning">
+            <p class="bwWarning">
                 <strong>This action is permanent and cannot be undone.</strong>
             </p>
             <p>
@@ -11,19 +11,19 @@
                 <strong>{{ currentEmail }}</strong
                 >:
             </p>
-            <div class="lpFields">
+            <div class="bwFields">
                 <input v-model="confirmEmail" type="email" name="confirmEmail" placeholder="Your email address" />
             </div>
 
             <errors :errors="errors_" />
 
-            <div class="lpButtons">
+            <div class="bwButtons">
                 <input
                     type="submit"
                     value="Permanently delete account"
-                    :class="{ lpButton: true, lpButtonDisabled: !isConfirmationComplete }"
+                    :class="{ bwButton: true, bwButtonDisabled: !isConfirmationComplete }"
                 />
-                <a class="lpHref" @click="shown = false">Cancel</a>
+                <a class="bwHref" @click="shown = false">Cancel</a>
             </div>
         </form>
     </modal>

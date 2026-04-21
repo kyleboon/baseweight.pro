@@ -7,7 +7,7 @@ describe('useAnnounce', () => {
     beforeEach(() => {
         vi.useFakeTimers();
         liveRegion = document.createElement('div');
-        liveRegion.id = 'lp-announce';
+        liveRegion.id = 'bw-announce';
         document.body.appendChild(liveRegion);
     });
 

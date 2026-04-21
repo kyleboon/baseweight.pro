@@ -24,7 +24,7 @@ test.describe('User Authentication Tests', () => {
         const { email } = await getSharedUser();
 
         await loginUser(page, email);
-        await expect(page.locator('.lp-sidebar-footer')).toBeVisible();
+        await expect(page.locator('.bw-sidebar-footer')).toBeVisible();
         await expect(page.getByText('Welcome to LighterPack!')).toBeVisible();
     });
 
@@ -33,7 +33,7 @@ test.describe('User Authentication Tests', () => {
 
         await loginUser(page, email);
         await logoutUser(page);
-        await expect(page.locator('.lp-landing')).toBeVisible();
+        await expect(page.locator('.bw-landing')).toBeVisible();
     });
 
     test('should successfully delete a user', async ({ page }) => {
@@ -47,6 +47,6 @@ test.describe('User Authentication Tests', () => {
         await page.getByPlaceholder('Your email address').fill(email);
         await page.getByText('Permanently delete account').click();
 
-        await expect(page.locator('.lp-landing')).toBeVisible();
+        await expect(page.locator('.bw-landing')).toBeVisible();
     });
 });

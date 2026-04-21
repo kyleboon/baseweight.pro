@@ -1,4 +1,4 @@
-.lpSprite {
+.bwSprite {
     background-image: url('/images/sprite2x.png?v=2');
     background-size: 400px;
     display: inline-block;
@@ -13,115 +13,115 @@
     }
 }
 
-.lpSpriteAdd {
+.bwSpriteAdd {
     background-position: 0 0;
 }
 
-.lpSpriteUpload {
+.bwSpriteUpload {
     background-position: -250px 0;
 }
 
-.lpSpriteDownload {
+.bwSpriteDownload {
     background-position: -250px -25px;
 }
 
-.lpSpriteCopy {
+.bwSpriteCopy {
     background-position: 0 -50px;
 }
 
-.lpSpriteRemove {
+.bwSpriteRemove {
     background-position: -25px 0;
     height: 8px;
     top: 0;
     width: 8px;
 
-    .lpRemove:hover & {
+    .bwRemove:hover & {
         background-position: -25px -25px;
     }
 }
 
-.lpWorn {
+.bwWorn {
     background-position: -50px 0;
     width: 17px;
 
-    &.lpActive {
+    &.bwActive {
         background-position: -50px -25px;
     }
 
-    &.lpWornOne {
+    &.bwWornOne {
         background-position: -50px -50px;
     }
 }
 
-.lpLinkBig {
+.bwLinkBig {
     background-position: -75px 0;
     height: 20px;
     width: 18px;
 }
 
-.lpCamera {
+.bwCamera {
     background-position: -100px 0;
     width: 18px;
 }
 
-.lpExpand {
+.bwExpand {
     background-position: -125px 0;
 }
 
-.lpHamburger {
+.bwHamburger {
     background-position: -150px 0;
     height: 20px;
     width: 20px;
 }
 
-.lpLink {
+.bwLink {
     background-position: -175px 0;
     width: 13px;
 
-    &.lpActive {
+    &.bwActive {
         background-position: -175px -25px;
     }
 }
 
-.lpUp {
+.bwUp {
     background-position: -200px 0;
     height: 7px;
     width: 7px;
 }
 
-.lpDown {
+.bwDown {
     background-position: -200px -25px;
     height: 7px;
     width: 7px;
 }
 
-.lpStar {
+.bwStar {
     background-position: -225px 0;
     height: 14px;
     width: 14px;
 
-    &.lpStar1 {
+    &.bwStar1 {
         background-position: -225px -25px;
     }
 
-    &.lpStar2 {
+    &.bwStar2 {
         background-position: -225px -50px;
     }
 
-    &.lpStar3 {
+    &.bwStar3 {
         background-position: -225px -75px;
     }
 }
 
-.lpConsumable {
+.bwConsumable {
     background-position: -275px 0;
     width: 17px;
 
-    &.lpActive {
+    &.bwActive {
         background-position: -275px -25px;
     }
 }
 
-.lpSettings {
+.bwSettings {
     background-position: -300px 0;
 }

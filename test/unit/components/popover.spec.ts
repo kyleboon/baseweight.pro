@@ -3,14 +3,14 @@ import { mount } from '@vue/test-utils';
 import Popover from '../../../app/components/popover.vue';
 
 describe('Popover component', () => {
-    it('adds lpPopoverShown class when shown is true', () => {
+    it('adds bwPopoverShown class when shown is true', () => {
         const wrapper = mount(Popover, { props: { shown: true } });
-        expect(wrapper.find('.lpPopoverShown').exists()).toBe(true);
+        expect(wrapper.find('.bwPopoverShown').exists()).toBe(true);
     });
 
-    it('does not add lpPopoverShown class when shown is false', () => {
+    it('does not add bwPopoverShown class when shown is false', () => {
         const wrapper = mount(Popover, { props: { shown: false } });
-        expect(wrapper.find('.lpPopoverShown').exists()).toBe(false);
+        expect(wrapper.find('.bwPopoverShown').exists()).toBe(false);
     });
 
     it('emits hide when Escape key is pressed and shown is true', () => {
@@ -48,7 +48,7 @@ describe('Popover component', () => {
                 content: '<div>content</div>',
             },
         });
-        const content = wrapper.find('.lp-popover-content');
+        const content = wrapper.find('.bw-popover-content');
         expect(content.attributes('aria-modal')).toBe('true');
     });
 });

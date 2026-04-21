@@ -1,17 +1,17 @@
 <template>
-    <section class="lp-lists-section" id="listContainer">
-        <div class="lp-sidebar-section-header">
-            <span class="lp-label-xs">Lists</span>
+    <section class="bw-lists-section" id="listContainer">
+        <div class="bw-sidebar-section-header">
+            <span class="bw-label-xs">Lists</span>
         </div>
 
-        <ul id="lists" class="lp-nav-list">
+        <ul id="lists" class="bw-nav-list">
             <li
                 v-for="(libList, index) in library.lists"
                 :key="libList.id"
-                class="lp-nav-list-item"
+                class="bw-nav-list-item"
                 :class="{ 'is-active': library.defaultListId == libList.id }"
             >
-                <span class="lpHandle lp-drag-handle" title="Reorder" aria-label="Drag to reorder list">
+                <span class="bwHandle bw-drag-handle" title="Reorder" aria-label="Drag to reorder list">
                     <svg width="10" height="14" viewBox="0 0 10 14" fill="none" aria-hidden="true">
                         <circle cx="3" cy="2.5" r="1.2" fill="currentColor" />
                         <circle cx="7" cy="2.5" r="1.2" fill="currentColor" />
@@ -23,7 +23,7 @@
                 </span>
                 <button
                     v-if="index > 0"
-                    class="lp-reorder-btn visually-hidden"
+                    class="bw-reorder-btn visually-hidden"
                     :aria-label="'Move ' + listName(libList) + ' up'"
                     @click="moveListUp(index)"
                 >
@@ -31,14 +31,14 @@
                 </button>
                 <button
                     v-if="index < library.lists.length - 1"
-                    class="lp-reorder-btn visually-hidden"
+                    class="bw-reorder-btn visually-hidden"
                     :aria-label="'Move ' + listName(libList) + ' down'"
                     @click="moveListDown(index)"
                 >
                     &darr;
                 </button>
                 <button
-                    class="lp-nav-link"
+                    class="bw-nav-link"
                     :class="{ active: library.defaultListId == libList.id }"
                     @click="setDefaultList(libList)"
                 >
@@ -46,7 +46,7 @@
                 </button>
                 <button
                     v-if="library.defaultListId !== libList.id"
-                    class="lp-nav-remove"
+                    class="bw-nav-remove"
                     title="Remove this list"
                     aria-label="Remove list"
                     @click="removeList(libList)"
@@ -56,9 +56,9 @@
             </li>
         </ul>
 
-        <div class="lp-lists-actions">
-            <button class="lp-action-link" @click="newList">+ Add new list</button>
-            <button class="lp-action-link" @click="importCSV">+ Import CSV</button>
+        <div class="bw-lists-actions">
+            <button class="bw-action-link" @click="newList">+ Add new list</button>
+            <button class="bw-action-link" @click="importCSV">+ Import CSV</button>
         </div>
     </section>
 </template>
@@ -102,7 +102,7 @@ let listSortable = null;
 onMounted(() => {
     const $lists = document.getElementById('lists');
     listSortable = Sortable.create($lists, {
-        handle: '.lpHandle',
+        handle: '.bwHandle',
         animation: 150,
         onEnd(evt) {
             const { item, from, oldIndex, newIndex } = evt;
@@ -149,7 +149,7 @@ function removeList(list) {
 
 <style>
 /* ── Section header ─────────────────────────────────────────── */
-.lp-sidebar-section-header {
+.bw-sidebar-section-header {
     align-items: center;
     display: flex;
     justify-content: space-between;
@@ -157,7 +157,7 @@ function removeList(list) {
     padding: 0 8px;
 }
 
-.lp-label-xs {
+.bw-label-xs {
     color: #5a5954;
     font-family: Figtree, system-ui, sans-serif;
     font-size: 11px;
@@ -168,27 +168,27 @@ function removeList(list) {
 }
 
 /* ── Nav list ───────────────────────────────────────────────── */
-.lp-nav-list {
+.bw-nav-list {
     list-style: none;
     margin: 0 0 8px;
     padding: 0;
 }
 
-.lp-nav-list-item {
+.bw-nav-list-item {
     align-items: center;
     display: flex;
     gap: 2px;
 
-    &:hover .lp-drag-handle {
+    &:hover .bw-drag-handle {
         opacity: 1;
     }
 
-    &:hover .lp-nav-remove {
+    &:hover .bw-nav-remove {
         opacity: 1;
     }
 }
 
-.lp-drag-handle {
+.bw-drag-handle {
     align-items: center;
     color: #3b3b37;
     cursor: grab;
@@ -211,8 +211,8 @@ function removeList(list) {
     }
 }
 
-/* Nav link — replicates .lp-nav-link from style guide */
-.lp-nav-link {
+/* Nav link — replicates .bw-nav-link from style guide */
+.bw-nav-link {
     align-items: center;
     background: transparent;
     border: none;
@@ -254,7 +254,7 @@ function removeList(list) {
     }
 }
 
-.lp-nav-remove {
+.bw-nav-remove {
     align-items: center;
     background: transparent;
     border: none;
@@ -285,14 +285,14 @@ function removeList(list) {
 }
 
 /* ── Add / import / copy actions ────────────────────────────── */
-.lp-lists-actions {
+.bw-lists-actions {
     display: flex;
     flex-direction: column;
     gap: 2px;
     padding-left: 8px;
 }
 
-.lp-action-link {
+.bw-action-link {
     align-items: center;
     background: transparent;
     border: none;
@@ -320,13 +320,13 @@ function removeList(list) {
 }
 
 /* ── Sortable drag state ─────────────────────────────────────── */
-.lp-nav-list-item.sortable-drag {
+.bw-nav-list-item.sortable-drag {
     background: #2f2f2c;
     border-radius: 6px;
     opacity: 0.9;
 }
 
-.lp-reorder-btn {
+.bw-reorder-btn {
     background: none;
     border: 1px solid #3b3b37;
     border-radius: 4px;
@@ -339,7 +339,7 @@ function removeList(list) {
     width: 22px;
 }
 
-.lp-reorder-btn:focus-visible {
+.bw-reorder-btn:focus-visible {
     clip-path: none;
     height: auto;
     outline: 2px solid #e8a220;
@@ -352,12 +352,12 @@ function removeList(list) {
 
 @media only screen and (width < 900px) {
     /* Hide drag handles on mobile */
-    .lp-drag-handle {
+    .bw-drag-handle {
         display: none;
     }
 
     /* Hide Import CSV — desktop only */
-    .lp-lists-actions .lp-action-link:last-child {
+    .bw-lists-actions .bw-action-link:last-child {
         display: none;
     }
 }

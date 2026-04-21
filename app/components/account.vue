@@ -6,12 +6,12 @@
             Signed in as <strong>{{ currentEmail }}</strong>
         </p>
 
-        <hr class="lp-account-divider" />
+        <hr class="bw-account-divider" />
 
-        <h3 class="lp-account-section-title">Display Settings</h3>
+        <h3 class="bw-account-section-title">Display Settings</h3>
 
-        <ul id="lpOptionalFields">
-            <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="lpOptionalField">
+        <ul id="bwOptionalFields">
+            <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="bwOptionalField">
                 <label>
                     <input
                         :checked="optionalField.value"
@@ -23,7 +23,7 @@
             </li>
         </ul>
 
-        <div v-if="library.optionalFields['price']" id="lpPriceSettings">
+        <div v-if="library.optionalFields['price']" id="bwPriceSettings">
             <label>
                 Currency:
                 <input
@@ -36,11 +36,11 @@
             </label>
         </div>
 
-        <hr class="lp-account-divider" />
+        <hr class="bw-account-divider" />
 
-        <div class="lpButtons">
-            <a class="lpHref" @click="shown = false">Close</a>
-            <a class="lpHref" @click="showDeleteAccount">Delete account</a>
+        <div class="bwButtons">
+            <a class="bwHref" @click="shown = false">Close</a>
+            <a class="bwHref" @click="showDeleteAccount">Delete account</a>
         </div>
     </modal>
 </template>
@@ -94,13 +94,13 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
     width: 380px;
 }
 
-.lp-account-divider {
+.bw-account-divider {
     border: none;
     border-top: 1px solid #e8e7e1;
     margin: 16px 0;
 }
 
-.lp-account-section-title {
+.bw-account-section-title {
     color: #1e1e1c;
     font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
@@ -110,7 +110,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
     text-transform: uppercase;
 }
 
-#lpOptionalFields {
+#bwOptionalFields {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -119,7 +119,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
     padding: 0;
 }
 
-.lpOptionalField {
+.bwOptionalField {
     label {
         align-items: center;
         cursor: pointer;
@@ -143,7 +143,7 @@ defineExpose({ shown, currentEmail, showDeleteAccount });
     }
 }
 
-#lpPriceSettings {
+#bwPriceSettings {
     border-top: 1px solid #e8e7e1;
     margin-top: 8px;
     padding-top: 8px;

@@ -1,29 +1,29 @@
 <template>
-    <section class="lp-gear-section lp-library-section" id="libraryContainer">
-        <div class="lp-sidebar-section-header">
-            <span class="lp-label-xs">Gear</span>
+    <section class="bw-gear-section bw-library-section" id="libraryContainer">
+        <div class="bw-sidebar-section-header">
+            <span class="bw-label-xs">Gear</span>
         </div>
 
         <input
             id="librarySearch"
             v-model="searchText"
-            class="lp-sidebar-search"
+            class="bw-sidebar-search"
             type="search"
             placeholder="Search gear…"
             aria-label="Search gear library"
         />
 
-        <ul id="library" class="lp-gear-list">
+        <ul id="library" class="bw-gear-list">
             <li
                 v-for="libItem in filteredItems"
                 :key="libItem.id"
-                class="lp-gear-list-item"
+                class="bw-gear-list-item"
                 :class="{ 'is-in-list': libItem.inCurrentList }"
                 :data-item-id="libItem.id"
             >
                 <div
                     v-if="!libItem.inCurrentList"
-                    class="lpHandle lpLibraryItemHandle lp-gear-drag-handle"
+                    class="bwHandle bwLibraryItemHandle bw-gear-drag-handle"
                     title="Drag to add to list"
                     aria-label="Drag to add to list"
                 >
@@ -36,28 +36,28 @@
                         <circle cx="6" cy="10" r="1.1" fill="currentColor" />
                     </svg>
                 </div>
-                <div v-else class="lp-gear-in-list-indicator" aria-hidden="true" />
+                <div v-else class="bw-gear-in-list-indicator" aria-hidden="true" />
 
-                <div class="lp-gear-item-info">
+                <div class="bw-gear-item-info">
                     <a
                         v-if="libItem.url"
                         :href="libItem.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="lp-gear-item-name lp-gear-item-link"
+                        class="bw-gear-item-name bw-gear-item-link"
                         >{{ libItem.name }}</a
                     >
-                    <span v-else class="lp-gear-item-name">{{ libItem.name }}</span>
-                    <span v-if="libItem.description" class="lp-gear-item-desc">{{ libItem.description }}</span>
+                    <span v-else class="bw-gear-item-name">{{ libItem.name }}</span>
+                    <span v-if="libItem.description" class="bw-gear-item-desc">{{ libItem.description }}</span>
                 </div>
 
-                <span class="lp-gear-item-weight">
+                <span class="bw-gear-item-weight">
                     {{ displayWeight(libItem.weight, libItem.authorUnit) }}
-                    <span class="lp-gear-item-unit">{{ libItem.authorUnit }}</span>
+                    <span class="bw-gear-item-unit">{{ libItem.authorUnit }}</span>
                 </span>
 
                 <button
-                    class="lp-gear-remove"
+                    class="bw-gear-remove"
                     title="Delete this item permanently"
                     aria-label="Delete item"
                     @click="removeItem(libItem)"
@@ -128,7 +128,7 @@ onMounted(() => {
             pull: 'clone',
             put: false,
         },
-        handle: '.lpLibraryItemHandle',
+        handle: '.bwLibraryItemHandle',
         filter(_evt, el) {
             // Prevent dragging items already in the current list
             const items = store.library.getItemsInCurrentList();
@@ -160,7 +160,7 @@ function removeItem(item) {
 
 <style>
 /* ── Gear section ───────────────────────────────────────────── */
-.lp-gear-section {
+.bw-gear-section {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -168,7 +168,7 @@ function removeItem(item) {
 }
 
 /* ── Search input ───────────────────────────────────────────── */
-.lp-sidebar-search {
+.bw-sidebar-search {
     background: #2f2f2c;
     border: 0.5px solid #3b3b37;
     border-radius: 6px;
@@ -197,7 +197,7 @@ function removeItem(item) {
 }
 
 /* ── Gear list ──────────────────────────────────────────────── */
-.lp-gear-list {
+.bw-gear-list {
     flex: 1;
     list-style: none;
     margin: 0;
@@ -208,7 +208,7 @@ function removeItem(item) {
     scrollbar-width: thin;
 }
 
-.lp-gear-list-item {
+.bw-gear-list-item {
     align-items: flex-start;
     border-bottom: 0.5px solid #2f2f2c;
     display: flex;
@@ -225,11 +225,11 @@ function removeItem(item) {
     }
 
     &:hover {
-        .lp-gear-drag-handle {
+        .bw-gear-drag-handle {
             opacity: 1;
         }
 
-        .lp-gear-remove {
+        .bw-gear-remove {
             opacity: 1;
         }
     }
@@ -247,7 +247,7 @@ function removeItem(item) {
 }
 
 /* ── Drag handle ────────────────────────────────────────────── */
-.lp-gear-drag-handle {
+.bw-gear-drag-handle {
     align-items: center;
     color: #3b3b37;
     cursor: grab;
@@ -271,13 +271,13 @@ function removeItem(item) {
     }
 }
 
-.lp-gear-in-list-indicator {
+.bw-gear-in-list-indicator {
     flex-shrink: 0;
     width: 14px;
 }
 
 /* ── Item info ──────────────────────────────────────────────── */
-.lp-gear-item-info {
+.bw-gear-item-info {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -285,7 +285,7 @@ function removeItem(item) {
     min-width: 0;
 }
 
-.lp-gear-item-name {
+.bw-gear-item-name {
     color: #c8c6bc;
     font-family: Figtree, system-ui, sans-serif;
     font-size: 12px;
@@ -295,7 +295,7 @@ function removeItem(item) {
     white-space: nowrap;
 }
 
-.lp-gear-item-link {
+.bw-gear-item-link {
     color: #97b8d8;
     text-decoration: none;
     transition: color 120ms ease;
@@ -307,7 +307,7 @@ function removeItem(item) {
     }
 }
 
-.lp-gear-item-desc {
+.bw-gear-item-desc {
     color: #5a5954;
     display: block;
     font-family: Figtree, system-ui, sans-serif;
@@ -318,7 +318,7 @@ function removeItem(item) {
 }
 
 /* ── Weight (DM Mono per style guide) ───────────────────────── */
-.lp-gear-item-weight {
+.bw-gear-item-weight {
     color: #8a8880;
     flex-shrink: 0;
     font-family: 'DM Mono', 'Fira Mono', monospace;
@@ -328,13 +328,13 @@ function removeItem(item) {
     white-space: nowrap;
 }
 
-.lp-gear-item-unit {
+.bw-gear-item-unit {
     color: #5a5954;
     font-size: 10px;
 }
 
 /* ── Remove button ──────────────────────────────────────────── */
-.lp-gear-remove {
+.bw-gear-remove {
     align-items: center;
     background: transparent;
     border: none;

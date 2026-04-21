@@ -1,34 +1,34 @@
 <template>
-    <div v-if="library && list" class="lp-share-page">
+    <div v-if="library && list" class="bw-share-page">
         <!-- ── Top bar: wordmark + sign-in / copy ──── -->
-        <header class="lp-share-topbar">
-            <NuxtLink to="/welcome" class="lp-share-wordmark">LighterPack</NuxtLink>
-            <div class="lp-share-topbar-right">
+        <header class="bw-share-topbar">
+            <NuxtLink to="/welcome" class="bw-share-wordmark">LighterPack</NuxtLink>
+            <div class="bw-share-topbar-right">
                 <template v-if="loggedIn">
-                    <button class="lp-share-copy-btn" @click="showCopyConfirm = true">Copy to my account</button>
+                    <button class="bw-share-copy-btn" @click="showCopyConfirm = true">Copy to my account</button>
                 </template>
                 <ClientOnly v-else>
-                    <signin-form :callback-u-r-l="`/r/${route.params.id}`" class="lp-share-signin" />
+                    <signin-form :callback-u-r-l="`/r/${route.params.id}`" class="bw-share-signin" />
                 </ClientOnly>
             </div>
         </header>
 
         <!-- ── Main content ──── -->
-        <div class="lpList">
+        <div class="bwList">
             <ListComponent :readonly="true" />
         </div>
 
         <!-- ── Copy confirmation modal ──── -->
-        <div v-if="showCopyConfirm" class="lp-copy-overlay" @click.self="showCopyConfirm = false">
-            <div class="lp-copy-modal">
+        <div v-if="showCopyConfirm" class="bw-copy-overlay" @click.self="showCopyConfirm = false">
+            <div class="bw-copy-modal">
                 <h3>Copy this list?</h3>
                 <p>
                     Copy <strong>{{ list.name || 'this list' }}</strong> to your account? This will add {{ totalItems }}
                     {{ totalItems === 1 ? 'item' : 'items' }} to your library.
                 </p>
-                <div class="lp-copy-modal-actions">
-                    <button class="lp-copy-modal-cancel" @click="showCopyConfirm = false">Cancel</button>
-                    <button class="lp-copy-modal-confirm" :disabled="copying" @click="copyList">
+                <div class="bw-copy-modal-actions">
+                    <button class="bw-copy-modal-cancel" @click="showCopyConfirm = false">Cancel</button>
+                    <button class="bw-copy-modal-confirm" :disabled="copying" @click="copyList">
                         <template v-if="copying">Copying…</template>
                         <template v-else>Copy list</template>
                     </button>
@@ -38,7 +38,7 @@
     </div>
 
     <!-- ── Error state ──── -->
-    <div v-else-if="error" class="lp-share-page lp-share-error">
+    <div v-else-if="error" class="bw-share-page bw-share-error">
         <p>{{ error.message || 'List not found.' }}</p>
     </div>
 </template>
@@ -177,7 +177,7 @@ async function copyList() {
 </script>
 
 <style>
-.lp-share-page {
+.bw-share-page {
     --amber-400: #e8a220;
     --amber-600: #c07a0a;
     --stone-50: #fafaf7;
@@ -192,7 +192,7 @@ async function copyList() {
 }
 
 /* ── Top bar ───────────────────────────────────────────────────────────── */
-.lp-share-topbar {
+.bw-share-topbar {
     align-items: center;
     background: #fff;
     border-bottom: 1px solid var(--stone-200);
@@ -201,7 +201,7 @@ async function copyList() {
     padding: 10px 24px;
 }
 
-.lp-share-wordmark {
+.bw-share-wordmark {
     color: #1e1e1c;
     font-family: var(--font-display);
     font-size: 20px;
@@ -212,21 +212,21 @@ async function copyList() {
     }
 }
 
-.lp-share-topbar-right {
+.bw-share-topbar-right {
     align-items: center;
     display: flex;
     gap: 12px;
 }
 
 /* Compact inline sign-in form in topbar */
-.lp-share-signin {
+.bw-share-signin {
     .signin {
         align-items: center;
         flex-direction: row;
         gap: 8px;
     }
 
-    .lpFields {
+    .bwFields {
         margin: 0;
     }
 
@@ -236,23 +236,23 @@ async function copyList() {
         width: 200px;
     }
 
-    .lpButtons {
+    .bwButtons {
         margin: 0;
     }
 
-    .lpButton {
+    .bwButton {
         font-size: 13px;
         padding: 6px 14px;
         white-space: nowrap;
     }
 
-    .lpSuccess {
+    .bwSuccess {
         font-size: 12px;
         padding: 6px 10px;
     }
 }
 
-.lp-share-copy-btn {
+.bw-share-copy-btn {
     background: var(--amber-400);
     border: none;
     border-radius: 6px;
@@ -270,14 +270,14 @@ async function copyList() {
 }
 
 /* ── Main content area ─────────────────────────────────────────────────── */
-.lp-share-page > .lpList {
+.bw-share-page > .bwList {
     margin: 0 auto;
     max-width: 960px;
     padding: 24px 16px;
 }
 
 /* ── Copy confirmation modal ───────────────────────────────────────────── */
-.lp-copy-overlay {
+.bw-copy-overlay {
     align-items: center;
     background: rgb(0 0 0 / 40%);
     display: flex;
@@ -287,7 +287,7 @@ async function copyList() {
     z-index: 100;
 }
 
-.lp-copy-modal {
+.bw-copy-modal {
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 32px rgb(0 0 0 / 18%);
@@ -310,13 +310,13 @@ async function copyList() {
     }
 }
 
-.lp-copy-modal-actions {
+.bw-copy-modal-actions {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
 }
 
-.lp-copy-modal-cancel {
+.bw-copy-modal-cancel {
     background: transparent;
     border: 1px solid var(--stone-300);
     border-radius: 6px;
@@ -331,7 +331,7 @@ async function copyList() {
     }
 }
 
-.lp-copy-modal-confirm {
+.bw-copy-modal-confirm {
     background: var(--amber-400);
     border: none;
     border-radius: 6px;
@@ -353,7 +353,7 @@ async function copyList() {
 }
 
 /* ── Error state ───────────────────────────────────────────────────────── */
-.lp-share-error {
+.bw-share-error {
     align-items: center;
     display: flex;
     font-family: var(--font-ui);
@@ -367,17 +367,17 @@ async function copyList() {
 }
 
 @media only screen and (width < 600px) {
-    .lp-share-topbar {
+    .bw-share-topbar {
         flex-wrap: wrap;
         gap: 8px;
         padding: 10px 12px;
     }
 
-    .lp-share-page > .lpList {
+    .bw-share-page > .bwList {
         padding: 16px 12px;
     }
 
-    .lp-copy-modal {
+    .bw-copy-modal {
         max-height: 80vh;
         overflow-y: auto;
         width: calc(100vw - 24px);

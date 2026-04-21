@@ -11,39 +11,39 @@
     #topRight,
     #sidebar,
     .addCategory,
-    .lpAddItem,
-    .lpExpand,
+    .bwAddItem,
+    .bwExpand,
     .ad,
     .noprint,
-    #lpFooter,
+    #bwFooter,
     hr,
     #hamburger {
         display: none;
     }
 
-    .lpHasSidebar .lpList,
-    .lpListName {
+    .bwHasSidebar .bwList,
+    .bwListName {
         margin-left: 0;
     }
 
-    .lpHandleCell,
-    .lpItems .lpFooter > .lpCell:first-child,
-    .lpRemoveCell,
-    .lpActionsCell .lpLink,
-    .lpActionsCell .lpCamera,
-    .lpQtyCell .lpArrows {
+    .bwHandleCell,
+    .bwItems .bwFooter > .bwCell:first-child,
+    .bwRemoveCell,
+    .bwActionsCell .bwLink,
+    .bwActionsCell .bwCamera,
+    .bwQtyCell .bwArrows {
         display: none !important;
     }
 
-    .lpActionsCell {
+    .bwActionsCell {
         width: 80px !important;
     }
 
-    .lpQtyCell {
+    .bwQtyCell {
         width: 20px !important;
     }
 
-    .lpWeightCell {
+    .bwWeightCell {
         width: 99px !important;
     }
 }

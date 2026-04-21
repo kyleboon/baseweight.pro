@@ -19,8 +19,8 @@
                 Settings
             </template>
             <template #content>
-                <ul id="lpOptionalFields">
-                    <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="lpOptionalField">
+                <ul id="bwOptionalFields">
+                    <li v-for="optionalField in optionalFieldsLookup" :key="optionalField.name" class="bwOptionalField">
                         <label>
                             <input
                                 :checked="optionalField.value"
@@ -31,7 +31,7 @@
                         </label>
                     </li>
                 </ul>
-                <div v-if="library.optionalFields['price']" id="lpPriceSettings">
+                <div v-if="library.optionalFields['price']" id="bwPriceSettings">
                     <hr />
                     <label>
                         Currency:
@@ -63,11 +63,11 @@ const isSignedIn = computed(() => store.loggedIn);
 
 const optionalFieldsLookup = computed(() => {
     const fields = [
-        { name: 'images', displayName: 'Item images', cssClass: 'lpShowImages' },
-        { name: 'price', displayName: 'Item prices', cssClass: 'lpShowPrices' },
-        { name: 'worn', displayName: 'Worn items', cssClass: 'lpShowWorn' },
-        { name: 'consumable', displayName: 'Consumable items', cssClass: 'lpShowConsumable' },
-        { name: 'listDescription', displayName: 'List descriptions', cssClass: 'lpShowListDescription' },
+        { name: 'images', displayName: 'Item images', cssClass: 'bwShowImages' },
+        { name: 'price', displayName: 'Item prices', cssClass: 'bwShowPrices' },
+        { name: 'worn', displayName: 'Worn items', cssClass: 'bwShowWorn' },
+        { name: 'consumable', displayName: 'Consumable items', cssClass: 'bwShowConsumable' },
+        { name: 'listDescription', displayName: 'List descriptions', cssClass: 'bwShowListDescription' },
     ];
     return fields.map((f) => ({ ...f, value: library.value.optionalFields[f.name] }));
 });
@@ -82,12 +82,12 @@ function updateCurrencySymbol(evt) {
 </script>
 
 <style>
-#settings .lp-popover-content,
-#settings .lpContent {
+#settings .bw-popover-content,
+#settings .bwContent {
     width: 200px;
 }
 
-#lpOptionalFields {
+#bwOptionalFields {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -96,7 +96,7 @@ function updateCurrencySymbol(evt) {
     padding: 0;
 }
 
-.lpOptionalField {
+.bwOptionalField {
     label {
         align-items: center;
         cursor: pointer;
@@ -120,7 +120,7 @@ function updateCurrencySymbol(evt) {
     }
 }
 
-#lpPriceSettings {
+#bwPriceSettings {
     border-top: 1px solid #e8e7e1;
     margin-top: 8px;
     padding-top: 8px;

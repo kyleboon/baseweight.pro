@@ -1,9 +1,9 @@
 <template>
-    <div v-if="isSignedIn" class="lp-list-actions">
+    <div v-if="isSignedIn" class="bw-list-actions">
         <Popover id="list-actions" :shown="menuOpen" @hide="closeMenu">
             <template #target>
                 <button
-                    class="lp-btn lp-btn-icon lp-list-actions-btn"
+                    class="bw-btn bw-btn-icon bw-list-actions-btn"
                     :class="{ 'is-copied': copied }"
                     aria-label="List actions"
                     title="List actions"
@@ -39,10 +39,10 @@
                 </button>
             </template>
             <template #content>
-                <div class="lp-actions-menu">
-                    <div class="lp-actions-menu-section-label">Share</div>
+                <div class="bw-actions-menu">
+                    <div class="bw-actions-menu-section-label">Share</div>
                     <button
-                        class="lp-actions-menu-item"
+                        class="bw-actions-menu-item"
                         :disabled="loading"
                         :aria-disabled="loading"
                         @click="copyShareLink"
@@ -64,10 +64,10 @@
                         Copy share link
                     </button>
 
-                    <div class="lp-actions-menu-divider" />
-                    <div class="lp-actions-menu-section-label">Export</div>
+                    <div class="bw-actions-menu-divider" />
+                    <div class="bw-actions-menu-section-label">Export</div>
                     <button
-                        class="lp-actions-menu-item"
+                        class="bw-actions-menu-item"
                         :disabled="loading"
                         :aria-disabled="loading"
                         @click="exportCSV"
@@ -90,9 +90,9 @@
                         Export to CSV
                     </button>
 
-                    <div class="lp-actions-menu-divider" />
-                    <div class="lp-actions-menu-section-label">Manage</div>
-                    <button class="lp-actions-menu-item" @click="copyList">
+                    <div class="bw-actions-menu-divider" />
+                    <div class="bw-actions-menu-section-label">Manage</div>
+                    <button class="bw-actions-menu-item" @click="copyList">
                         <svg
                             width="16"
                             height="16"
@@ -196,11 +196,11 @@ function copyList() {
 </script>
 
 <style>
-.lp-list-actions {
+.bw-list-actions {
     position: relative;
 }
 
-.lp-list-actions-btn {
+.bw-list-actions-btn {
     align-items: center;
     background: none;
     border: none;
@@ -226,7 +226,7 @@ function copyList() {
 }
 
 /* Right-align the dropdown panel so it doesn't overflow the viewport */
-#list-actions .lp-popover-content {
+#list-actions .bw-popover-content {
     left: auto;
     right: 0;
     transform: none;
@@ -238,19 +238,19 @@ function copyList() {
     }
 }
 
-#list-actions.is-shown .lp-popover-content {
+#list-actions.is-shown .bw-popover-content {
     transform: none;
 }
 
 /* Menu content */
-.lp-actions-menu {
+.bw-actions-menu {
     display: flex;
     flex-direction: column;
     min-width: 190px;
     padding: 4px 0;
 }
 
-.lp-actions-menu-section-label {
+.bw-actions-menu-section-label {
     color: var(--charcoal-300);
     font-family: var(--font-ui);
     font-size: 10px;
@@ -261,7 +261,7 @@ function copyList() {
     user-select: none;
 }
 
-.lp-actions-menu-item {
+.bw-actions-menu-item {
     align-items: center;
     background: transparent;
     border: none;
@@ -300,7 +300,7 @@ function copyList() {
     }
 }
 
-.lp-actions-menu-divider {
+.bw-actions-menu-divider {
     background: var(--stone-200);
     height: 1px;
     margin: 4px 12px;

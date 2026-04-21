@@ -2,14 +2,14 @@
     <div
         v-click-outside="hide"
         :id="id"
-        :class="{ 'lp-popover': true, lpPopover: true, 'is-shown': shown, lpPopoverShown: shown }"
+        :class="{ 'bw-popover': true, bwPopover: true, 'is-shown': shown, bwPopoverShown: shown }"
     >
-        <div class="lp-popover-target lpTarget">
+        <div class="bw-popover-target bwTarget">
             <slot name="target" />
         </div>
         <div
             ref="contentRef"
-            class="lp-popover-content lpContent"
+            class="bw-popover-content bwContent"
             role="dialog"
             aria-modal="true"
             :aria-labelledby="labelId"
@@ -74,12 +74,12 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
    Popover — floating content panel anchored to a trigger
    ================================================================ */
 
-.lp-popover {
+.bw-popover {
     display: block;
     position: relative;
 }
 
-.lp-popover-target {
+.bw-popover-target {
     cursor: default;
     display: inline-block;
 
@@ -89,7 +89,7 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
     position: relative;
 }
 
-.lp-popover-content {
+.bw-popover-content {
     background: #fafaf7;
     border: 0.5px solid #d0cfc9;
     border-radius: 10px;
@@ -133,12 +133,12 @@ onBeforeUnmount(() => window.removeEventListener('keyup', closeOnEscape));
 }
 
 /* Shown state */
-.lp-popover.is-shown {
-    .lp-popover-target {
+.bw-popover.is-shown {
+    .bw-popover-target {
         z-index: 101;
     }
 
-    .lp-popover-content {
+    .bw-popover-content {
         opacity: 1;
         pointer-events: all;
         transform: translateX(-50%) translateY(0);

@@ -1,6 +1,6 @@
 <template>
-    <div class="lpListSummary">
-        <div class="lpChartContainer">
+    <div class="bwListSummary">
+        <div class="bwChartContainer">
             <donut-chart
                 :categories="categories"
                 :total-weight="list.totalWeight"
@@ -8,24 +8,24 @@
                 @category-hover="hoveredCategoryId = $event"
             />
         </div>
-        <div class="lpTotalsContainer">
-            <div class="lp-summary" :class="{ 'lp-summary--has-price': library.optionalFields['price'] }">
+        <div class="bwTotalsContainer">
+            <div class="bw-summary" :class="{ 'bw-summary--has-price': library.optionalFields['price'] }">
                 <!-- Header -->
-                <div class="lp-summary-header">
-                    <span class="lp-s-dot"></span>
-                    <span class="lp-s-name">Category</span>
-                    <span v-if="library.optionalFields['price']" class="lp-s-price">Price</span>
-                    <span class="lp-s-weight">Weight</span>
+                <div class="bw-summary-header">
+                    <span class="bw-s-dot"></span>
+                    <span class="bw-s-name">Category</span>
+                    <span v-if="library.optionalFields['price']" class="bw-s-price">Price</span>
+                    <span class="bw-s-weight">Weight</span>
                 </div>
 
                 <!-- Category rows -->
                 <div
                     v-for="category in categories"
                     :key="category.id"
-                    class="lp-summary-row"
-                    :class="{ 'lp-summary-row--hover': category.activeHover }"
+                    class="bw-summary-row"
+                    :class="{ 'bw-summary-row--hover': category.activeHover }"
                 >
-                    <span class="lp-s-dot lp-s-dot--picker">
+                    <span class="bw-s-dot bw-s-dot--picker">
                         <colorPicker
                             v-if="!readonly && category.displayColor"
                             :color="colorToHex(category.displayColor)"
@@ -33,35 +33,35 @@
                         />
                         <span
                             v-else-if="category.displayColor"
-                            class="lpLegend"
+                            class="bwLegend"
                             :style="{ backgroundColor: category.displayColor }"
                         />
                     </span>
-                    <span class="lp-s-name">{{ category.name }}</span>
-                    <span v-if="library.optionalFields['price']" class="lp-s-price lp-s-num">
+                    <span class="bw-s-name">{{ category.name }}</span>
+                    <span v-if="library.optionalFields['price']" class="bw-s-price bw-s-num">
                         {{ displayPrice(category.subtotalPrice, library.currencySymbol) }}
                     </span>
-                    <span class="lp-s-weight lp-s-num">
-                        <span class="lpDisplaySubtotal" :mg="category.subtotalWeight">{{
+                    <span class="bw-s-weight bw-s-num">
+                        <span class="bwDisplaySubtotal" :mg="category.subtotalWeight">{{
                             displayWeight(category.subtotalWeight, library.totalUnit)
                         }}</span>
-                        <span class="lp-s-unit">{{ library.totalUnit }}</span>
+                        <span class="bw-s-unit">{{ library.totalUnit }}</span>
                     </span>
                 </div>
 
                 <!-- Total row -->
-                <div class="lp-summary-total">
-                    <span class="lp-s-dot"></span>
-                    <span class="lp-s-name">
+                <div class="bw-summary-total">
+                    <span class="bw-s-dot"></span>
+                    <span class="bw-s-name">
                         Total
-                        <span class="lp-s-qty">{{ list.totalQty }} items</span>
+                        <span class="bw-s-qty">{{ list.totalQty }} items</span>
                     </span>
-                    <span v-if="library.optionalFields['price']" class="lp-s-price lp-s-num">
+                    <span v-if="library.optionalFields['price']" class="bw-s-price bw-s-num">
                         {{ displayPrice(list.totalPrice, library.currencySymbol) }}
                     </span>
-                    <span class="lp-s-weight lp-s-num">
-                        <span class="lpTotalValue">{{ displayWeight(list.totalWeight, library.totalUnit) }}</span>
-                        <span class="lp-s-unit"
+                    <span class="bw-s-weight bw-s-num">
+                        <span class="bwTotalValue">{{ displayWeight(list.totalWeight, library.totalUnit) }}</span>
+                        <span class="bw-s-unit"
                             ><unitSelect
                                 v-if="!readonly"
                                 :unit="library.totalUnit"
@@ -72,30 +72,30 @@
                 </div>
 
                 <!-- Breakdown strip (consumable / worn / base) -->
-                <div v-if="list.totalConsumableWeight || list.totalWornWeight" class="lp-summary-breakdown">
-                    <div v-if="list.totalConsumableWeight" class="lp-breakdown-chip" data-weight-type="consumable">
-                        <span class="lp-breakdown-label">Consumable</span>
-                        <span class="lp-breakdown-value">
-                            <span class="lpDisplaySubtotal" :mg="list.totalConsumableWeight">{{
+                <div v-if="list.totalConsumableWeight || list.totalWornWeight" class="bw-summary-breakdown">
+                    <div v-if="list.totalConsumableWeight" class="bw-breakdown-chip" data-weight-type="consumable">
+                        <span class="bw-breakdown-label">Consumable</span>
+                        <span class="bw-breakdown-value">
+                            <span class="bwDisplaySubtotal" :mg="list.totalConsumableWeight">{{
                                 displayWeight(list.totalConsumableWeight, library.totalUnit)
                             }}</span>
-                            <span class="lp-s-unit">{{ library.totalUnit }}</span>
+                            <span class="bw-s-unit">{{ library.totalUnit }}</span>
                         </span>
                     </div>
-                    <div v-if="list.totalWornWeight" class="lp-breakdown-chip" data-weight-type="worn">
-                        <span class="lp-breakdown-label">Worn</span>
-                        <span class="lp-breakdown-value">
-                            <span class="lpDisplaySubtotal" :mg="list.totalWornWeight">{{
+                    <div v-if="list.totalWornWeight" class="bw-breakdown-chip" data-weight-type="worn">
+                        <span class="bw-breakdown-label">Worn</span>
+                        <span class="bw-breakdown-value">
+                            <span class="bwDisplaySubtotal" :mg="list.totalWornWeight">{{
                                 displayWeight(list.totalWornWeight, library.totalUnit)
                             }}</span>
-                            <span class="lp-s-unit">{{ library.totalUnit }}</span>
+                            <span class="bw-s-unit">{{ library.totalUnit }}</span>
                         </span>
                     </div>
-                    <div class="lp-breakdown-chip lp-breakdown-chip--base" data-weight-type="base">
-                        <span class="lp-breakdown-label">Base weight</span>
-                        <span class="lp-breakdown-value">
+                    <div class="bw-breakdown-chip bw-breakdown-chip--base" data-weight-type="base">
+                        <span class="bw-breakdown-label">Base weight</span>
+                        <span class="bw-breakdown-value">
                             <span
-                                class="lpDisplaySubtotal"
+                                class="bwDisplaySubtotal"
                                 :mg="list.totalBaseWeight"
                                 :title="
                                     displayWeight(list.totalPackWeight, library.totalUnit) +
@@ -105,7 +105,7 @@
                                 "
                                 >{{ displayWeight(list.totalBaseWeight, library.totalUnit) }}</span
                             >
-                            <span class="lp-s-unit">{{ library.totalUnit }}</span>
+                            <span class="bw-s-unit">{{ library.totalUnit }}</span>
                         </span>
                     </div>
                 </div>
@@ -174,18 +174,18 @@ function colorToHex(color) {
    List Summary — donut chart + aligned weight/price table
    ================================================================ */
 
-.lpListSummary {
+.bwListSummary {
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
     margin-bottom: 24px;
 }
 
-.lpChartContainer {
+.bwChartContainer {
     flex-shrink: 0;
 }
 
-.lpTotalsContainer {
+.bwTotalsContainer {
     flex: 1;
     min-width: 260px;
 }
@@ -201,7 +201,7 @@ function colorToHex(color) {
  *   [dot]   [name]   [price]   [weight]
  *   26px    1fr      80px      96px
  */
-.lp-summary {
+.bw-summary {
     --col-dot: 26px;
     --col-price: 80px;
     --col-weight: 96px;
@@ -211,22 +211,22 @@ function colorToHex(color) {
     font-size: 13px;
     width: 100%;
 
-    &.lp-summary--has-price {
+    &.bw-summary--has-price {
         --cols: var(--col-dot) 1fr var(--col-price) var(--col-weight);
     }
 }
 
 /* Shared grid layout for every row type */
-.lp-summary-header,
-.lp-summary-row,
-.lp-summary-total {
+.bw-summary-header,
+.bw-summary-row,
+.bw-summary-total {
     align-items: center;
     display: grid;
     grid-template-columns: var(--cols);
 }
 
 /* ── Header ─────────────────────────────────────────────────────── */
-.lp-summary-header {
+.bw-summary-header {
     border-bottom: 1px solid #d0cfc9;
     color: #8a8880;
     font-size: 11px;
@@ -237,12 +237,12 @@ function colorToHex(color) {
 }
 
 /* ── Category rows ──────────────────────────────────────────────── */
-.lp-summary-row {
+.bw-summary-row {
     border-bottom: 1px solid #e8e7e1;
     padding: 4px 0;
     transition: background-color 80ms ease;
 
-    &.lp-summary-row--hover {
+    &.bw-summary-row--hover {
         background: #f3f2ee;
         margin: 0 -6px;
         padding-left: 6px;
@@ -251,20 +251,20 @@ function colorToHex(color) {
 }
 
 /* ── Total row ──────────────────────────────────────────────────── */
-.lp-summary-total {
+.bw-summary-total {
     border-top: 2px solid #1e1e1c;
     font-weight: 600;
     padding: 7px 0 4px;
 }
 
 /* ── Shared cell classes ────────────────────────────────────────── */
-.lp-s-dot {
+.bw-s-dot {
     align-items: center;
     display: flex;
     width: var(--col-dot);
 }
 
-.lp-s-name {
+.bw-s-name {
     align-items: baseline;
     display: flex;
     gap: 6px;
@@ -274,28 +274,28 @@ function colorToHex(color) {
     white-space: nowrap;
 }
 
-.lp-s-price {
+.bw-s-price {
     padding-right: 8px;
     text-align: right;
 }
 
-.lp-s-weight {
+.bw-s-weight {
     text-align: right;
 }
 
-.lp-s-num {
+.bw-s-num {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     font-variant-numeric: tabular-nums;
 }
 
-.lp-s-unit {
+.bw-s-unit {
     color: #8a8880;
     font-size: 11px;
     margin-left: 2px;
 }
 
-.lp-s-qty {
+.bw-s-qty {
     color: #8a8880;
     font-family: Figtree, system-ui, sans-serif;
     font-size: 11px;
@@ -303,7 +303,7 @@ function colorToHex(color) {
 }
 
 /* ── Breakdown strip ────────────────────────────────────────────── */
-.lp-summary-breakdown {
+.bw-summary-breakdown {
     border-top: 1px solid #e8e7e1;
     display: flex;
     flex-wrap: wrap;
@@ -312,7 +312,7 @@ function colorToHex(color) {
     padding-top: 8px;
 }
 
-.lp-breakdown-chip {
+.bw-breakdown-chip {
     align-items: baseline;
     color: #8a8880;
     display: flex;
@@ -320,22 +320,22 @@ function colorToHex(color) {
     gap: 6px;
 }
 
-.lp-breakdown-label {
+.bw-breakdown-label {
     font-weight: 500;
 }
 
-.lp-breakdown-value {
+.bw-breakdown-value {
     font-family: 'DM Mono', monospace;
     font-size: 12px;
     font-variant-numeric: tabular-nums;
 }
 
-.lp-breakdown-chip--base {
+.bw-breakdown-chip--base {
     color: #5a5954;
     font-weight: 600;
     margin-left: auto;
 
-    .lp-breakdown-label {
+    .bw-breakdown-label {
         font-weight: 600;
     }
 }

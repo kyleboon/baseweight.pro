@@ -154,9 +154,9 @@ describe('Item component', () => {
                 props: { ...makeProps({ name: 'Tent' }), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('input.lpName').exists()).toBe(false);
-            expect(wrapper.find('span.lpName').exists()).toBe(true);
-            expect(wrapper.find('span.lpName').text()).toBe('Tent');
+            expect(wrapper.find('input.bwName').exists()).toBe(false);
+            expect(wrapper.find('span.bwName').exists()).toBe(true);
+            expect(wrapper.find('span.bwName').text()).toBe('Tent');
         });
 
         it('renders item name as a link when url is set', () => {
@@ -166,9 +166,9 @@ describe('Item component', () => {
                 props: { ...makeProps({ name: 'Tent', url: 'https://example.com' }), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('a.lpHref').exists()).toBe(true);
-            expect(wrapper.find('a.lpHref').attributes('href')).toBe('https://example.com');
-            expect(wrapper.find('a.lpHref').text()).toBe('Tent');
+            expect(wrapper.find('a.bwHref').exists()).toBe(true);
+            expect(wrapper.find('a.bwHref').attributes('href')).toBe('https://example.com');
+            expect(wrapper.find('a.bwHref').text()).toBe('Tent');
         });
 
         it('renders description as static text instead of input', () => {
@@ -178,9 +178,9 @@ describe('Item component', () => {
                 props: { ...makeProps({ description: 'A tent' }), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('input.lpDescription').exists()).toBe(false);
-            expect(wrapper.find('span.lpDescription').exists()).toBe(true);
-            expect(wrapper.find('span.lpDescription').text()).toBe('A tent');
+            expect(wrapper.find('input.bwDescription').exists()).toBe(false);
+            expect(wrapper.find('span.bwDescription').exists()).toBe(true);
+            expect(wrapper.find('span.bwDescription').text()).toBe('A tent');
         });
 
         it('hides drag handle', () => {
@@ -190,7 +190,7 @@ describe('Item component', () => {
                 props: { ...makeProps(), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('.lpHandleCell').exists()).toBe(false);
+            expect(wrapper.find('.bwHandleCell').exists()).toBe(false);
         });
 
         it('hides action buttons (camera, link, remove)', () => {
@@ -200,8 +200,8 @@ describe('Item component', () => {
                 props: { ...makeProps(), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('button.lpCamera').exists()).toBe(false);
-            expect(wrapper.find('button.lpLink').exists()).toBe(false);
+            expect(wrapper.find('button.bwCamera').exists()).toBe(false);
+            expect(wrapper.find('button.bwLink').exists()).toBe(false);
         });
 
         it('hides remove button', () => {
@@ -211,7 +211,7 @@ describe('Item component', () => {
                 props: { ...makeProps(), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('.lpRemoveCell').exists()).toBe(false);
+            expect(wrapper.find('.bwRemoveCell').exists()).toBe(false);
         });
 
         it('shows static weight and unit instead of input', () => {
@@ -221,8 +221,8 @@ describe('Item component', () => {
                 props: { ...makeProps({ weight: 28349, authorUnit: 'oz' }), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('input.lpWeight').exists()).toBe(false);
-            const weightCell = wrapper.find('.lpWeightCell');
+            expect(wrapper.find('input.bwWeight').exists()).toBe(false);
+            const weightCell = wrapper.find('.bwWeightCell');
             expect(weightCell.exists()).toBe(true);
             expect(weightCell.text()).toContain('oz');
         });
@@ -234,8 +234,8 @@ describe('Item component', () => {
                 props: { ...makeProps({}, { qty: 3 }), readonly: true },
                 global: { stubs },
             });
-            expect(wrapper.find('input.lpQty').exists()).toBe(false);
-            const qtyCell = wrapper.find('.lpQtyCell');
+            expect(wrapper.find('input.bwQty').exists()).toBe(false);
+            const qtyCell = wrapper.find('.bwQtyCell');
             expect(qtyCell.exists()).toBe(true);
             expect(qtyCell.text()).toContain('3');
         });
@@ -247,9 +247,9 @@ describe('Item component', () => {
                 props: { ...makeProps({}, { worn: true }), readonly: true },
                 global: { stubs },
             });
-            const wornIcon = wrapper.find('i.lpWorn');
+            const wornIcon = wrapper.find('i.bwWorn');
             expect(wornIcon.exists()).toBe(true);
-            expect(wornIcon.classes()).toContain('lpActive');
+            expect(wornIcon.classes()).toContain('bwActive');
         });
     });
 });

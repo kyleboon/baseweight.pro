@@ -9,15 +9,15 @@ async function freshUser(page: any) {
     await registerUser(page, `list${now}`, 'testtest', `list+${now}@lighterpack.com`);
 }
 
-/** Creates a new list via the store (sidebar button is behind .lpList z-index). */
+/** Creates a new list via the store (sidebar button is behind .bwList z-index). */
 async function addNewList(page: any) {
     await page.evaluate(() => {
         const app = (document.getElementById('lp') as any).__vue_app__;
         app.config.globalProperties.$store.newList();
     });
     // Ensure the sidebar is open (newList changes defaultListId which may hide the sidebar
-    // briefly during the transition — wait for lpHasSidebar to stabilise)
-    await page.waitForFunction(() => document.getElementById('main')?.classList.contains('lpHasSidebar'));
+    // briefly during the transition — wait for bwHasSidebar to stabilise)
+    await page.waitForFunction(() => document.getElementById('main')?.classList.contains('bwHasSidebar'));
 }
 
 test.describe('List management', () => {
@@ -25,7 +25,7 @@ test.describe('List management', () => {
         await freshUser(page);
 
         await addNewList(page);
-        await expect(page.locator('.lp-nav-list-item')).toHaveCount(2);
+        await expect(page.locator('.bw-nav-list-item')).toHaveCount(2);
     });
 
     test('should switch to a different list', async ({ page }) => {
@@ -34,8 +34,8 @@ test.describe('List management', () => {
         await addNewList(page);
 
         // Second list is now in the sidebar; click it to make it active
-        const secondList = page.locator('.lp-nav-list-item').nth(1);
-        await secondList.locator('.lp-nav-link').click();
+        const secondList = page.locator('.bw-nav-list-item').nth(1);
+        await secondList.locator('.bw-nav-link').click();
 
         await expect(secondList).toHaveClass(/is-active/);
     });
@@ -47,26 +47,26 @@ test.describe('List management', () => {
         await addNewList(page);
 
         // Switch to second list so the first list's remove button is visible
-        await page.locator('.lp-nav-list-item').nth(1).locator('.lp-nav-link').click();
+        await page.locator('.bw-nav-list-item').nth(1).locator('.bw-nav-link').click();
 
         // Delete the first list
-        await page.locator('.lp-nav-list-item').nth(0).locator('.lp-nav-remove').click({ force: true });
+        await page.locator('.bw-nav-list-item').nth(0).locator('.bw-nav-remove').click({ force: true });
         await page.getByRole('button', { name: 'Yes' }).click();
 
-        await expect(page.locator('.lp-nav-list-item')).toHaveCount(1);
+        await expect(page.locator('.bw-nav-list-item')).toHaveCount(1);
     });
 
     test('should copy a list', async ({ page }) => {
         await freshUser(page);
 
         // Add a category name so the list has content to copy
-        await page.locator('input.lpCategoryName').first().fill('Shelter');
+        await page.locator('input.bwCategoryName').first().fill('Shelter');
 
         // Copy the current list via the list-actions menu
         await page.locator('button[aria-label="List actions"]').click();
-        await page.locator('.lp-actions-menu-item', { hasText: 'Copy this list' }).click();
+        await page.locator('.bw-actions-menu-item', { hasText: 'Copy this list' }).click();
 
-        await expect(page.locator('.lp-nav-list-item')).toHaveCount(2);
+        await expect(page.locator('.bw-nav-list-item')).toHaveCount(2);
     });
 
     test('should rename a list', async ({ page }) => {
@@ -78,6 +78,6 @@ test.describe('List management', () => {
         await listNameInput.blur();
 
         // The sidebar should reflect the new name
-        await expect(page.locator('.lp-nav-link').first()).toContainText('Weekend Trip');
+        await expect(page.locator('.bw-nav-link').first()).toContainText('Weekend Trip');
     });
 });

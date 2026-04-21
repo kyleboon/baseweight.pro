@@ -1,11 +1,11 @@
 <template>
-    <div class="lpListBody">
+    <div class="bwListBody">
         <!-- ── List header: title + share ──── -->
-        <header class="lp-list-header">
-            <h1 v-if="readonly" class="lp-list-title">{{ list.name }}</h1>
+        <header class="bw-list-header">
+            <h1 v-if="readonly" class="bw-list-title">{{ list.name }}</h1>
             <input
                 v-else
-                class="lp-list-title"
+                class="bw-list-title"
                 :value="list.name"
                 type="text"
                 placeholder="List name"
@@ -13,10 +13,10 @@
                 name="lastpass-disable-search"
                 @input="updateListName"
             />
-            <div v-if="!readonly" class="lp-list-header-actions">
+            <div v-if="!readonly" class="bw-list-header-actions">
                 <button
                     v-if="library.optionalFields['images']"
-                    class="lp-icon-btn lp-list-camera"
+                    class="bw-icon-btn bw-list-camera"
                     title="Manage list images"
                     aria-label="Manage list images"
                     @click="manageListImages"
@@ -48,22 +48,22 @@
                 <li>Add new categories and give items weights to start the visualization.</li>
                 <li v-if="!isLocalSaving">When you're done, share your list with others!</li>
             </ol>
-            <p v-if="isLocalSaving" class="lpWarning">
+            <p v-if="isLocalSaving" class="bwWarning">
                 <strong>Note:</strong> Your data is being saved to your local computer. In order to share your lists
                 please register an account.
             </p>
         </div>
-        <div v-if="library.optionalFields['images'] && listImages.length > 0" class="lp-list-image-strip">
+        <div v-if="library.optionalFields['images'] && listImages.length > 0" class="bw-list-image-strip">
             <img
                 v-for="(img, i) in visibleListThumbs"
                 :key="img.id ?? i"
-                class="lpItemThumb"
+                class="bwItemThumb"
                 :src="img.url"
                 :alt="`${list.name} image ${i + 1}`"
                 :title="`Image ${i + 1}`"
                 @click="viewListImageAt(i)"
             />
-            <span v-if="extraListImageCount > 0" class="lpThumbMore" @click="viewListImageAt(visibleListThumbs.length)"
+            <span v-if="extraListImageCount > 0" class="bwThumbMore" @click="viewListImageAt(visibleListThumbs.length)"
                 >+{{ extraListImageCount }}</span
             >
         </div>
@@ -71,14 +71,14 @@
         <list-summary v-if="!isListNew" :list="list" :readonly="readonly" />
 
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <div v-if="readonly && renderedDescription" id="lpListDescription" v-html="renderedDescription" />
+        <div v-if="readonly && renderedDescription" id="bwListDescription" v-html="renderedDescription" />
 
         <div style="clear: both" />
 
         <div v-if="!readonly && library.optionalFields['listDescription']" id="listDescriptionContainer">
             <h3>List Description</h3>
             <p>
-                (<a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="lpHref"
+                (<a href="https://guides.github.com/features/mastering-markdown/" target="_blank" class="bwHref"
                     >Markdown</a
                 >
                 supported)
@@ -86,13 +86,13 @@
             <textarea id="listDescription" v-model="list.description" @input="updateListDescription" />
         </div>
 
-        <ul class="lpCategories">
+        <ul class="bwCategories">
             <category v-for="cat in categories" :key="cat.id" :category="cat" :readonly="readonly" />
         </ul>
 
         <hr v-if="!readonly" />
 
-        <a v-if="!readonly" class="lpAdd addCategory lp-action-link" @click="newCategory">
+        <a v-if="!readonly" class="bwAdd addCategory bw-action-link" @click="newCategory">
             <svg
                 width="16"
                 height="16"
@@ -199,9 +199,9 @@ function updateListDescription() {
 }
 
 function handleCategoryReorder(Sortable) {
-    const $categories = /** @type {HTMLElement} */ (document.getElementsByClassName('lpCategories')[0]);
+    const $categories = /** @type {HTMLElement} */ (document.getElementsByClassName('bwCategories')[0]);
     return Sortable.create($categories, {
-        handle: '.lpCategoryHandle',
+        handle: '.bwCategoryHandle',
         animation: 150,
         onEnd(evt) {
             const { item, from, oldIndex, newIndex } = evt;
@@ -222,7 +222,7 @@ function handleCategoryReorder(Sortable) {
 
 <style>
 /* ── List header ─────────────────────────────────────────────── */
-.lp-list-header {
+.bw-list-header {
     align-items: center;
     border-bottom: 1px solid #e8e7e1;
     display: flex;
@@ -231,7 +231,7 @@ function handleCategoryReorder(Sortable) {
     padding: 10px 16px;
 }
 
-.lp-list-title {
+.bw-list-title {
     background: transparent;
     border: 0.5px solid transparent;
     border-radius: 4px;
@@ -262,7 +262,7 @@ function handleCategoryReorder(Sortable) {
     }
 }
 
-.lp-list-header-actions {
+.bw-list-header-actions {
     align-items: center;
     display: flex;
     flex-shrink: 0;
@@ -288,7 +288,7 @@ function handleCategoryReorder(Sortable) {
             color: #1e1e1c;
         }
 
-        .lpTarget {
+        .bwTarget {
             align-items: center;
             color: inherit;
             display: flex;
@@ -302,7 +302,7 @@ function handleCategoryReorder(Sortable) {
 }
 
 /* List image thumbnail strip */
-.lp-list-image-strip {
+.bw-list-image-strip {
     align-items: center;
     display: flex;
     gap: 4px;
@@ -310,7 +310,7 @@ function handleCategoryReorder(Sortable) {
 }
 
 /* List-level camera button */
-.lp-list-camera {
+.bw-list-camera {
     color: #8a8880;
     visibility: visible;
 

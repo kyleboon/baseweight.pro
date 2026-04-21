@@ -10,7 +10,7 @@
                         <img :src="img.url" class="gallery-thumb" :alt="`Image ${index + 1}`" @click="viewImage(img)" />
                         <button
                             v-if="index > 0"
-                            class="gallery-move gallery-move-left lp-reorder-btn visually-hidden"
+                            class="gallery-move gallery-move-left bw-reorder-btn visually-hidden"
                             :aria-label="'Move image ' + (index + 1) + ' left'"
                             @click="moveImageUp(index)"
                         >
@@ -18,7 +18,7 @@
                         </button>
                         <button
                             v-if="index < images.length - 1"
-                            class="gallery-move gallery-move-right lp-reorder-btn visually-hidden"
+                            class="gallery-move gallery-move-right bw-reorder-btn visually-hidden"
                             :aria-label="'Move image ' + (index + 1) + ' right'"
                             @click="moveImageDown(index)"
                         >
@@ -67,7 +67,7 @@
                                 class="url-input"
                                 placeholder="https://example.com/photo.jpg"
                             />
-                            <button type="submit" class="lpButton" :disabled="!urlInput.trim() || savingUrl">
+                            <button type="submit" class="bwButton" :disabled="!urlInput.trim() || savingUrl">
                                 Add
                             </button>
                         </div>

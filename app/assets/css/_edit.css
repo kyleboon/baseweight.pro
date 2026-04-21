@@ -1,4 +1,4 @@
-.lpSilent {
+.bwSilent {
     background: transparent;
     border: 1px solid transparent;
 
@@ -14,7 +14,7 @@
         outline: none;
     }
 
-    &.lpSilentError {
+    &.bwSilentError {
         background-color: #f3bfc7;
         border: 1px solid var(--red1);
         outline-color: var(--red1);
@@ -28,7 +28,7 @@
 /* Body */
 
 .addCategory,
-.lpAddItem {
+.bwAddItem {
     margin-left: 20px;
     margin-top: 6px;
 }
@@ -42,7 +42,7 @@
     width: 1px;
 }
 
-.lpHref.close {
+.bwHref.close {
     margin-left: 10px;
 }
 

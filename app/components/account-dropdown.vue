@@ -2,7 +2,7 @@
     <span class="headerItem hasPopover">
         <PopoverHover id="headerPopover">
             <template #target>
-                Signed in as <span class="lp-username">{{ username }}</span>
+                Signed in as <span class="bw-username">{{ username }}</span>
                 <svg
                     width="10"
                     height="6"
@@ -16,10 +16,10 @@
                 </svg>
             </template>
             <template #content>
-                <nav class="lp-account-nav">
-                    <a class="lp-account-link" @click="showAccount">Account Settings</a>
-                    <a class="lp-account-link" @click="showHelp">Help</a>
-                    <a class="lp-account-link lp-account-link--signout" @click="signout">Sign Out</a>
+                <nav class="bw-account-nav">
+                    <a class="bw-account-link" @click="showAccount">Account Settings</a>
+                    <a class="bw-account-link" @click="showHelp">Help</a>
+                    <a class="bw-account-link bw-account-link--signout" @click="signout">Sign Out</a>
                 </nav>
             </template>
         </PopoverHover>
@@ -54,22 +54,22 @@ function signout() {
 </script>
 
 <style>
-#headerPopover .lp-popover-content,
-#headerPopover .lpContent {
+#headerPopover .bw-popover-content,
+#headerPopover .bwContent {
     min-width: 9em;
 }
 
-.lp-username {
+.bw-username {
     font-weight: 600;
 }
 
-.lp-account-nav {
+.bw-account-nav {
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
-.lp-account-link {
+.bw-account-link {
     border-radius: 6px;
     color: #5a5954;
     cursor: pointer;
@@ -88,7 +88,7 @@ function signout() {
         color: #1e1e1c;
     }
 
-    &.lp-account-link--signout {
+    &.bw-account-link--signout {
         margin-top: 4px;
 
         &:hover {

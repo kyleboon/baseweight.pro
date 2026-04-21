@@ -56,7 +56,7 @@
     }
 }
 
-.lpHref {
+.bwHref {
     color: var(--blue1);
     cursor: pointer;
     text-decoration: none;
@@ -66,7 +66,7 @@
     }
 }
 
-.lpInvisible {
+.bwInvisible {
     height: 1px;
     left: -9999px;
     overflow: hidden;
@@ -74,7 +74,7 @@
     width: 1px;
 }
 
-.lpNotSupported {
+.bwNotSupported {
     background: var(--red1);
     color: #fff;
     font-size: 24px;
@@ -82,12 +82,12 @@
     text-align: center;
 }
 
-.lpNumber {
+.bwNumber {
     text-align: right;
 }
 
-.lpAdd,
-.lpCopy {
+.bwAdd,
+.bwCopy {
     color: var(--green1);
     cursor: pointer;
     display: inline-block;
@@ -106,12 +106,12 @@
     }
 }
 
-.lpHalf {
+.bwHalf {
     float: left;
     width: 50%;
 }
 
-#lp {
+#bw {
     background: inherit;
 }
 
@@ -124,12 +124,12 @@
     text-align: left;
     transition: all var(--transition-duration-slow);
 
-    &.lpHasSidebar {
+    &.bwHasSidebar {
         max-width: 1280px;
     }
 }
 
-.lpRemove {
+.bwRemove {
     border-radius: 16px;
     cursor: pointer;
     display: inline-block;
@@ -146,7 +146,7 @@
     }
 }
 
-.lpHandle {
+.bwHandle {
     background: url('/images/handle.png');
     cursor: move;
     cursor: grab;
@@ -158,18 +158,18 @@
     width: 12px;
 }
 
-.lpAlignRight {
+.bwAlignRight {
     text-align: right;
 }
 
-.lpLegend {
+.bwLegend {
     border: 1px solid #fff;
     display: block;
     height: 10px;
     width: 10px;
 }
 
-.lpFields {
+.bwFields {
     input[type='text'],
     input[type='email'],
     input[type='password'],
@@ -188,7 +188,7 @@
     }
 }
 
-.lpButtons {
+.bwButtons {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -203,7 +203,7 @@
     }
 }
 
-.lp .lpButton {
+.lp .bwButton {
     /* TODO: find out why this specificity is needed */
     background-image: linear-gradient(165deg, var(--orange1) 50%, var(--orange2) 100%);
     background-position: 100% 100%;
@@ -227,7 +227,7 @@
     transition: all 0.2s;
     width: auto;
 
-    &.lpSmall {
+    &.bwSmall {
         font-size: 13px;
         padding: 5px 10px;
     }
@@ -257,55 +257,55 @@
     }
 
     &:disabled,
-    &.lpButtonDisabled {
+    &.bwButtonDisabled {
         cursor: default;
         opacity: 0.5;
     }
 }
 
-.lpButtons .lpButton {
+.bwButtons .bwButton {
     width: 100%;
 }
 
-.lpListSummary {
+.bwListSummary {
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.lpTable {
+.bwTable {
     display: table;
     margin: 0;
     padding: 0;
 }
 
-.lpRow {
+.bwRow {
     display: table-row;
 
-    &:first-child > .lpCell {
+    &:first-child > .bwCell {
         border-top: none;
     }
 
-    &.lpHeader {
-        .lpCell {
+    &.bwHeader {
+        .bwCell {
             border-bottom: 1px solid #aaa;
             vertical-align: bottom;
         }
 
-        + .lpRow .lpCell {
+        + .bwRow .bwCell {
             border-top: none;
         }
     }
 }
 
-.lpFooter {
-    .lpCell {
+.bwFooter {
+    .bwCell {
         border-top: 1px solid #aaa;
     }
 }
 
-.lpCell {
+.bwCell {
     border-top: 1px dotted #aaa;
     display: table-cell;
     padding: 1px 8px;
@@ -319,31 +319,31 @@
     }
 }
 
-.lpHeader,
-.lpSubtotal {
+.bwHeader,
+.bwSubtotal {
     font-weight: 600;
 
-    + .lpItem {
+    + .bwItem {
         border-top: none;
     }
 }
 
-.lpError {
+.bwError {
     color: var(--red1);
 }
 
-.lpSuccess {
+.bwSuccess {
     color: #5b8611;
 }
 
-.lpWarning {
+.bwWarning {
     background: var(--yellow2);
     border: 1px solid var(--dark-yellow);
     border-radius: 5px;
     padding: 10px;
 }
 
-#lpImageDialog {
+#bwImageDialog {
     width: auto;
 
     img {
@@ -351,14 +351,14 @@
     }
 }
 
-#lpFooter {
+#bwFooter {
     color: #777;
     display: flex;
     justify-content: space-between;
     padding: 150px 0 20px;
 }
 
-#lpWelcomeFooter {
+#bwWelcomeFooter {
     background: rgb(255 255 255 / 65%);
     bottom: 0;
     display: flex;
@@ -369,21 +369,21 @@
     right: 0;
     z-index: 999999999;
 
-    .lpHasBlackout & {
+    .bwHasBlackout & {
         display: block;
     }
 }
 
-.lpLibraryList:hover .lpRemove,
-.lpCategory .lpHeader:hover .lpRemove,
-.lpLibraryItem:hover .lpRemove,
-.lpLibraryItem:hover .lpHandle,
-.lpCategory .lpHeader:hover .lpHandle {
+.bwLibraryList:hover .bwRemove,
+.bwCategory .bwHeader:hover .bwRemove,
+.bwLibraryItem:hover .bwRemove,
+.bwLibraryItem:hover .bwHandle,
+.bwCategory .bwHeader:hover .bwHandle {
     visibility: visible;
 }
 
 /* ── Mobile top bar ────────────────────────────────────────── */
-.lp-mobile-topbar {
+.bw-mobile-topbar {
     align-items: center;
     background: #252523;
     color: #c8c6bc;
@@ -395,7 +395,7 @@
     z-index: 50;
 }
 
-.lp-hamburger {
+.bw-hamburger {
     align-items: center;
     background: transparent;
     border: none;
@@ -405,23 +405,23 @@
     padding: 4px;
 }
 
-.lp-mobile-wordmark {
+.bw-mobile-wordmark {
     font-family: 'DM Serif Display', georgia, serif;
     font-size: 18px;
 }
 
 /* ── Sidebar backdrop ──────────────────────────────────────── */
-.lp-sidebar-backdrop {
+.bw-sidebar-backdrop {
     display: none;
 }
 
 @media only screen and (width < 900px) {
-    .lp-mobile-topbar {
+    .bw-mobile-topbar {
         display: flex;
     }
 
     /* Sidebar backdrop — visible when sidebar is open */
-    .lpSidebarOpen .lp-sidebar-backdrop {
+    .bwSidebarOpen .bw-sidebar-backdrop {
         background: rgb(0 0 0 / 40%);
         display: block;
         inset: 0;
@@ -430,47 +430,47 @@
     }
 
     /* Gear table: hide column headers for weight/price/qty */
-    .lpItems {
+    .bwItems {
         position: relative;
 
-        .lpWeightCell {
+        .bwWeightCell {
             flex-basis: 100px;
         }
 
-        .lpPriceCell {
+        .bwPriceCell {
             flex-basis: 65px;
         }
 
-        .lpHeader {
-            .lpWeightCell,
-            .lpPriceCell,
-            .lpQtyCell {
+        .bwHeader {
+            .bwWeightCell,
+            .bwPriceCell,
+            .bwQtyCell {
                 display: none;
             }
         }
 
-        .lpFooter {
+        .bwFooter {
             justify-content: flex-end;
 
-            .lpQtyCell {
+            .bwQtyCell {
                 display: none;
             }
         }
     }
 
     /* Gear table: item row reflow */
-    .lpItem {
+    .bwItem {
         align-items: baseline;
         flex-flow: row wrap;
         justify-content: flex-end;
         padding: 3px 0;
 
-        .lpShowImages &.lpItemHasImage {
+        .bwShowImages &.bwItemHasImage {
             min-height: 90px;
             padding-left: 100px;
             position: relative;
 
-            .lpImageCell {
+            .bwImageCell {
                 height: 90px;
                 left: 0;
                 position: absolute;
@@ -480,7 +480,7 @@
         }
 
         /* First line: qty (if > 1) + name + price */
-        .lpQtyCell {
+        .bwQtyCell {
             order: 1;
 
             &[qty1] {
@@ -492,63 +492,63 @@
             }
         }
 
-        .lpName {
+        .bwName {
             flex: 1 1 0;
             font-weight: bold;
             min-width: 80px;
             order: 2;
         }
 
-        .lpPriceCell {
+        .bwPriceCell {
             order: 3;
         }
 
         /* Second line: weight + description + actions */
-        .lpWeightCell {
+        .bwWeightCell {
             order: 4;
         }
 
-        .lpDescription {
+        .bwDescription {
             min-width: 0;
             order: 98;
         }
 
-        .lpActionsCell {
+        .bwActionsCell {
             order: 99;
             padding: 0 4px;
             text-align: right;
 
-            .lpHidden,
-            i:not(.lpActive) {
+            .bwHidden,
+            i:not(.bwActive) {
                 display: none;
             }
         }
     }
 
     /* Touch targets */
-    .lpWeight,
-    .lpPrice,
-    .lpQty {
+    .bwWeight,
+    .bwPrice,
+    .bwQty {
         min-height: 44px;
     }
 
     /* Hide drag handles */
-    .lpHandle {
+    .bwHandle {
         display: none;
     }
 
     /* Hide remove button unless row focused/hovered */
-    .lpRemove {
+    .bwRemove {
         visibility: hidden;
     }
 
-    .lpItem:hover .lpRemove,
-    .lpItem:focus-within .lpRemove {
+    .bwItem:hover .bwRemove,
+    .bwItem:focus-within .bwRemove {
         visibility: visible;
     }
 
     /* Image dialog mobile sizing */
-    #lpImageDialog {
+    #bwImageDialog {
         padding: 5px;
         width: 90%;
 
@@ -558,27 +558,27 @@
         }
     }
 
-    .lpChart {
+    .bwChart {
         max-width: 100%;
     }
 }
 
 @media only screen and (width < 600px) {
-    .lpListSummary {
+    .bwListSummary {
         flex-direction: column;
         margin-bottom: 30px;
     }
 
-    .lpChartContainer {
+    .bwChartContainer {
         max-width: 200px;
     }
 
     /* Tighter content padding */
-    .lpList {
+    .bwList {
         padding: 0 12px;
     }
 
-    .lpCategory {
+    .bwCategory {
         margin-bottom: 12px;
     }
 
@@ -588,7 +588,7 @@
     }
 
     /* Modal mobile sizing */
-    .lp-copy-modal {
+    .bw-copy-modal {
         max-height: 80vh;
         overflow-y: auto;
         width: calc(100vw - 24px);

@@ -1,5 +1,5 @@
 <template>
-    <modal id="lpImageDialog" :shown="shown" label-id="view-image-dialog-title" @hide="shown = false">
+    <modal id="bwImageDialog" :shown="shown" label-id="view-image-dialog-title" @hide="shown = false">
         <h2 id="view-image-dialog-title" class="visually-hidden">Image viewer</h2>
         <!-- Main image display -->
         <div class="view-image-main">
@@ -88,7 +88,7 @@ function next() {
 </script>
 
 <style>
-#lpImageDialog {
+#bwImageDialog {
     max-width: 90vw;
     width: auto;
 }

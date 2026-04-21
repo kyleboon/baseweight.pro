@@ -16,11 +16,11 @@ function revertDOM(item: HTMLElement, container: HTMLElement, oldIndex: number, 
 }
 
 /**
- * Creates and manages Sortable instances on all .lpItems containers.
+ * Creates and manages Sortable instances on all .bwItems containers.
  * Handles both intra-category item reorder (onEnd) and cross-container drops
  * from other categories or the library sidebar (onAdd).
  *
- * Called by list.vue (which owns the .lpItems lifecycle) and shared with
+ * Called by list.vue (which owns the .bwItems lifecycle) and shared with
  * library-items.vue via the group name 'items'.
  */
 export function useItemDrag(): { setup: (list: Ref<IList>) => void; destroy: () => void } {
@@ -29,7 +29,7 @@ export function useItemDrag(): { setup: (list: Ref<IList>) => void; destroy: () 
 
     function setup(list: Ref<IList>) {
         destroy();
-        const containers = Array.from(document.getElementsByClassName('lpItems')) as HTMLElement[];
+        const containers = Array.from(document.getElementsByClassName('bwItems')) as HTMLElement[];
         sortables = containers.map((container) =>
             Sortable.create(container, {
                 group: {
@@ -37,8 +37,8 @@ export function useItemDrag(): { setup: (list: Ref<IList>) => void; destroy: () 
                     pull: true,
                     put: true,
                 },
-                handle: '.lpItemHandle',
-                draggable: '.lpItem',
+                handle: '.bwItemHandle',
+                draggable: '.bwItem',
                 animation: 150,
                 onEnd(evt: Sortable.SortableEvent) {
                     if (evt.from !== evt.to) return; // cross-container handled by onAdd on target

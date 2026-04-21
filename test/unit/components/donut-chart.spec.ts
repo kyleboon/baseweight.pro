@@ -33,7 +33,7 @@ describe('DonutChart component', () => {
         const wrapper = mount(DonutChart, {
             props: { categories, totalWeight: 10000, library: makeLibrary(categories) },
         });
-        expect(wrapper.findAll('path.lp-donut-slice').length).toBe(2);
+        expect(wrapper.findAll('path.bw-donut-slice').length).toBe(2);
     });
 
     it('emits category-hover with null on mouseleave', async () => {

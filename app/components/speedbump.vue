@@ -7,10 +7,10 @@
         <p>{{ messages.body }}</p>
 
         <div class="buttons">
-            <button v-focus-on-create class="lpButton" @click="confirmSpeedbump()">
+            <button v-focus-on-create class="bwButton" @click="confirmSpeedbump()">
                 {{ messages.confirm }}
             </button>
-            &nbsp;<button class="lpButton" @click="shown = false">
+            &nbsp;<button class="bwButton" @click="shown = false">
                 {{ messages.cancel }}
             </button>
         </div>

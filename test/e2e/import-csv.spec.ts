@@ -44,7 +44,7 @@ test.describe('CSV import', () => {
         await expect(page.locator('#importValidate')).toBeVisible();
 
         // All three item rows should be listed
-        await expect(page.locator('#importData .lpRow:not(.lpHeader)')).toHaveCount(3);
+        await expect(page.locator('#importData .bwRow:not(.bwHeader)')).toHaveCount(3);
         await expect(page.locator('#importData')).toContainText('Tent');
         await expect(page.locator('#importData')).toContainText('Sleeping Bag');
         await expect(page.locator('#importData')).toContainText('Stove');
@@ -67,7 +67,7 @@ test.describe('CSV import', () => {
 
         // After import, the modal should close and the items should appear in the list
         await expect(page.locator('#importValidate')).toBeHidden();
-        await expect(page.locator('.lpItem')).toHaveCount(3);
+        await expect(page.locator('.bwItem')).toHaveCount(3);
     });
 
     test('should show an alert and not open the modal for a non-CSV file', async ({ page }) => {
@@ -125,10 +125,10 @@ test.describe('CSV import', () => {
 
         // The validation modal should appear with all three items
         await expect(page.locator('#importValidate')).toBeVisible();
-        await expect(page.locator('#importData .lpRow:not(.lpHeader)')).toHaveCount(3);
+        await expect(page.locator('#importData .bwRow:not(.bwHeader)')).toHaveCount(3);
 
         // Price, Worn, and Consumable columns should be visible in the header
-        const header = page.locator('#importData .lpHeader');
+        const header = page.locator('#importData .bwHeader');
         await expect(header).toContainText('Price');
         await expect(header).toContainText('Worn');
         await expect(header).toContainText('Consumable');
@@ -138,7 +138,7 @@ test.describe('CSV import', () => {
         await expect(page.locator('#importValidate')).toBeHidden();
 
         // All three items should be in the list
-        await expect(page.locator('.lpItem')).toHaveCount(3);
+        await expect(page.locator('.bwItem')).toHaveCount(3);
 
         // Verify the imported data via the store
         const storeData = await page.evaluate(() => {

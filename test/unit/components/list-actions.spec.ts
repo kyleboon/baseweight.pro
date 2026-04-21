@@ -43,7 +43,7 @@ describe('ListActions component', () => {
     it('renders the ellipsis button when signed in', () => {
         makeStore();
         const wrapper = mount(ListActions, { global: { stubs } });
-        const btn = wrapper.find('button.lp-btn');
+        const btn = wrapper.find('button.bw-btn');
         expect(btn.exists()).toBe(true);
         expect(btn.attributes('aria-label')).toBe('List actions');
     });
@@ -57,15 +57,15 @@ describe('ListActions component', () => {
     it('clicking the button opens the menu', async () => {
         makeStore();
         const wrapper = mount(ListActions, { global: { stubs } });
-        await wrapper.find('button.lp-btn').trigger('click');
+        await wrapper.find('button.bw-btn').trigger('click');
         expect(wrapper.vm.menuOpen).toBe(true);
     });
 
     it('clicking the button again closes the menu', async () => {
         makeStore();
         const wrapper = mount(ListActions, { global: { stubs } });
-        await wrapper.find('button.lp-btn').trigger('click');
-        await wrapper.find('button.lp-btn').trigger('click');
+        await wrapper.find('button.bw-btn').trigger('click');
+        await wrapper.find('button.bw-btn').trigger('click');
         expect(wrapper.vm.menuOpen).toBe(false);
     });
 

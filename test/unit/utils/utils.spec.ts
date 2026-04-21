@@ -122,7 +122,7 @@ describe('fetchJson', () => {
         );
     });
 
-    it('rejects with lpError on non-ok response', async () => {
+    it('rejects with bwError on non-ok response', async () => {
         fetchSpy.mockResolvedValue({
             ok: false,
             status: 500,

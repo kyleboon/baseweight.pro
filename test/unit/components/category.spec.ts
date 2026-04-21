@@ -38,7 +38,7 @@ describe('Category component', () => {
             props: { category: makeCategory() },
             global: { stubs },
         });
-        expect(wrapper.find('input.lpCategoryName').exists()).toBe(true);
+        expect(wrapper.find('input.bwCategoryName').exists()).toBe(true);
     });
 
     it('itemContainers maps categoryItems to item/categoryItem pairs', () => {
@@ -117,25 +117,25 @@ describe('Category component', () => {
 
         it('renders category name as h2 instead of input', () => {
             const wrapper = mountReadonly();
-            expect(wrapper.find('input.lpCategoryName').exists()).toBe(false);
-            expect(wrapper.find('h2.lpCategoryName').exists()).toBe(true);
-            expect(wrapper.find('h2.lpCategoryName').text()).toBe('Shelter');
+            expect(wrapper.find('input.bwCategoryName').exists()).toBe(false);
+            expect(wrapper.find('h2.bwCategoryName').exists()).toBe(true);
+            expect(wrapper.find('h2.bwCategoryName').text()).toBe('Shelter');
         });
 
         it('hides drag handle in readonly mode', () => {
             const wrapper = mountReadonly();
-            expect(wrapper.find('.lpHandleCell').exists()).toBe(false);
-            expect(wrapper.find('.lpCategoryHandle').exists()).toBe(false);
+            expect(wrapper.find('.bwHandleCell').exists()).toBe(false);
+            expect(wrapper.find('.bwCategoryHandle').exists()).toBe(false);
         });
 
         it('hides remove button in readonly mode', () => {
             const wrapper = mountReadonly();
-            expect(wrapper.find('.lpRemoveCategory').exists()).toBe(false);
+            expect(wrapper.find('.bwRemoveCategory').exists()).toBe(false);
         });
 
         it('hides add item link in readonly mode', () => {
             const wrapper = mountReadonly();
-            expect(wrapper.find('.lpAddItem').exists()).toBe(false);
+            expect(wrapper.find('.bwAddItem').exists()).toBe(false);
         });
 
         it('passes readonly prop to child item components', () => {

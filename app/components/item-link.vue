@@ -3,8 +3,8 @@
         <h2 id="item-link-dialog-title">Add a link for this item</h2>
         <form id="itemLinkForm" @submit.prevent="addLink">
             <input v-model="url" type="text" d="itemLink" placeholder="Item Link" />
-            <input type="submit" class="lpButton" value="Save" />
-            <a class="lpHref close" @click="shown = false">Cancel</a>
+            <input type="submit" class="bwButton" value="Save" />
+            <a class="bwHref close" @click="shown = false">Cancel</a>
         </form>
     </modal>
 </template>

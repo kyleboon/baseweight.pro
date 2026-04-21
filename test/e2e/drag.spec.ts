@@ -10,7 +10,7 @@ async function freshUser(page: Page) {
 async function openSidebar(page: Page) {
     // Check if sidebar is already open (new users start with showSidebar=true)
     const isOpen = await page.evaluate(
-        () => document.getElementById('main')?.classList.contains('lpHasSidebar') ?? false,
+        () => document.getElementById('main')?.classList.contains('bwHasSidebar') ?? false,
     );
     if (!isOpen) {
         await page.locator('#hamburger').click();
@@ -49,7 +49,7 @@ async function drag(
 
     // Force drag handles visible — Firefox headless doesn't reliably trigger :hover via mouse.move
     await page.evaluate(() => {
-        document.querySelectorAll<HTMLElement>('.lpHandle').forEach((el) => {
+        document.querySelectorAll<HTMLElement>('.bwHandle').forEach((el) => {
             el.style.visibility = 'visible';
         });
     });
@@ -78,56 +78,56 @@ test.describe('Drag and drop', () => {
     test('reorders items within a category', async ({ page }) => {
         await freshUser(page);
 
-        await page.locator('input.lpCategoryName').first().fill('Gear');
-        await page.locator('.lpCategory').first().locator('input.lpName').first().fill('Alpha');
-        await page.locator('.lpCategory').first().getByText('Add new item').click();
-        await page.locator('.lpCategory').first().locator('input.lpName').nth(1).fill('Beta');
-        await page.locator('.lpCategory').first().getByText('Add new item').click();
-        await page.locator('.lpCategory').first().locator('input.lpName').nth(2).fill('Gamma');
+        await page.locator('input.bwCategoryName').first().fill('Gear');
+        await page.locator('.bwCategory').first().locator('input.bwName').first().fill('Alpha');
+        await page.locator('.bwCategory').first().getByText('Add new item').click();
+        await page.locator('.bwCategory').first().locator('input.bwName').nth(1).fill('Beta');
+        await page.locator('.bwCategory').first().getByText('Add new item').click();
+        await page.locator('.bwCategory').first().locator('input.bwName').nth(2).fill('Gamma');
 
         // Drag Alpha (0) to before the footer (= after all items) → order: Beta, Gamma, Alpha
         await drag(
             page,
-            page.locator('.lpCategory').first().locator('.lpItem').nth(0).locator('.lpItemHandle'),
-            page.locator('.lpCategory').first().locator('.lpItemsFooter'),
+            page.locator('.bwCategory').first().locator('.bwItem').nth(0).locator('.bwItemHandle'),
+            page.locator('.bwCategory').first().locator('.bwItemsFooter'),
             'before',
         );
 
-        await expect(page.locator('.lpCategory').first().locator('input.lpName').nth(0)).toHaveValue('Beta');
-        await expect(page.locator('.lpCategory').first().locator('input.lpName').nth(2)).toHaveValue('Alpha');
+        await expect(page.locator('.bwCategory').first().locator('input.bwName').nth(0)).toHaveValue('Beta');
+        await expect(page.locator('.bwCategory').first().locator('input.bwName').nth(2)).toHaveValue('Alpha');
     });
 
     test('moves an item between categories', async ({ page }) => {
         await freshUser(page);
 
         // Cat 0: Tent, Sleeping Bag | Cat 1: Stove
-        await page.locator('input.lpCategoryName').first().fill('Pack');
-        await page.locator('.lpCategory').first().locator('input.lpName').first().fill('Tent');
-        await page.locator('.lpCategory').first().getByText('Add new item').click();
-        await page.locator('.lpCategory').first().locator('input.lpName').nth(1).fill('Sleeping Bag');
+        await page.locator('input.bwCategoryName').first().fill('Pack');
+        await page.locator('.bwCategory').first().locator('input.bwName').first().fill('Tent');
+        await page.locator('.bwCategory').first().getByText('Add new item').click();
+        await page.locator('.bwCategory').first().locator('input.bwName').nth(1).fill('Sleeping Bag');
 
         await page.getByText('Add new category').click();
-        await page.locator('input.lpCategoryName').nth(1).fill('Kitchen');
-        await page.locator('.lpCategory').nth(1).locator('input.lpName').first().fill('Stove');
+        await page.locator('input.bwCategoryName').nth(1).fill('Kitchen');
+        await page.locator('.bwCategory').nth(1).locator('input.bwName').first().fill('Stove');
 
         // Drag Sleeping Bag (item 1 in Cat 0) into Cat 1's footer
         await drag(
             page,
-            page.locator('.lpCategory').nth(0).locator('.lpItem').nth(1).locator('.lpItemHandle'),
-            page.locator('.lpCategory').nth(1).locator('.lpItemsFooter'),
+            page.locator('.bwCategory').nth(0).locator('.bwItem').nth(1).locator('.bwItemHandle'),
+            page.locator('.bwCategory').nth(1).locator('.bwItemsFooter'),
             'before',
         );
 
-        await expect(page.locator('.lpCategory').nth(0).locator('.lpItem')).toHaveCount(1);
-        await expect(page.locator('.lpCategory').nth(1).locator('.lpItem')).toHaveCount(2);
+        await expect(page.locator('.bwCategory').nth(0).locator('.bwItem')).toHaveCount(1);
+        await expect(page.locator('.bwCategory').nth(1).locator('.bwItem')).toHaveCount(2);
     });
 
     test('reorders categories', async ({ page }) => {
         await freshUser(page);
 
-        await page.locator('input.lpCategoryName').first().fill('Alpha');
+        await page.locator('input.bwCategoryName').first().fill('Alpha');
         await page.getByText('Add new category').click();
-        await page.locator('input.lpCategoryName').nth(1).fill('Beta');
+        await page.locator('input.bwCategoryName').nth(1).fill('Beta');
 
         // Reorder via store — Firefox headless doesn't reliably fire SortableJS drag events
         // on category handles. Use the store API directly (same pattern as list reordering).
@@ -138,8 +138,8 @@ test.describe('Drag and drop', () => {
             store.reorderCategory({ list, before: 1, after: 0 });
         });
 
-        await expect(page.locator('input.lpCategoryName').nth(0)).toHaveValue('Beta');
-        await expect(page.locator('input.lpCategoryName').nth(1)).toHaveValue('Alpha');
+        await expect(page.locator('input.bwCategoryName').nth(0)).toHaveValue('Beta');
+        await expect(page.locator('input.bwCategoryName').nth(1)).toHaveValue('Alpha');
     });
 
     test('reorders lists in the sidebar', async ({ page }) => {
@@ -148,7 +148,7 @@ test.describe('Drag and drop', () => {
         // Name the first list
         await page.getByPlaceholder('List name').fill('Trip A');
 
-        // Create a second list via the store (sidebar button is behind .lpList z-index)
+        // Create a second list via the store (sidebar button is behind .bwList z-index)
         await page.evaluate(() => {
             const app = (document.getElementById('lp') as any).__vue_app__;
             return app.config.globalProperties.$store.newList();
@@ -158,8 +158,8 @@ test.describe('Drag and drop', () => {
         await openSidebar(page);
         await page.waitForTimeout(300); // let sidebar finish CSS transition
 
-        await expect(page.locator('.lp-nav-link').nth(0)).toContainText('Trip A');
-        await expect(page.locator('.lp-nav-link').nth(1)).toContainText('Trip B');
+        await expect(page.locator('.bw-nav-link').nth(0)).toContainText('Trip A');
+        await expect(page.locator('.bw-nav-link').nth(1)).toContainText('Trip B');
 
         // Reorder via store — sidebar items are behind the main content area (z-index 20 vs 30)
         // making physical drag interactions unreliable; use the store API directly.
@@ -168,15 +168,15 @@ test.describe('Drag and drop', () => {
             app.config.globalProperties.$store.reorderList({ before: 0, after: 1 });
         });
 
-        await expect(page.locator('.lp-nav-link').nth(0)).toContainText('Trip B');
-        await expect(page.locator('.lp-nav-link').nth(1)).toContainText('Trip A');
+        await expect(page.locator('.bw-nav-link').nth(0)).toContainText('Trip B');
+        await expect(page.locator('.bw-nav-link').nth(1)).toContainText('Trip A');
     });
 
     test('drags an item from the gear library into a category', async ({ page }) => {
         await freshUser(page);
 
         // Name the existing item so it is identifiable in the gear library
-        await page.locator('.lpCategory').first().locator('input.lpName').first().fill('Tent');
+        await page.locator('.bwCategory').first().locator('input.bwName').first().fill('Tent');
 
         // Create a second list — Tent is not in this list so it will have a drag handle
         await page.evaluate(() => {
@@ -186,7 +186,7 @@ test.describe('Drag and drop', () => {
 
         await openSidebar(page);
 
-        const tentLibraryItem = page.locator('.lp-gear-list-item').filter({ hasText: 'Tent' });
+        const tentLibraryItem = page.locator('.bw-gear-list-item').filter({ hasText: 'Tent' });
         await expect(tentLibraryItem).toBeVisible();
 
         // Add via store — sidebar items are behind the main content area (z-index 20 vs 30)
@@ -204,6 +204,6 @@ test.describe('Drag and drop', () => {
         });
 
         // Category should now contain 2 items: the default one + Tent
-        await expect(page.locator('.lpCategory').first().locator('.lpItem')).toHaveCount(2);
+        await expect(page.locator('.bwCategory').first().locator('.bwItem')).toHaveCount(2);
     });
 });

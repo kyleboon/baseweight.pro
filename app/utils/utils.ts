@@ -14,7 +14,7 @@ interface FetchOptions extends RequestInit {
     headers: Record<string, string>;
 }
 
-class lpError extends Error {
+class bwError extends Error {
     statusCode: number | null;
     errors: Array<{ message: string }> | null;
     id: string | null;
@@ -105,14 +105,14 @@ export const fetchJson = (url: string, options?: Partial<FetchOptions>): Promise
                 }
 
                 if (res.json) {
-                    return reject(new lpError(res.json, res.status));
+                    return reject(new bwError(res.json, res.status));
                 }
 
-                return reject(new lpError(res as ErrorResponse));
+                return reject(new bwError(res as ErrorResponse));
             })
             .catch((err) => {
                 const wrappedErr = err && err instanceof TypeError && err.message === 'Failed to fetch' ? {} : err;
-                return reject(new lpError(wrappedErr));
+                return reject(new bwError(wrappedErr));
             });
     });
 };
