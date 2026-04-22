@@ -78,17 +78,10 @@ Playwright automatically starts the app server before running tests (via `npm ru
 
 ### Deployment related
 
-- [ ] Register new domain name
-- [ ] Update branding to use new domain name
-- [ ] Create a simple logo and add it to the branding
 - [ ] Deploy to VPS
 - [ ] Replace email provider (Mailgun)
 - [ ] Add database backup strategy — automated backups for the SQLite file
 - [ ] Create `.env.example` and deployment documentation (required env vars, secrets management, database setup)
-
-### Front End Ux Work
-
-- [ ] Update the UX to be responsive
 
 ### Code quality / type safety
 
