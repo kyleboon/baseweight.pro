@@ -73,24 +73,3 @@ npx playwright test --update-snapshots                 # Regenerate screenshot b
 ```
 
 Playwright automatically starts the app server before running tests (via `npm run start`).
-
-## Roadmap
-
-### Deployment related
-
-- [ ] Deploy to VPS
-- [ ] Replace email provider (Mailgun)
-- [ ] Add database backup strategy — automated backups for the SQLite file
-- [ ] Create `.env.example` and deployment documentation (required env vars, secrets management, database setup)
-
-### Code quality / type safety
-
-- [ ] Replace the pragmatic `UNLOADED_LIBRARY` cast in `app/store/store.ts` with a proper nullable type (`library: LibraryType | null`) and add real `if (!this.library) return;` guards at the top of each action. The current pattern is a type-assertion workaround: all actions assume `library` is loaded because the UI only renders them in that state, but there is no static guarantee. A proper refactor would surface missing guards as compile errors.
-- [ ] Set up `@typescript-eslint` fully (rules, plugin, project-aware parsing) so `.ts` files in `app/`, `server/`, and `shared/` are linted with type information, not just test files.
-
-### Future features
-
-- [ ] Implement column sorting
-- [ ] Add additional fields (notes, condition, calories)
-- [ ] Add a "pantry" section for food
-- [ ] Markdown export along with CSV
